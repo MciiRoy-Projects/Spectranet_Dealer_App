@@ -1,9 +1,9 @@
 import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
-const factor = (width + height) * 0.15;
+const factor = (width + height) / 12;
 
 export const RF = num => {
-  num = num * factor;
+  num = (num / 100) * factor;
   return num;
 };
 

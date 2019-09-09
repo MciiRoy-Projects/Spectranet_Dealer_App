@@ -5,8 +5,9 @@
   "scripts": {
     "start": "react-native start",
     "andy": "react-native run-android",
-    "clean": "cd android && gradlew clean",
+    "apk-release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
+    "clean": "cd android && gradlew clean",
     "test": "jest",
     "lint": "eslint ."
   },

@@ -9,7 +9,7 @@ module.exports = {
   purple: '#6A69DB',
   orange: '#DF8100',
   red: '#D0021B',
-  skyBlue: '#E9EFF3',
+  skyBlue: '#5e9bfb',
   paleGrey: '#e9eff3',
   green: '#7ED321',
   lighBlack: '#444547',
@@ -28,7 +28,7 @@ module.exports = {
   offWhite: '#d8d8d820',
   azul: '#0e5edc',
   duskBlue40: '#21418240',
-  brownishGreyLight: '#5c5c5c30',
+  brownishGrey: '#5c5c5c',
   appleGreen: '#7ed321',
   scarlet: '#d0021b20',
   scarlet2: '#d0021b',
@@ -40,4 +40,5 @@ module.exports = {
   golden: '#f9c003',
   orangeTwo: '#ea7f11',
   lightGreyBlue: '#90b4d8',
+  blueyGrey: '#8a96ad',
 };
