@@ -6,8 +6,8 @@ import {
   createDrawerNavigator,
 } from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {RH, RW, RF} from './src/partials/_sizes';
 
+import Onboard from './src/auth/Onboard';
 import Login from './src/auth/Login';
 
 const transitionConfig = () => {
@@ -46,6 +46,7 @@ const UserNavigator = createStackNavigator(
 
 const AppNavigator = createSwitchNavigator(
   {
+    Onboard,
     UserNavigator,
   },
   {
