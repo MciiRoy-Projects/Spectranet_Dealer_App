@@ -8,12 +8,12 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  AsyncStorage,
   ScrollView,
   StatusBar,
   Platform,
   SafeAreaView,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
@@ -81,6 +81,21 @@ export const Wrapper = props => {
   );
 };
 
+export const WrapperMain = props => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: AppColors.paleGrey,
+        paddingHorizontal: RW(6),
+      }}>
+      <StatusBar backgroundColor={AppColors.paleGrey} barStyle="dark-content" />
+      {Platform.OS == 'ios' ? <SafeAreaView /> : null}
+      <ScrollView>{props.children}</ScrollView>
+    </View>
+  );
+};
+
 export const ColoredInput = props => {
   let check = props.value;
   return (
@@ -121,3 +136,87 @@ export const Button = props => {
     </Touch>
   );
 };
+
+export const Header = props => {
+  return (
+    <View
+      style={{
+        marginVertical: RH(4),
+        height: RH(6),
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+      <Touch onPress={props.openDrawer}>
+        <Image
+          style={{height: RH(3.5), width: RH(3.5)}}
+          source={AppIcons.menu}
+          resizeMode="contain"
+        />
+      </Touch>
+      <Touch onPress={props.openProfile}>
+        <PlaceholderIcon />
+      </Touch>
+    </View>
+  );
+};
+
+export const Title = props => {
+  return (
+    <H1
+      style={{
+        color: AppColors.blue,
+        fontSize: RF(28),
+        marginVertical: RH(1),
+        marginBottom: RH(2),
+      }}>
+      {props.children}
+    </H1>
+  );
+};
+
+export class PlaceholderIcon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profilePicture: AppIcons.placeholder,
+    };
+  }
+
+  defaultAvatar = async () => {
+    try {
+      var userInfo = await AsyncStorage.getItem('userInformation');
+      userInfo = JSON.parse(userInfo);
+      this.setState({profilePicture: userInfo.userData.photo_url});
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  componentDidMount() {
+    this.defaultAvatar();
+  }
+
+  render() {
+    const {profilePicture} = this.state;
+    let imgPicture = profilePicture;
+    imgPicture == ''
+      ? (imgPicture =
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSgjwZnhSrPqOgR9kN17cZx3fsFxWKsbdtoerHMPRXLPcPgJxFt')
+      : null;
+
+    return (
+      <Image
+        style={{
+          height: RH(5),
+          width: RH(5),
+          borderRadius: RH(2.5),
+          backgroundColor: '#cfcfcf',
+        }}
+        source={{uri: imgPicture}}
+        resizeMode="cover"
+      />
+    );
+  }
+}

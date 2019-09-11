@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {StatusBar, Animated, Easing} from 'react-native';
-import {
-  createAppContainer,
-  createSwitchNavigator,
-  createDrawerNavigator,
-} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 
 import Onboard from './src/auth/Onboard';
 import Login from './src/auth/Login';
+import Home from './src/main/Home';
 
 const transitionConfig = () => {
   return {
@@ -44,10 +42,15 @@ const UserNavigator = createStackNavigator(
   },
 );
 
+const DrawerNavigator = createDrawerNavigator({
+  Home,
+});
+
 const AppNavigator = createSwitchNavigator(
   {
-    Onboard,
-    UserNavigator,
+    //Onboard,
+    //UserNavigator,
+    DrawerNavigator,
   },
   {
     transitionConfig,

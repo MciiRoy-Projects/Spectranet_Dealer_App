@@ -1,4 +1,5 @@
 module.exports = {
+  menu: require('../../assets/icons/menu.png'),
   home: require('../../assets/icons/home.png'),
   scoreboard: require('../../assets/icons/scoreboard.png'),
   shop: require('../../assets/icons/shop.png'),

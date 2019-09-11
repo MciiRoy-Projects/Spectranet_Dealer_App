@@ -27,12 +27,12 @@ export default class Login extends React.Component {
           <Card>
             <View style={styles.form}>
               <Image
-                source={require('../../assets/img/logoDark.png')}
+                source={require('../../assets/img/AgentLogoDark.png')}
                 style={{
-                  width: '60%',
+                  width: '100%',
                   alignSelf: 'center',
                   height: RH(15),
-                  marginBottom: RH(4),
+                  marginBottom: RH(0),
                 }}
                 resizeMode="contain"
               />
@@ -55,8 +55,11 @@ export default class Login extends React.Component {
                 type="done"
               />
             </View>
+
+            <Button text="SIGN IN" style={styles.btn} />
           </Card>
-          <Button text="SIGN IN" style={styles.btn} />
+
+          {/*
           <Touch style={styles.touch}>
             <H2 style={styles.text1}>Dont have a dealer account?</H2>
           </Touch>
@@ -64,6 +67,7 @@ export default class Login extends React.Component {
           <Touch style={styles.touch2}>
             <H1 style={styles.text2}>Sign Up now.</H1>
           </Touch>
+          */}
         </ScrollView>
       </Wrapper>
     );

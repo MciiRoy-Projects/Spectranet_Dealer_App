@@ -12,14 +12,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "moment": "^2.24.0",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-modal-datetime-picker": "^7.5.0",
     "react-native-pure-chart": "^0.0.24",
+    "react-native-reanimated": "^1.2.0",
     "react-native-swiper": "^1.5.14",
     "react-navigation": "^4.0.0",
+    "react-navigation-drawer": "^2.1.2",
     "react-navigation-stack": "^1.5.1"
   },
   "devDependencies": {
