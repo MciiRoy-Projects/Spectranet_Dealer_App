@@ -87,11 +87,10 @@ export const WrapperMain = props => {
       style={{
         flex: 1,
         backgroundColor: AppColors.paleGrey,
-        paddingHorizontal: RW(6),
       }}>
       <StatusBar backgroundColor={AppColors.paleGrey} barStyle="dark-content" />
       {Platform.OS == 'ios' ? <SafeAreaView /> : null}
-      <ScrollView>{props.children}</ScrollView>
+      {props.children}
     </View>
   );
 };
@@ -141,7 +140,7 @@ export const Header = props => {
   return (
     <View
       style={{
-        marginVertical: RH(4),
+        marginVertical: RH(2),
         height: RH(6),
         width: '100%',
         flexDirection: 'row',
@@ -214,9 +213,37 @@ export class PlaceholderIcon extends React.Component {
           borderRadius: RH(2.5),
           backgroundColor: '#cfcfcf',
         }}
-        source={{uri: imgPicture}}
+        source={imgPicture}
         resizeMode="cover"
       />
     );
   }
 }
+
+export const LiImage = props => {
+  return (
+    <Touch style={styles.grid}>
+      <Image
+        style={{height: RH(5), width: RH(5)}}
+        source={props.icon}
+        resizeMode="contain"
+      />
+      <H2 style={styles.two}>{props.text}</H2>
+    </Touch>
+  );
+};
+
+const styles = StyleSheet.create({
+  grid: {
+    paddingVertical: RH(2),
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.5,
+  },
+  two: {
+    marginLeft: RW(5),
+    fontSize: RF(20),
+    color: AppColors.greyishBrown,
+  },
+});

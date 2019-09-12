@@ -7,6 +7,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import Onboard from './src/auth/Onboard';
 import Login from './src/auth/Login';
 import Home from './src/main/Home';
+import Scoreboard from './src/main/Scoreboard';
 
 const transitionConfig = () => {
   return {
@@ -44,6 +45,7 @@ const UserNavigator = createStackNavigator(
 
 const DrawerNavigator = createDrawerNavigator({
   Home,
+  Scoreboard,
 });
 
 const AppNavigator = createSwitchNavigator(

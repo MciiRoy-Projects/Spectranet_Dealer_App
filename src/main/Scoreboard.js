@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView, Image} from 'react-native';
 import {
   Header,
   WrapperMain,
@@ -8,8 +8,10 @@ import {
   Title,
   Card,
   Touch,
+  LiImage,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
+import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
 const data = [
@@ -19,7 +21,7 @@ const data = [
   {item: 'Data Incentives', num: 14},
 ];
 
-export default class Home extends React.Component {
+export default class Scoreboard extends React.Component {
   render() {
     const {navigation} = this.props;
     return (
@@ -29,20 +31,15 @@ export default class Home extends React.Component {
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title>Account Summary</Title>
-          <Card style={styles.paneOne}>
-            <H2 />
-          </Card>
+          <Title> Scoreboard</Title>
         </View>
 
         <View style={styles.paneTwo}>
-          <H1 style={styles.textOne}>Transactions</H1>
-          {data.map((el, i) => (
-            <Touch key={i} style={styles.grid}>
-              <H2 style={styles.one}>{el.item}</H2>
-              <H1 style={styles.two}>{el.num}</H1>
-            </Touch>
-          ))}
+          <ScrollView>
+            <LiImage icon={AppIcons.mtdSales} text="Stock Purchase" />
+            <LiImage icon={AppIcons.mtdSales} text="Activations" />
+            <LiImage icon={AppIcons.incentives} text="Inventive" />
+          </ScrollView>
         </View>
       </WrapperMain>
     );
@@ -58,26 +55,9 @@ const styles = StyleSheet.create({
     marginTop: RH(1),
     backgroundColor: '#fff',
     paddingVertical: RH(4),
-    paddingHorizontal: RW(12),
-    borderTopLeftRadius: RH(2),
-    borderTopRightRadius: RH(2),
-    minHeight: RH(38),
-  },
-  textOne: {
-    color: AppColors.pumpkin,
-    fontSize: RF(15),
-  },
-  grid: {
-    paddingVertical: RH(2),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  one: {
-    fontSize: RF(16),
-  },
-  two: {
-    fontSize: RF(18),
-    color: AppColors.cobalt,
-    textAlign: 'right',
+    paddingHorizontal: RW(6),
+    borderTopLeftRadius: RH(5),
+    borderTopRightRadius: RH(5),
+    flex: 1,
   },
 });

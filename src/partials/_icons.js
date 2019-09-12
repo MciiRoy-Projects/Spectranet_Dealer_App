@@ -12,6 +12,5 @@ module.exports = {
   logout: require('../../assets/icons/logout.png'),
   cartB: require('../../assets/icons/cartB.png'),
   cartO: require('../../assets/icons/cartO.png'),
-  placeholder:
-    'https://www.vrc.crim.cam.ac.uk/VRCconferences/conference/cplenaries/pelnspeakers/person-placeholder.jpg/image',
+  placeholder: require('../../assets/icons/placeholder.jpg'),
 };
