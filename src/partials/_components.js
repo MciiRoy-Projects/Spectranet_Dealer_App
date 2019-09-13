@@ -19,9 +19,17 @@ import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
 import AppIcons from './_icons';
 
-export const H1 = props => {
+/*export const H1 = props => {
   return (
     <Text style={[{fontFamily: 'AvenirLTStd-Heavy'}, props.style]}>
+      {props.children}
+    </Text>
+  );
+};*/
+
+export const H1 = props => {
+  return (
+    <Text style={[{fontFamily: 'Product Sans Bold'}, props.style]}>
       {props.children}
     </Text>
   );
@@ -29,7 +37,7 @@ export const H1 = props => {
 
 export const H2 = props => {
   return (
-    <Text style={[{fontFamily: 'AvenirLTStd-Roman'}, props.style]}>
+    <Text style={[{fontFamily: 'Product Sans Regular'}, props.style]}>
       {props.children}
     </Text>
   );
@@ -37,7 +45,7 @@ export const H2 = props => {
 
 export const P = props => {
   return (
-    <Text style={[{fontFamily: 'AvenirLTStd-Roman'}, props.style]}>
+    <Text style={[{fontFamily: 'Product Sans Regular'}, props.style]}>
       {props.children}
     </Text>
   );
@@ -84,10 +92,13 @@ export const Wrapper = props => {
 export const WrapperMain = props => {
   return (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: AppColors.paleGrey,
-      }}>
+      style={[
+        {
+          flex: 1,
+          backgroundColor: AppColors.paleGrey,
+        },
+        props.style,
+      ]}>
       <StatusBar backgroundColor={AppColors.paleGrey} barStyle="dark-content" />
       {Platform.OS == 'ios' ? <SafeAreaView /> : null}
       {props.children}
@@ -137,6 +148,31 @@ export const Button = props => {
 };
 
 export const Header = props => {
+  return (
+    <View
+      style={{
+        marginVertical: RH(2),
+        height: RH(6),
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+      <Touch onPress={props.openDrawer}>
+        <Image
+          style={{height: RH(3.5), width: RH(3.5)}}
+          source={AppIcons.menu}
+          resizeMode="contain"
+        />
+      </Touch>
+      <Touch onPress={props.openProfile}>
+        <PlaceholderIcon />
+      </Touch>
+    </View>
+  );
+};
+
+export const HeaderBack = props => {
   return (
     <View
       style={{
@@ -222,7 +258,7 @@ export class PlaceholderIcon extends React.Component {
 
 export const LiImage = props => {
   return (
-    <Touch style={styles.grid}>
+    <Touch style={styles.grid} onPress={props.onPress}>
       <Image
         style={{height: RH(5), width: RH(5)}}
         source={props.icon}

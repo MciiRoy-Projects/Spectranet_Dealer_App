@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Spectranet_Dealer_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Spectranet_Dealer_AppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -28,6 +27,10 @@
 		C76C565DA04647EC8BF7FF67 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16FAA167FAE843888D90574E /* NunitoSans-Regular.ttf */; };
 		E52CD18E3589455B986A70F3 /* AvenirLTStd-Roman.otf in Resources */ = {isa = PBXBuildFile; fileRef = E0F04F9413DF4683A5E286BF /* AvenirLTStd-Roman.otf */; };
 		FDF30C20393249C705CA00CF /* libPods-Spectranet_Dealer_App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A004323D56858C194A65671D /* libPods-Spectranet_Dealer_App.a */; };
+		6D1E0335CE4942CC9D81A2BB /* Product Sans Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */; };
+		7B1BBC36DDEA4692A77816BC /* Product Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */; };
+		B2F863D54A65434881DB2E9E /* Product Sans Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */; };
+		028958F8DEA148E5A0E106BB /* Product Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,10 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F600416B4659315F85AE3705 /* libPods-Spectranet_Dealer_App-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spectranet_Dealer_App-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */ = {isa = PBXFileReference; name = "Product Sans Bold Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */ = {isa = PBXFileReference; name = "Product Sans Bold.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */ = {isa = PBXFileReference; name = "Product Sans Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */ = {isa = PBXFileReference; name = "Product Sans Regular.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +233,10 @@
 				E700BB84B3F14E2AB96305C9 /* icofont.ttf */,
 				ACD3111861624B2399D17C05 /* NunitoSans-Bold.ttf */,
 				16FAA167FAE843888D90574E /* NunitoSans-Regular.ttf */,
+				0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */,
+				0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */,
+				D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */,
+				188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -379,6 +390,10 @@
 				B382E503976C4013A8EAFF28 /* icofont.ttf in Resources */,
 				534AA19298504F99920EC03E /* NunitoSans-Bold.ttf in Resources */,
 				C76C565DA04647EC8BF7FF67 /* NunitoSans-Regular.ttf in Resources */,
+				6D1E0335CE4942CC9D81A2BB /* Product Sans Bold Italic.ttf in Resources */,
+				7B1BBC36DDEA4692A77816BC /* Product Sans Bold.ttf in Resources */,
+				B2F863D54A65434881DB2E9E /* Product Sans Italic.ttf in Resources */,
+				028958F8DEA148E5A0E106BB /* Product Sans Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,13 +14,6 @@ import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
-const data = [
-  {item: 'MTD Stock Purchase', num: 1234},
-  {item: 'Available Stock', num: 234},
-  {item: 'MTD Activations', num: 1423},
-  {item: 'Data Incentives', num: 14},
-];
-
 export default class Scoreboard extends React.Component {
   render() {
     const {navigation} = this.props;
@@ -36,9 +29,35 @@ export default class Scoreboard extends React.Component {
 
         <View style={styles.paneTwo}>
           <ScrollView>
-            <LiImage icon={AppIcons.mtdSales} text="Stock Purchase" />
-            <LiImage icon={AppIcons.mtdSales} text="Activations" />
-            <LiImage icon={AppIcons.incentives} text="Inventive" />
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="MTD Stock Purchase"
+              onPress={() =>
+                navigation.navigate('ScoreboardView', 'MTD Stock Purchase')
+              }
+            />
+
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="Available Stock"
+              onPress={() =>
+                navigation.navigate('ScoreboardView', 'Available Stock')
+              }
+            />
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="MTD Activations"
+              onPress={() =>
+                navigation.navigate('ScoreboardView', 'MTD Activations')
+              }
+            />
+            <LiImage
+              icon={AppIcons.incentives}
+              text="Data Inventive"
+              onPress={() =>
+                navigation.navigate('ScoreboardView', 'Data Inventive')
+              }
+            />
           </ScrollView>
         </View>
       </WrapperMain>

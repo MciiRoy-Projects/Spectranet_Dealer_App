@@ -8,6 +8,7 @@ import Onboard from './src/auth/Onboard';
 import Login from './src/auth/Login';
 import Home from './src/main/Home';
 import Scoreboard from './src/main/Scoreboard';
+import ScoreboardView from './src/main/ScoreboardView';
 
 const transitionConfig = () => {
   return {
@@ -39,13 +40,25 @@ const UserNavigator = createStackNavigator(
     defaultNavigationOptions: {
       header: null,
     },
-    transitionConfig,
+    //transitionConfig,
+  },
+);
+
+const MainStack = createStackNavigator(
+  {
+    Home,
+    Scoreboard,
+    ScoreboardView,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
   },
 );
 
 const DrawerNavigator = createDrawerNavigator({
-  Home,
-  Scoreboard,
+  MainStack,
 });
 
 const AppNavigator = createSwitchNavigator(
