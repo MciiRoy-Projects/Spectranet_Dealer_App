@@ -56,7 +56,11 @@ export default class Login extends React.Component {
               />
             </View>
 
-            <Button text="SIGN IN" style={styles.btn} />
+            <Button
+              text="SIGN IN"
+              style={styles.btn}
+              onPress={() => this.props.navigation.navigate('DrawerNavigator')}
+            />
           </Card>
 
           {/*

@@ -19,6 +19,9 @@ import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
 import AppIcons from './_icons';
 
+let boldFont = {};
+let RegFont = {};
+
 /*export const H1 = props => {
   return (
     <Text style={[{fontFamily: 'AvenirLTStd-Heavy'}, props.style]}>
@@ -26,6 +29,13 @@ import AppIcons from './_icons';
     </Text>
   );
 };*/
+Platform.OS == 'ios'
+  ? (boldFont = 'Product Sans')
+  : (boldFont = 'Product Sans Bold');
+
+Platform.OS == 'ios'
+  ? (RegFont = 'Product Sans')
+  : (RegFont = 'Product Sans Regular');
 
 export const Ico = props => {
   return (
@@ -41,8 +51,7 @@ export const Ico = props => {
 
 export const H1 = props => {
   return (
-    <Text
-      style={[{fontFamily: 'Product Sans', fontWeight: 'bold'}, props.style]}>
+    <Text style={[{fontFamily: boldFont, fontWeight: 'bold'}, props.style]}>
       {props.children}
     </Text>
   );
@@ -51,7 +60,7 @@ export const H1 = props => {
 export const H2 = props => {
   return (
     <Text
-      style={[{fontFamily: 'Product Sans'}, props.style]}
+      style={[{fontFamily: RegFont}, props.style]}
       numberOfLines={props.numberOfLines}>
       {props.children}
     </Text>
@@ -60,9 +69,7 @@ export const H2 = props => {
 
 export const P = props => {
   return (
-    <Text style={[{fontFamily: 'Product Sans Regular'}, props.style]}>
-      {props.children}
-    </Text>
+    <Text style={[{fontFamily: RegFont}, props.style]}>{props.children}</Text>
   );
 };
 
@@ -137,6 +144,7 @@ export const ColoredInput = props => {
           fontFamily: 'AvenirLTStd-Roman',
           fontSize: RF(18),
           color: AppColors.cobalt,
+          paddingVertical: RH(2),
         },
         props.style,
       ]}

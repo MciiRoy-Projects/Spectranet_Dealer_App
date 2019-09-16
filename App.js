@@ -78,8 +78,8 @@ const DrawerNavigator = createDrawerNavigator(
 
 const AppNavigator = createSwitchNavigator(
   {
-    //Onboard,
-    //UserNavigator,
+    Onboard,
+    UserNavigator,
     DrawerNavigator,
   },
   {
