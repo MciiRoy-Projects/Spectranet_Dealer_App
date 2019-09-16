@@ -41,4 +41,5 @@ module.exports = {
   orangeTwo: '#ea7f11',
   lightGreyBlue: '#90b4d8',
   blueyGrey: '#8a96ad',
+  veryLightPink: '#ffdbdb',
 };

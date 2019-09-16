@@ -20,7 +20,7 @@ export default class ScoreboardView extends React.Component {
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
           <HeaderBack
-            openDrawer={() => navigation.openDrawer()}
+            goBack={() => navigation.goBack()}
             openProfile={() => navigation.navigate('Profile')}
           />
           <Title> {title}</Title>

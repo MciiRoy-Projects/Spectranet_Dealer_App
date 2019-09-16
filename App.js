@@ -9,6 +9,12 @@ import Login from './src/auth/Login';
 import Home from './src/main/Home';
 import Scoreboard from './src/main/Scoreboard';
 import ScoreboardView from './src/main/ScoreboardView';
+import Request from './src/main/Request';
+import RequestForm from './src/main/RequestForm';
+import NewsNotification from './src/main/NewsNotification';
+import NewsNotificationView from './src/main/NewsNotificationView';
+
+import {Drawer} from './src/partials/_drawers';
 
 const transitionConfig = () => {
   return {
@@ -40,7 +46,7 @@ const UserNavigator = createStackNavigator(
     defaultNavigationOptions: {
       header: null,
     },
-    //transitionConfig,
+    transitionConfig,
   },
 );
 
@@ -49,6 +55,10 @@ const MainStack = createStackNavigator(
     Home,
     Scoreboard,
     ScoreboardView,
+    Request,
+    RequestForm,
+    NewsNotification,
+    NewsNotificationView,
   },
   {
     defaultNavigationOptions: {
@@ -57,9 +67,14 @@ const MainStack = createStackNavigator(
   },
 );
 
-const DrawerNavigator = createDrawerNavigator({
-  MainStack,
-});
+const DrawerNavigator = createDrawerNavigator(
+  {
+    MainStack,
+  },
+  {
+    contentComponent: Drawer,
+  },
+);
 
 const AppNavigator = createSwitchNavigator(
   {

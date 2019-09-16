@@ -27,9 +27,22 @@ import AppIcons from './_icons';
   );
 };*/
 
+export const Ico = props => {
+  return (
+    <Text
+      style={[
+        {fontFamily: 'Font Awesome 5 Free', fontSize: RF(20)},
+        props.style,
+      ]}>
+      {props.children}
+    </Text>
+  );
+};
+
 export const H1 = props => {
   return (
-    <Text style={[{fontFamily: 'Product Sans Bold'}, props.style]}>
+    <Text
+      style={[{fontFamily: 'Product Sans', fontWeight: 'bold'}, props.style]}>
       {props.children}
     </Text>
   );
@@ -37,7 +50,9 @@ export const H1 = props => {
 
 export const H2 = props => {
   return (
-    <Text style={[{fontFamily: 'Product Sans Regular'}, props.style]}>
+    <Text
+      style={[{fontFamily: 'Product Sans'}, props.style]}
+      numberOfLines={props.numberOfLines}>
       {props.children}
     </Text>
   );
@@ -151,7 +166,7 @@ export const Header = props => {
   return (
     <View
       style={{
-        marginVertical: RH(2),
+        marginVertical: RH(1),
         height: RH(6),
         width: '100%',
         flexDirection: 'row',
@@ -183,12 +198,8 @@ export const HeaderBack = props => {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-      <Touch onPress={props.openDrawer}>
-        <Image
-          style={{height: RH(3.5), width: RH(3.5)}}
-          source={AppIcons.menu}
-          resizeMode="contain"
-        />
+      <Touch onPress={props.goBack}>
+        <Ico style={{fontSize: RF(35), color: AppColors.cobalt}}>&#xf104;</Ico>
       </Touch>
       <Touch onPress={props.openProfile}>
         <PlaceholderIcon />
@@ -215,7 +226,8 @@ export class PlaceholderIcon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profilePicture: AppIcons.placeholder,
+      profilePicture:
+        'https://upload.wikimedia.org/wikipedia/commons/8/82/Linwood_Pendleton_Profile_Photograph.jpg',
     };
   }
 
@@ -235,21 +247,15 @@ export class PlaceholderIcon extends React.Component {
 
   render() {
     const {profilePicture} = this.state;
-    let imgPicture = profilePicture;
-    imgPicture == ''
-      ? (imgPicture =
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSgjwZnhSrPqOgR9kN17cZx3fsFxWKsbdtoerHMPRXLPcPgJxFt')
-      : null;
-
     return (
       <Image
         style={{
-          height: RH(5),
-          width: RH(5),
+          height: RH(4),
+          width: RH(4),
           borderRadius: RH(2.5),
           backgroundColor: '#cfcfcf',
         }}
-        source={imgPicture}
+        source={{uri: profilePicture}}
         resizeMode="cover"
       />
     );
@@ -264,7 +270,16 @@ export const LiImage = props => {
         source={props.icon}
         resizeMode="contain"
       />
-      <H2 style={styles.two}>{props.text}</H2>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <H2 style={styles.two}>{props.text}</H2>
+        <Ico>&#xf105;</Ico>
+      </View>
     </Touch>
   );
 };

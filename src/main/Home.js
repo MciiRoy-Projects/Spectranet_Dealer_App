@@ -57,10 +57,10 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   paneOne: {
     padding: RW(6),
-    height: RH(40),
+    height: RH(42),
   },
   paneTwo: {
-    marginTop: RH(1),
+    marginTop: RH(1.5),
     backgroundColor: '#fff',
     paddingVertical: RH(2),
     borderTopLeftRadius: RH(5),
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginBottom: RH(2),
   },
   grid: {
-    paddingVertical: RH(3),
+    paddingVertical: RH(2),
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#d8d8d820',
