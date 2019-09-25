@@ -40,7 +40,7 @@ export default class NewsNotification extends React.Component {
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             {List.map((el, key) => (
               <Touch
                 style={styles.grid}

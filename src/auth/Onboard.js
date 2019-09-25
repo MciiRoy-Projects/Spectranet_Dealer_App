@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, ImageBackground, StatusBar} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {H1, P, Touch} from '../partials/_components';
+import {H1, H2, P, Touch} from '../partials/_components';
 import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
 
@@ -54,7 +54,7 @@ export default class Onboard extends React.Component {
               <View style={styles.overlay} />
             </ImageBackground>
             <View style={styles.pane2}>
-              <H1 style={styles.text1}>{header1}</H1>
+              <H2 style={styles.text1}>{header1}</H2>
               <P style={styles.text2}>
                 Enables dealers to make instant communication with the
                 Spectranet sales and marketing team from the comfort of their
@@ -75,7 +75,7 @@ export default class Onboard extends React.Component {
               <View style={styles.overlay} />
             </ImageBackground>
             <View style={styles.pane2}>
-              <H1 style={styles.text1}>{header2}</H1>
+              <H2 style={styles.text1}>{header2}</H2>
               <P style={styles.text2}>
                 Know your inventory and make prompt requests to the store for
                 more in the quest to customer satisfaction.
@@ -95,7 +95,7 @@ export default class Onboard extends React.Component {
               <View style={styles.overlay} />
             </ImageBackground>
             <View style={styles.pane2}>
-              <H1 style={styles.text1}>{header3}</H1>
+              <H2 style={styles.text1}>{header3}</H2>
               <P style={styles.text2}>
                 Create additional revenue generating stream, and make more
                 profit as you expand your team selling Spectranet Devices

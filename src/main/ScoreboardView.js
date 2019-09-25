@@ -27,7 +27,7 @@ export default class ScoreboardView extends React.Component {
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             {data.map((el, i) => (
               <View key={i} style={styles.grid}>
                 <H2 style={styles.one}>{el.item}</H2>

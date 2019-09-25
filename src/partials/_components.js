@@ -19,8 +19,9 @@ import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
 import AppIcons from './_icons';
 
-let boldFont = {};
-let RegFont = {};
+let boldFont = '';
+let RegFont = '';
+let fontWeight = '';
 
 /*export const H1 = props => {
   return (
@@ -37,6 +38,8 @@ Platform.OS == 'ios'
   ? (RegFont = 'Product Sans')
   : (RegFont = 'Product Sans Regular');
 
+Platform.OS == 'ios' ? (fontWeight = 'bold') : (fontWeight = 'normal');
+
 export const Ico = props => {
   return (
     <Text
@@ -51,7 +54,7 @@ export const Ico = props => {
 
 export const H1 = props => {
   return (
-    <Text style={[{fontFamily: boldFont, fontWeight: 'bold'}, props.style]}>
+    <Text style={[{fontFamily: boldFont, fontWeight: fontWeight}, props.style]}>
       {props.children}
     </Text>
   );
@@ -221,7 +224,7 @@ export const Title = props => {
     <H1
       style={{
         color: AppColors.blue,
-        fontSize: RF(28),
+        fontSize: RF(23),
         marginVertical: RH(1),
         marginBottom: RH(2),
       }}>
@@ -294,7 +297,7 @@ export const LiImage = props => {
 
 const styles = StyleSheet.create({
   grid: {
-    paddingVertical: RH(2),
+    paddingVertical: RH(2.5),
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomColor: '#dfdfdf',

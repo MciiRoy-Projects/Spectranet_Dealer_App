@@ -25,7 +25,7 @@ export default class RequestForm extends React.Component {
 
         <View style={styles.paneTwo}>
           <H1 style={styles.textOne}>{navigation.state.params}</H1>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <TextInput style={styles.input} placeholder="Customer User ID" />
             <TextInput style={styles.input} placeholder="Customer Name" />
             <TextInput style={styles.input} placeholder="Customer Subject" />

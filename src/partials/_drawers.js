@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   two: {
     marginLeft: RW(2),
-    fontSize: RF(18),
+    fontSize: RF(17),
     color: '#fff',
   },
   icon: {

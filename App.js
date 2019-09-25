@@ -72,6 +72,7 @@ const DrawerNavigator = createDrawerNavigator(
     MainStack,
   },
   {
+    drawerWidth: '80%',
     contentComponent: Drawer,
   },
 );

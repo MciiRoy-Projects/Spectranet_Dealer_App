@@ -28,7 +28,7 @@ export default class Scoreboard extends React.Component {
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <LiImage
               icon={AppIcons.mtdSales}
               text="MTD Stock Purchase"

@@ -37,7 +37,7 @@ export default class Request extends React.Component {
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             {List.map((el, key) => (
               <Touch
                 style={styles.grid}

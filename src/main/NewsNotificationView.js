@@ -26,7 +26,7 @@ export default class NewsNotificationView extends React.Component {
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.grid}>
               <Image
                 source={{
