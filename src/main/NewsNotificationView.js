@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Image} from 'react-native';
 import {
   HeaderBack,
   WrapperMain,
-  H1,
+  P,
   H2,
   Title,
   Ico,
@@ -11,6 +11,7 @@ import {
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
+import moment from 'moment';
 
 export default class NewsNotificationView extends React.Component {
   render() {
@@ -28,34 +29,19 @@ export default class NewsNotificationView extends React.Component {
         <View style={styles.paneTwo}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.grid}>
-              <Image
-                source={{
-                  uri: 'https://images1.jiji.ng/28104136_evo_620x326.jpg',
-                }}
-                style={styles.img}
-                resizeMode="cover"
-              />
               <H2 style={styles.header}>Evo Mifi</H2>
+              <P style={styles.one}>
+                {moment(new Date()).format('MMMM DD, YYYY')}
+              </P>
             </View>
 
-            <View style={styles.grid}>
-              <H2 style={styles.two}>Sub Total</H2>
-              <H2 style={styles.three}>N20,000</H2>
-            </View>
-
-            <View style={styles.gridTwo}>
-              <H2 style={styles.two}>Shipping</H2>
-              <H2 style={styles.three}>Free Shipping</H2>
-            </View>
-
-            <View style={styles.grid}>
-              <H1 style={styles.two}>Total</H1>
-              <H1 style={styles.three}>N20,000</H1>
-            </View>
-
-            <View style={styles.gridThree}>
-              <Ico style={styles.feedbackIcon}>&#xf058;</Ico>
-              <H2 style={styles.feedback}>Order was made successfully</H2>
+            <View style={{marginTop: RH(1)}}>
+              <H2 style={styles.two}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+              </H2>
             </View>
           </ScrollView>
         </View>
@@ -80,49 +66,16 @@ const styles = StyleSheet.create({
   },
   grid: {
     paddingVertical: RH(2.3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
-  gridTwo: {
-    paddingVertical: RH(2.3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomColor: '#dfdfdf',
-    borderBottomWidth: 0.5,
-  },
-  gridThree: {
-    paddingVertical: RH(2.3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: RH(4),
-  },
-  img: {
-    height: RH(15),
-    width: RH(15),
-  },
+
   header: {
-    fontSize: RF(30),
+    fontSize: RF(23),
+    color: AppColors.cobalt,
   },
   two: {
     marginLeft: RW(2),
     fontSize: RF(18),
+    lineHeight: RF(25),
     color: AppColors.greyishBrown,
-  },
-  three: {
-    marginLeft: RW(2),
-    fontSize: RF(18),
-    color: AppColors.cobalt,
-  },
-  feedback: {
-    color: AppColors.appleGreen,
-    fontSize: RF(19),
-  },
-  feedbackIcon: {
-    color: AppColors.appleGreen,
-    fontSize: RF(30),
-    marginRight: RW(1),
   },
 });

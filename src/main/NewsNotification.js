@@ -5,6 +5,7 @@ import {
   WrapperMain,
   H1,
   H2,
+  P,
   Title,
   Card,
   Touch,
@@ -14,16 +15,13 @@ import {
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
+import moment from 'moment';
 
 const List = [
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
-  {item: 'Your Order has been successfully sent!'},
+  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
+  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
+  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
+  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
 ];
 
 export default class NewsNotification extends React.Component {
@@ -46,10 +44,10 @@ export default class NewsNotification extends React.Component {
                 style={styles.grid}
                 onPress={() => navigation.navigate('NewsNotificationView', el)}
                 key={key}>
-                <H2 style={styles.two} numberOfLines={1}>
-                  {el.item}
-                </H2>
-                <Ico>&#xf105;</Ico>
+                <P style={styles.one}>
+                  {moment(el.timestamp).format('MMMM DD, YYYY')}
+                </P>
+                <H1 style={styles.two}>{el.item}</H1>
               </Touch>
             ))}
           </ScrollView>
@@ -75,16 +73,20 @@ const styles = StyleSheet.create({
   },
   grid: {
     paddingVertical: RH(3),
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomColor: '#dfdfdf',
     borderBottomWidth: 0.5,
   },
-  two: {
-    marginLeft: RW(2),
-    fontSize: RF(18),
+  one: {
+    fontSize: RF(12),
     color: AppColors.greyishBrown,
+    paddingRight: RW(10),
+    opacity: 0.7,
+  },
+  two: {
+    fontSize: RF(18),
+    color: AppColors.cobalt,
+    paddingRight: RW(5),
   },
   icon: {
     marginLeft: RW(5),

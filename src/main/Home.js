@@ -11,6 +11,7 @@ import {
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
+import {dealerStock, dealerPerformance} from '../partials/_api';
 
 const data = [
   {item: 'Available Stock', num: 0},
@@ -18,8 +19,58 @@ const data = [
 ];
 
 export default class Home extends React.Component {
+  state = {
+    data: data,
+  };
+
+  loadStock = () => {
+    dealerStock()
+      .then(res => {
+        const {data} = this.state;
+        res = res.data;
+        if (res.success == true) {
+          res = res.data;
+          let mifi = res.mifi;
+          let cpe = res.cpe;
+
+          if (mifi == null) mifi = 0;
+          if (cpe == null) cpe = 0;
+
+          data[0].num = parseInt(mifi) + parseInt(cpe);
+          this.setState({
+            data,
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadPerformance = () => {
+    dealerPerformance()
+      .then(res => {
+        const {data} = this.state;
+        res = res.data;
+        if (res.success == true) {
+          res = res.data;
+          let last3month = res.last3month;
+
+          data[1].num = parseInt(last3month);
+          this.setState({
+            data,
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  componentDidMount() {
+    this.loadStock();
+    this.loadPerformance();
+  }
+
   render() {
     const {navigation} = this.props;
+    const {data} = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
