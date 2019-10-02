@@ -13,10 +13,8 @@ import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
 
 const data = [
-  {item: 'MTD Stock Purchase', num: 1234},
-  {item: 'Available Stock', num: 234},
-  {item: 'MTD Activations', num: 1423},
-  {item: 'Data Incentives', num: 14},
+  {item: 'Available Stock', num: 0},
+  {item: 'MTD Activations', num: 0},
 ];
 
 export default class Home extends React.Component {
@@ -61,6 +59,7 @@ const styles = StyleSheet.create({
   },
   paneTwo: {
     marginTop: RH(1.5),
+    minHeight: RH(36),
     backgroundColor: '#fff',
     paddingVertical: RH(2),
     borderTopLeftRadius: RH(5),
