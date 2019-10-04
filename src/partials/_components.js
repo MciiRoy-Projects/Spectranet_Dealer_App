@@ -135,6 +135,7 @@ export const ColoredInput = props => {
   let check = props.value;
   return (
     <TextInput
+      value={props.value}
       placeholder={props.placeholder}
       secureTextEntry={props.secure}
       autoCapitalize="none"

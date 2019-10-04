@@ -4,6 +4,7 @@ import Swiper from 'react-native-swiper';
 import {H1, H2, P, Touch} from '../partials/_components';
 import {RF, RH, RW} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
+import {getData} from '../partials/_api';
 
 const header1 = 'Instant\nCommunication';
 const header2 = 'Inventory\nManagement';
@@ -13,6 +14,21 @@ export default class Onboard extends React.Component {
   continue = () => {
     this.props.navigation.navigate('UserNavigator');
   };
+
+  checker = () => {
+    getData()
+      .then(res => {
+        if (res !== false) {
+          this.props.navigation.navigate('DrawerNavigator');
+        }
+      })
+      .catch(err => {});
+  };
+
+  componentDidMount = () => {
+    setTimeout(() => this.checker(), 5);
+  };
+
   render() {
     return (
       <View style={{flex: 1}}>

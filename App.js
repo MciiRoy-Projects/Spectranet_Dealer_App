@@ -13,6 +13,7 @@ import Request from './src/main/Request';
 import RequestForm from './src/main/RequestForm';
 import NewsNotification from './src/main/NewsNotification';
 import NewsNotificationView from './src/main/NewsNotificationView';
+import Contact from './src/main/Contact';
 
 import {Drawer} from './src/partials/_drawers';
 
@@ -59,6 +60,7 @@ const MainStack = createStackNavigator(
     RequestForm,
     NewsNotification,
     NewsNotificationView,
+    Contact,
   },
   {
     defaultNavigationOptions: {
@@ -79,8 +81,8 @@ const DrawerNavigator = createDrawerNavigator(
 
 const AppNavigator = createSwitchNavigator(
   {
-    //Onboard,
-    //UserNavigator,
+    Onboard,
+    UserNavigator,
     DrawerNavigator,
   },
   {

@@ -11,11 +11,13 @@ import {
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
-import {dealerStock, dealerPerformance} from '../partials/_api';
+import {dealerStock, dealerPerformance, dealerBalance} from '../partials/_api';
 
 const data = [
   {item: 'Available Stock', num: 0},
   {item: 'MTD Activations', num: 0},
+  {item: 'E-Toup Up', num: 0},
+  {item: 'MTD Stock Purchase', num: 0},
 ];
 
 export default class Home extends React.Component {
@@ -63,9 +65,30 @@ export default class Home extends React.Component {
       .catch(err => console.log(err));
   };
 
+  loadETopUp = () => {
+    dealerBalance()
+      .then(res => {
+        const {data} = this.state;
+
+        res = res.data;
+
+        if (res.success == true) {
+          res = res.data;
+          let amount = res.amount;
+
+          data[2].num = parseInt(amount);
+          this.setState({
+            data,
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
   componentDidMount() {
     this.loadStock();
     this.loadPerformance();
+    this.loadETopUp();
   }
 
   render() {

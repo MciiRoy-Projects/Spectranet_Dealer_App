@@ -9,7 +9,7 @@ const List = [
   {name: 'Account Summary', icon: AppIcons.home, nav: 'Home'},
   {name: 'Scoreboard', icon: AppIcons.scoreboard, nav: 'Scoreboard'},
   {name: 'Request Forms', icon: AppIcons.orders, nav: 'Request'},
-  {name: 'Key Contact Information', icon: AppIcons.news, nav: 'Home'},
+  { name: 'Key Contact Information', icon: AppIcons.news, nav: 'Contact'},
   {name: 'Promos', icon: AppIcons.promo, nav: 'Home'},
   {name: 'News and Announcement', icon: AppIcons.news, nav: 'NewsNotification'},
   {name: 'Profile Settings', icon: AppIcons.profile, nav: 'Home'},

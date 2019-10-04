@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import {
   Wrapper,
   Card,
@@ -12,14 +18,51 @@ import {
 } from '../partials/_components';
 import {RF, RW, RH} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
+import {userLogin, storeData} from '../partials/_api';
 
 export default class Login extends React.Component {
   state = {
-    ID: '',
-    pass: '',
+    ID: 'testphcaffiliate',
+    pass: '123',
+    isLoading: false,
   };
-  render() {
+
+  loginApp = () => {
     const {ID, pass} = this.state;
+    if (ID == '' || pass == '') {
+      return;
+    }
+    this.setState({isLoading: true});
+    userLogin(ID, pass)
+      .then(res => {
+        if (res == false) {
+          alert(res);
+        }
+        res = res.data;
+        if (res.length > 0) {
+          res = res[1];
+          if (res.status == true) {
+            storeData(res.msg)
+              .then(e => {
+                this.setState({isLoading: false});
+                this.props.navigation.navigate('DrawerNavigator');
+              })
+              .catch(err => {
+                this.setState({isLoading: false});
+                console.warn(err);
+              });
+          }
+        }
+      })
+      .catch(err => {
+        this.setState({isLoading: false});
+        console.warn(err);
+      });
+  };
+
+  render() {
+    const {ID, pass, isLoading} = this.state;
+
     return (
       <Wrapper>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,11 +99,22 @@ export default class Login extends React.Component {
               />
             </View>
 
-            <Button
-              text="SIGN IN"
-              style={styles.btn}
-              onPress={() => this.props.navigation.navigate('DrawerNavigator')}
-            />
+            {isLoading ? (
+              <ActivityIndicator
+                size="large"
+                color={AppColors.cobalt}
+                style={{
+                  marginTop: RH(1),
+                  marginBottom: RH(5),
+                }}
+              />
+            ) : (
+              <Button
+                text="SIGN IN"
+                style={styles.btn}
+                onPress={() => this.loginApp()}
+              />
+            )}
           </Card>
 
           {/*
