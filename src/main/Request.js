@@ -6,7 +6,6 @@ import {
   H1,
   H2,
   Title,
-  Card,
   Touch,
   LiImage,
   Ico,
@@ -44,7 +43,11 @@ export default class Request extends React.Component {
                 onPress={() => navigation.navigate(el.nav, el.name)}
                 key={key}>
                 <H2 style={styles.two}>{el.name}</H2>
-                <Ico>&#xf105;</Ico>
+                <Image
+                  source={AppIcons.li}
+                  style={{width: RF(15), height: RF(15)}}
+                  resizeMode="contain"
+                />
               </Touch>
             ))}
           </ScrollView>

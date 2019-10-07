@@ -1,6 +1,8 @@
 module.exports = {
   menu: require('../../assets/icons/menu.png'),
   home: require('../../assets/icons/home.png'),
+  back: require('../../assets/icons/back.png'),
+  li: require('../../assets/icons/li.png'),
   scoreboard: require('../../assets/icons/scoreboard.png'),
   shop: require('../../assets/icons/shop.png'),
   orders: require('../../assets/icons/shoppingList.png'),

@@ -11,13 +11,18 @@ import {
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
-import {dealerStock, dealerPerformance, dealerBalance} from '../partials/_api';
+import {
+  dealerStock,
+  dealerPerformance,
+  dealerBalance,
+  dealerStockPurchase,
+} from '../partials/_api';
 
 const data = [
-  {item: 'Available Stock', num: 0},
-  {item: 'MTD Activations', num: 0},
-  {item: 'E-Toup Up', num: 0},
-  {item: 'MTD Stock Purchase', num: 0},
+  {item: 'Available Stock', num: 0, data: []},
+  {item: 'MTD Activations', num: 0, data: []},
+  {item: 'E-Top Up', num: 0, data: []},
+  {item: 'MTD Stock Purchase', num: 0, data: []},
 ];
 
 export default class Home extends React.Component {
@@ -39,6 +44,7 @@ export default class Home extends React.Component {
           if (cpe == null) cpe = 0;
 
           data[0].num = parseInt(mifi) + parseInt(cpe);
+          data[0].data = res;
           this.setState({
             data,
           });
@@ -55,8 +61,8 @@ export default class Home extends React.Component {
         if (res.success == true) {
           res = res.data;
           let last3month = res.last3month;
-
           data[1].num = parseInt(last3month);
+          data[1].data = res;
           this.setState({
             data,
           });
@@ -69,17 +75,34 @@ export default class Home extends React.Component {
     dealerBalance()
       .then(res => {
         const {data} = this.state;
-
         res = res.data;
-
         if (res.success == true) {
           res = res.data;
           let amount = res.amount;
-
           data[2].num = parseInt(amount);
+          data[2].data = res;
           this.setState({
             data,
           });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadDealerStockPurchase = () => {
+    dealerStockPurchase()
+      .then(res => {
+        const {data} = this.state;
+        res = res.data;
+        if (res.success == true) {
+          res = res.data;
+          console.warn(res);
+          /*let amount = res.amount;
+          data[2].num = parseInt(amount);
+          data[2].data = res;
+          this.setState({
+            data,
+          });*/
         }
       })
       .catch(err => console.log(err));
@@ -89,6 +112,7 @@ export default class Home extends React.Component {
     this.loadStock();
     this.loadPerformance();
     this.loadETopUp();
+    this.loadDealerStockPurchase();
   }
 
   render() {
@@ -114,7 +138,7 @@ export default class Home extends React.Component {
               <Touch
                 key={i}
                 style={styles.grid}
-                onPress={() => navigation.navigate('ScoreboardView', el.item)}>
+                onPress={() => navigation.navigate('ScoreboardView', el)}>
                 <H2 style={styles.one}>{el.item}</H2>
                 <H1 style={styles.two}>{el.num}</H1>
               </Touch>

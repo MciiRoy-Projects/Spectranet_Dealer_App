@@ -5,7 +5,7 @@ import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
-const data = [
+let data = [
   {item: 'MTD Stock Purchase', num: 1234},
   {item: 'Available Stock', num: 234},
   {item: 'MTD Activations', num: 1423},
@@ -13,9 +13,44 @@ const data = [
 ];
 
 export default class ScoreboardView extends React.Component {
+  state = {
+    title: '',
+  };
+
+  loadData = () => {
+    data = [];
+    let obj = this.props.navigation.state.params;
+
+    if (obj.item == 'Available Stock') {
+      data.push({item: 'mifi', num: obj.data.mifi});
+      data.push({item: 'cpe', num: obj.data.cpe});
+    }
+
+    if (obj.item == 'MTD Activations') {
+      data.push({item: 'Last 3 Months', num: obj.data.last3month});
+      data.push({item: 'mtd', num: obj.data.mtd});
+      data.push({item: 'ftd', num: obj.data.ftd});
+    }
+
+    if (obj.item == 'E-Top Up') {
+      data.push({item: 'amount', num: obj.data.amount});
+    }
+
+    if (obj.item == 'MTD Stock Purchase') {
+      data.push({item: 'amount', num: obj.data.amount});
+    }
+
+    this.setState({
+      title: obj.item,
+    });
+  };
+
+  componentDidMount() {
+    this.loadData();
+  }
   render() {
     const {navigation} = this.props;
-    const title = navigation.state.params;
+    const {title} = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -30,7 +65,7 @@ export default class ScoreboardView extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             {data.map((el, i) => (
               <View key={i} style={styles.grid}>
-                <H2 style={styles.one}>{el.item}</H2>
+                <H2 style={styles.one}>{el.item.toUpperCase()}</H2>
                 <H1 style={styles.two}>{el.num}</H1>
               </View>
             ))}

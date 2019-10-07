@@ -211,7 +211,11 @@ export const HeaderBack = props => {
         alignItems: 'center',
       }}>
       <Touch onPress={props.goBack}>
-        <Ico style={{fontSize: RF(35), color: AppColors.cobalt}}>&#xf104;</Ico>
+        <Image
+          source={AppIcons.back}
+          style={{width: RF(27), height: RF(27)}}
+          resizeMode="contain"
+        />
       </Touch>
       <Touch onPress={props.openProfile}>
         <PlaceholderIcon />
@@ -290,7 +294,11 @@ export const LiImage = props => {
           alignItems: 'center',
         }}>
         <H2 style={styles.two}>{props.text}</H2>
-        <Ico>&#xf105;</Ico>
+        <Image
+          source={AppIcons.li}
+          style={{width: RF(15), height: RF(15)}}
+          resizeMode="contain"
+        />
       </View>
     </Touch>
   );
