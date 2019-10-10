@@ -18,12 +18,14 @@ import {
 } from '../partials/_components';
 import {RF, RW, RH} from '../lib/_sizes';
 import AppColors from '../lib/_colors';
-import {userLogin, storeData} from '../partials/_api';
+import {userLogin, storeData, Snack} from '../partials/_api';
 
 export default class Login extends React.Component {
   state = {
-    ID: 'testphcaffiliate',
-    pass: '123',
+    //ID: 'testcoreaffiliate ',
+    //pass: '1234',
+    ID: '',
+    pass: '',
     isLoading: false,
   };
 
@@ -35,28 +37,36 @@ export default class Login extends React.Component {
     this.setState({isLoading: true});
     userLogin(ID, pass)
       .then(res => {
-        if (res == false) {
-          alert(res);
-        }
+        let userDetails = [];
         res = res.data;
-        if (res.length > 0) {
-          res = res[1];
-          if (res.status == true) {
-            storeData(res.msg)
+
+        if (res.length == 4) {
+          res.forEach((el, i) => {
+            if (el.name == 'userDetails') {
+              userDetails = el.msg;
+            }
+          });
+          if (userDetails.length > 0) {
+            storeData('userDetails', userDetails)
               .then(e => {
                 this.setState({isLoading: false});
                 this.props.navigation.navigate('DrawerNavigator');
               })
               .catch(err => {
                 this.setState({isLoading: false});
-                console.warn(err);
+                console.log(err);
               });
+          } else {
+            Snack('Error Logging. Please try again');
           }
+        } else {
+          this.setState({isLoading: false});
+          Snack('Error Logging. Please try again');
         }
       })
       .catch(err => {
         this.setState({isLoading: false});
-        console.warn(err);
+        Snack('Error Logging. Please try again');
       });
   };
 

@@ -15,11 +15,11 @@ import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
 const List = [
-  {name: 'Customer Complaints Form', nav: 'RequestForm'},
-  {name: 'Dealer Complaints Form', nav: 'RequestForm'},
+  {name: 'Customer Complaint Form', nav: 'RequestForm'},
+  {name: 'Dealer Complaint Form', nav: 'RequestForm'},
   {name: 'Stock Purchase Form', nav: 'RequestForm'},
   {name: 'Sales Lead Form', nav: 'RequestForm'},
-  {name: 'Customer Reactivation Form', nav: 'RequestForm'},
+  {name: 'Feedback Form', nav: 'RequestForm'},
 ];
 
 export default class Request extends React.Component {
@@ -32,7 +32,7 @@ export default class Request extends React.Component {
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Request Form</Title>
+          <Title> Request Forms</Title>
         </View>
 
         <View style={styles.paneTwo}>

@@ -4,6 +4,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 
+import Splash from './src/auth/Splash';
 import Onboard from './src/auth/Onboard';
 import Login from './src/auth/Login';
 import Home from './src/main/Home';
@@ -14,6 +15,9 @@ import RequestForm from './src/main/RequestForm';
 import NewsNotification from './src/main/NewsNotification';
 import NewsNotificationView from './src/main/NewsNotificationView';
 import Contact from './src/main/Contact';
+import Promo from './src/main/Promo';
+import PromoView from './src/main/PromoView';
+import Profile from './src/main/Profile';
 
 import {Drawer} from './src/partials/_drawers';
 
@@ -54,6 +58,9 @@ const UserNavigator = createStackNavigator(
 const MainStack = createStackNavigator(
   {
     Home,
+    Profile,
+    Promo,
+    PromoView,
     Scoreboard,
     ScoreboardView,
     Request,
@@ -74,13 +81,14 @@ const DrawerNavigator = createDrawerNavigator(
     MainStack,
   },
   {
-    drawerWidth: '80%',
+    drawerWidth: '75%',
     contentComponent: Drawer,
   },
 );
 
 const AppNavigator = createSwitchNavigator(
   {
+    Splash,
     Onboard,
     UserNavigator,
     DrawerNavigator,

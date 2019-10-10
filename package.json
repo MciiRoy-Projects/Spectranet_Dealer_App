@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "andy": "react-native run-android",
-    "apk-release": "react-native run-android --variant=release",
+    "release-andy": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "clean": "cd android && gradlew clean",
     "test": "jest",
@@ -21,6 +21,7 @@
     "react-native-modal-datetime-picker": "^7.5.0",
     "react-native-pure-chart": "^0.0.24",
     "react-native-reanimated": "^1.2.0",
+    "react-native-snackbar": "^2.0.2",
     "react-native-swiper": "^1.5.14",
     "react-navigation": "^4.0.0",
     "react-navigation-drawer": "^2.1.2",

@@ -224,6 +224,28 @@ export const HeaderBack = props => {
   );
 };
 
+export const HeaderBackNoPic = props => {
+  return (
+    <View
+      style={{
+        marginVertical: RH(1),
+        height: RH(6),
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+      <Touch onPress={props.goBack}>
+        <Image
+          source={AppIcons.back}
+          style={{width: RF(27), height: RF(27)}}
+          resizeMode="contain"
+        />
+      </Touch>
+    </View>
+  );
+};
+
 export const Title = props => {
   return (
     <H1
@@ -242,8 +264,8 @@ export class PlaceholderIcon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profilePicture:
-        'https://upload.wikimedia.org/wikipedia/commons/8/82/Linwood_Pendleton_Profile_Photograph.jpg',
+      //profilePicture:'https://upload.wikimedia.org/wikipedia/commons/8/82/Linwood_Pendleton_Profile_Photograph.jpg',
+      profilePicture: AppIcons.placeholder,
     };
   }
 
@@ -271,7 +293,7 @@ export class PlaceholderIcon extends React.Component {
           borderRadius: RH(2.5),
           backgroundColor: '#cfcfcf',
         }}
-        source={{uri: profilePicture}}
+        source={profilePicture}
         resizeMode="cover"
       />
     );

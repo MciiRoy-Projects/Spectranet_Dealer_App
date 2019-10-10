@@ -10,9 +10,17 @@ import {
   Touch,
   LiImage,
 } from '../partials/_components';
+
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
+
+const data = [
+  {item: 'Available Stock', num: 0, data: [], code: 'available_stock'},
+  {item: 'MTD Activations', num: 0, data: [], code: 'mtd_activations'},
+  {item: 'E-Top Up', num: 0, data: [], code: 'e_top_up'},
+  {item: 'MTD Stock Purchase', num: 0, data: [], code: 'mtd_stock_purchase'},
+];
 
 export default class Scoreboard extends React.Component {
   render() {
@@ -29,35 +37,14 @@ export default class Scoreboard extends React.Component {
 
         <View style={styles.paneTwo}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <LiImage
-              icon={AppIcons.mtdSales}
-              text="MTD Stock Purchase"
-              onPress={() =>
-                navigation.navigate('ScoreboardView', 'MTD Stock Purchase')
-              }
-            />
-
-            <LiImage
-              icon={AppIcons.mtdSales}
-              text="Available Stock"
-              onPress={() =>
-                navigation.navigate('ScoreboardView', 'Available Stock')
-              }
-            />
-            <LiImage
-              icon={AppIcons.mtdSales}
-              text="MTD Activations"
-              onPress={() =>
-                navigation.navigate('ScoreboardView', 'MTD Activations')
-              }
-            />
-            <LiImage
-              icon={AppIcons.incentives}
-              text="Data Inventive"
-              onPress={() =>
-                navigation.navigate('ScoreboardView', 'Data Inventive')
-              }
-            />
+            {data.map((el, i) => (
+              <LiImage
+                key={i}
+                icon={AppIcons.mtdSales}
+                text={el.item}
+                onPress={() => navigation.navigate('ScoreboardView', el)}
+              />
+            ))}
           </ScrollView>
         </View>
       </WrapperMain>

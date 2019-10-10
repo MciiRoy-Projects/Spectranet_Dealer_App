@@ -9,10 +9,9 @@ import {
   Touch,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
-import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import moment from 'moment';
 import {keyContact} from '../partials/_api';
+import {Linking} from 'react-native';
 
 export default class Contact extends React.Component {
   state = {
@@ -23,6 +22,7 @@ export default class Contact extends React.Component {
   loadData = () => {
     keyContact()
       .then(res => {
+        alert(res);
         res = res.data;
         if (res.success == true)
           this.setState({
@@ -74,18 +74,20 @@ export default class Contact extends React.Component {
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>tsmname</P>
+                <P style={styles.one}>Territory Relationship Manager Name</P>
                 <H1 style={styles.two}>{el.tsmname}</H1>
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>tsmemail</P>
+                <P style={styles.one}>Territory Relationship Manager Email</P>
                 <H1 style={styles.two}>{el.tsmemail}</H1>
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>tsmphone</P>
-                <H1 style={styles.two}>{el.tsmphone}</H1>
+                <P style={styles.one}>Territory Relationship Manager Phone</P>
+                <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
+                  <H1 style={styles.two}>{el.tsmphone}</H1>
+                </Touch>
               </View>
             </ScrollView>
           )}
