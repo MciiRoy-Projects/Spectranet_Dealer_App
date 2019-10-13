@@ -21,6 +21,7 @@ import {
   idCheck,
 } from '../partials/_api';
 import moment from 'moment';
+import numeral from 'numeral';
 import {Chart} from '../partials/_charts';
 
 const data = [
@@ -182,7 +183,7 @@ export default class Home extends React.Component {
                   {isNaN(el.num) || el.num == 0 ? (
                     <H1 style={styles.two}>0</H1>
                   ) : (
-                    <H1 style={styles.two}>{el.num}</H1>
+                    <H1 style={styles.two}>{numeral(el.num).format(0, 0)}</H1>
                   )}
                 </Touch>
               ))}

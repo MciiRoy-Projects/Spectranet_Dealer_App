@@ -65,13 +65,18 @@ export const dealerStockPurchase = async userId => {
   return res;
 };
 
-export const keyContact = async () => {
+export const keyContact = async userId => {
   const res = await axios.get(`${endPoint}/fetchdealer/${userId}`, {
     headers: {
       Authorization: token,
     },
   });
   return res;
+};
+
+export const requestForm = async fd => {
+  const result = await axios.post(`${endPoint}/newrequest`, fd);
+  return result;
 };
 
 export const storeData = async (key, data) => {
@@ -122,8 +127,6 @@ export const idCheck = (theArray, theValue) => {
   }
   return res;
 };
-
-//clearAll();
 
 export const Snack = async msg => {
   Snackbar.show({

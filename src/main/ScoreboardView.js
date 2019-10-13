@@ -3,6 +3,7 @@ import {View, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
 import {HeaderBack, WrapperMain, Title, H2, H1} from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
+import numeral from 'numeral';
 import {
   Snack,
   getData,
@@ -186,7 +187,7 @@ export default class ScoreboardView extends React.Component {
                   {isNaN(el.num) || el.num == null ? (
                     <H1 style={styles.two}> 0 </H1>
                   ) : (
-                    <H1 style={styles.two}>{el.num}</H1>
+                    <H1 style={styles.two}>{numeral(el.num).format(0, 0)}</H1>
                   )}
                 </View>
               ))}

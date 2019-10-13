@@ -10,19 +10,33 @@ import {
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
-import {keyContact} from '../partials/_api';
+import {keyContact, getData, idCheck} from '../partials/_api';
 import {Linking} from 'react-native';
 
 export default class Contact extends React.Component {
   state = {
     el: {},
     isLoading: true,
+    userId: '',
   };
 
-  loadData = () => {
-    keyContact()
+  init() {
+    getData('userDetails').then(res => {
+      if (res) {
+        res = JSON.parse(res);
+        let userId = idCheck(res, 'userId');
+        this.loadData(userId);
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.init();
+  }
+
+  loadData = userId => {
+    keyContact(userId)
       .then(res => {
-        alert(res);
         res = res.data;
         if (res.success == true)
           this.setState({
@@ -31,10 +45,6 @@ export default class Contact extends React.Component {
       })
       .then(() => this.setState({isLoading: false}));
   };
-
-  componentDidMount() {
-    this.loadData();
-  }
 
   render() {
     const {navigation} = this.props;

@@ -14,5 +14,5 @@ module.exports = {
   logout: require('../../assets/icons/logout.png'),
   cartB: require('../../assets/icons/cartB.png'),
   cartO: require('../../assets/icons/cartO.png'),
-  placeholder: require('../../assets/icons/placeholder.jpg'),
+  placeholder: require('../../assets/icons/placeholder.jpeg'),
 };

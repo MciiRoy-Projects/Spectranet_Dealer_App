@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "andy": "react-native run-android",
+    "build-andy": "cd android && ./gradlew  bundleRelease",
     "release-andy": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "clean": "cd android && gradlew clean",
@@ -15,6 +16,7 @@
     "@react-native-community/async-storage": "^1.6.1",
     "axios": "^0.19.0",
     "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-gesture-handler": "^1.4.1",
