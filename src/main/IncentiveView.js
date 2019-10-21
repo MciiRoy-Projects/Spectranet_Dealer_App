@@ -9,27 +9,21 @@ import {
   Card,
   Touch,
   LiImage,
+  HeaderBack,
 } from '../partials/_components';
 
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
-const data = [
-  {item: 'Available Stock', num: 0, data: [], code: 'available_stock'},
-  {item: 'MTD Activations', num: 0, data: [], code: 'mtd_activations'},
-  {item: 'E-Top Up', num: 0, data: [], code: 'e_top_up'},
-  {item: 'MTD Stock Purchase', num: 0, data: [], code: 'mtd_stock_purchase'},
-];
-
-export default class Scoreboard extends React.Component {
+export default class IncentiveView extends React.Component {
   render() {
     const {navigation} = this.props;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
-          <Header
-            openDrawer={() => navigation.openDrawer()}
+          <HeaderBack
+            goBack={() => navigation.goBack()}
             openProfile={() => navigation.navigate('Profile')}
           />
           <Title> Scoreboard</Title>
@@ -37,18 +31,22 @@ export default class Scoreboard extends React.Component {
 
         <View style={styles.paneTwo}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {data.map((el, i) => (
-              <LiImage
-                key={i}
-                icon={AppIcons.mtdSales}
-                text={el.item}
-                onPress={() => navigation.navigate('ScoreboardView', el)}
-              />
-            ))}
             <LiImage
               icon={AppIcons.mtdSales}
-              text="Incentives"
-              onPress={() => navigation.navigate('IncentiveView')}
+              text="Dealer"
+              onPress={() => navigation.navigate('ScoreboardView', el)}
+            />
+
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="Franchise"
+              onPress={() => navigation.navigate('ScoreboardView', el)}
+            />
+
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="Sheet 001"
+              onPress={() => navigation.navigate('ScoreboardView', el)}
             />
           </ScrollView>
         </View>

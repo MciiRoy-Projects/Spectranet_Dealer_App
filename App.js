@@ -10,6 +10,7 @@ import Login from './src/auth/Login';
 import Home from './src/main/Home';
 import Scoreboard from './src/main/Scoreboard';
 import ScoreboardView from './src/main/ScoreboardView';
+import IncentiveView from './src/main/IncentiveView';
 import Request from './src/main/Request';
 import RequestForm from './src/main/RequestForm';
 import NewsNotification from './src/main/NewsNotification';
@@ -57,12 +58,13 @@ const UserNavigator = createStackNavigator(
 
 const MainStack = createStackNavigator(
   {
-    Home,
+    /*Home,
     Profile,
     Promo,
-    PromoView,
+    PromoView,*/
     Scoreboard,
     ScoreboardView,
+    IncentiveView,
     Request,
     RequestForm,
     NewsNotification,

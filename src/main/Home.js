@@ -8,6 +8,7 @@ import {
   Title,
   Card,
   Touch,
+  P,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
@@ -24,6 +25,8 @@ import moment from 'moment';
 import numeral from 'numeral';
 import {Chart} from '../partials/_charts';
 
+const text = `Your device stock has reached the minimum inventory level of "available stock" ….. Get more device billed to achieve your activation targets.\nHappy selling.`;
+
 const data = [
   {item: 'Available Stock', num: 0, data: [], code: 'available_stock'},
   {item: 'MTD Activations', num: 0, data: [], code: 'mtd_activations'},
@@ -36,7 +39,9 @@ export default class Home extends React.Component {
     data: data,
     today: new Date(),
     refreshing: false,
+    showInfo: false,
   };
+
   init() {
     getData('userDetails').then(res => {
       if (res) {
@@ -49,6 +54,10 @@ export default class Home extends React.Component {
       }
     });
   }
+
+  hideInfo = () => {
+    this.setState({showInfo: false});
+  };
 
   loadStock = userId => {
     dealerStock(userId)
@@ -67,9 +76,11 @@ export default class Home extends React.Component {
 
           data[0].num = parseInt(mifi) + parseInt(cpe);
           data[0].data = res;
+
           this.setState({
             data,
             refreshing: false,
+            showInfo: data[0].num < 6 ? true : false,
           });
         }
       })
@@ -134,6 +145,8 @@ export default class Home extends React.Component {
       .catch(err => console.log(err));
   };
 
+  targetChecker = () => {};
+
   onRefresh = () => {
     this.setState({refreshing: true});
     this.init();
@@ -145,7 +158,7 @@ export default class Home extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {data, today, refreshing} = this.state;
+    const {data, today, refreshing, showInfo} = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -190,6 +203,25 @@ export default class Home extends React.Component {
             </View>
           </ScrollView>
         </ScrollView>
+
+        {showInfo ? (
+          <View style={styles.blackscreen}>
+            <View style={styles.wrap}>
+              <H1
+                style={{
+                  fontSize: RF(17),
+                  color: AppColors.cobalt,
+                  marginBottom: RH(1),
+                }}>
+                Dear Partner,
+              </H1>
+              <P style={styles.textWrap}>{text}</P>
+              <Touch style={styles.btn} onPress={this.hideInfo}>
+                <H1 style={{color: '#fff', fontSize: RF(15)}}>Close</H1>
+              </Touch>
+            </View>
+          </View>
+        ) : null}
       </WrapperMain>
     );
   }
@@ -237,5 +269,36 @@ const styles = StyleSheet.create({
     fontSize: RF(18),
     color: AppColors.cobalt,
     textAlign: 'right',
+  },
+  blackscreen: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#0003',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  wrap: {
+    backgroundColor: '#fff',
+    marginHorizontal: RW(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: RH(2),
+    padding: RW(10),
+  },
+  btn: {
+    backgroundColor: AppColors.cobalt,
+    padding: RH(2),
+    paddingHorizontal: RW(10),
+    borderRadius: RH(1),
+  },
+  textWrap: {
+    color: AppColors.cobalt,
+    paddingBottom: RH(2),
+    textAlign: 'center',
+    fontSize: RF(16),
+    lineHeight: RF(25),
   },
 });

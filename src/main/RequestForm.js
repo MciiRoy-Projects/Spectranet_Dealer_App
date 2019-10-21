@@ -16,6 +16,7 @@ export default class RequestForm extends React.Component {
   state = {
     name: '',
     userId: '',
+    type: '',
     subject: '',
     message: '',
   };
@@ -33,8 +34,8 @@ export default class RequestForm extends React.Component {
   }
 
   submit = () => {
-    const {userId, email, name, subject, message} = this.state;
-    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}`;
+    const {userId, email, name, subject, type, message} = this.state;
+    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}`;
   };
 
   componentDidMount() {
