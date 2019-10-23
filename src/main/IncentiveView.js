@@ -34,19 +34,21 @@ export default class IncentiveView extends React.Component {
             <LiImage
               icon={AppIcons.mtdSales}
               text="Dealer"
-              onPress={() => navigation.navigate('ScoreboardView', el)}
+              onPress={() => navigation.navigate('IncentiveHtml', 'Dealer')}
             />
 
             <LiImage
               icon={AppIcons.mtdSales}
               text="Franchise"
-              onPress={() => navigation.navigate('ScoreboardView', el)}
+              onPress={() => navigation.navigate('IncentiveHtml', 'Franchise')}
             />
 
             <LiImage
               icon={AppIcons.mtdSales}
-              text="Sheet 001"
-              onPress={() => navigation.navigate('ScoreboardView', el)}
+              text="Super Dealer"
+              onPress={() =>
+                navigation.navigate('IncentiveHtml', 'Super Dealer')
+              }
             />
           </ScrollView>
         </View>

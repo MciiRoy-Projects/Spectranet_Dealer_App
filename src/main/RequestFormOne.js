@@ -17,7 +17,7 @@ import {
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import {getData, idCheck, requestForm, Snack} from '../partials/_api';
+import {getData, idCheck, Snack, requestForm} from '../partials/_api';
 
 let RegFont = '';
 Platform.OS == 'ios'
@@ -26,50 +26,56 @@ Platform.OS == 'ios'
 
 Platform.OS == 'ios' ? (fontWeight = 'bold') : (fontWeight = 'normal');
 
-export default class RequestForm extends React.Component {
+export default class RequestFormOne extends React.Component {
   state = {
     name: '',
     userId: '',
     type: '',
+    customerId: '',
+    customerName: '',
     subject: '',
     message: '',
     isLoading: false,
   };
 
   init() {
+    const {navigation} = this.props;
     getData('userDetails').then(res => {
       if (res) {
         res = JSON.parse(res);
         let userId = idCheck(res, 'userId');
         let email = idCheck(res, 'email');
         let name = `${idCheck(res, 'firstName')}`;
-        this.setState({userId, email, name});
-        this.setState({
-          userId,
-          email,
-          name,
-          type: this.props.navigation.state.params,
-        });
+        this.setState({userId, email, name, type: navigation.state.params});
       }
     });
   }
 
   submit = () => {
-    const {userId, email, name, subject, type, message} = this.state;
+    const {
+      userId,
+      email,
+      name,
+      subject,
+      type,
+      message,
+      customerId,
+      customerName,
+    } = this.state;
+
     if (
       userId == '' ||
       email == '' ||
       name == '' ||
       subject == '' ||
       message == '' ||
-      type == ''
+      customerId == ''
     ) {
       Snack('Fields with * are required');
       return;
     }
-
     this.setState({isLoading: true});
-    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}`;
+    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}&customerId=${customerId}&customerName=${customerName}`;
     requestForm(fd)
       .then(res => {
         if (res.data.status == true) {
@@ -87,7 +93,15 @@ export default class RequestForm extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {userId, subject, name, message, isLoading} = this.state;
+    const {
+      userId,
+      subject,
+      name,
+      message,
+      customerId,
+      customerName,
+      isLoading,
+    } = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -103,7 +117,7 @@ export default class RequestForm extends React.Component {
             <TextInput
               value={userId}
               style={styles.input2}
-              placeholder="Dealer ID"
+              placeholder="Dealer User ID"
               editable={false}
             />
             <TextInput
@@ -111,6 +125,18 @@ export default class RequestForm extends React.Component {
               style={styles.input2}
               placeholder="Dealer Name"
               editable={false}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Customer ID"
+              value={customerId}
+              onChangeText={customerId => this.setState({customerId})}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Customer Name"
+              value={customerName}
+              onChangeText={customerName => this.setState({customerName})}
             />
             <TextInput
               style={styles.input}

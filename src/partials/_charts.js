@@ -13,8 +13,8 @@ import {monthlyPerformance, getData, idCheck, Snack} from './_api';
 import {H1, P, H2} from './_components';
 
 function minChartHeight(v) {
-  if (v < 25) {
-    v = 40 + v;
+  if (v < 50) {
+    v = 30 + v;
   }
   return v;
 }
@@ -22,7 +22,6 @@ function minChartHeight(v) {
 export class Chart extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       barWidth: 30,
       chartData: [],
@@ -61,6 +60,7 @@ export class Chart extends React.Component {
   };
 
   loadChart = data => {
+    let maxHeight = RH(48) - RH(3);
     var sum = 0;
     let barWidth;
     let number = data.length;
@@ -79,7 +79,7 @@ export class Chart extends React.Component {
 
     this.setState({
       barWidth: barWidth,
-      maxHeight: RH(48) - RH(3),
+      maxHeight,
       chartData: data,
       chartSum: sum,
     });

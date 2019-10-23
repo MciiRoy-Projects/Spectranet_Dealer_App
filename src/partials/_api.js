@@ -75,7 +75,10 @@ export const keyContact = async userId => {
 };
 
 export const requestForm = async fd => {
-  const result = await axios.post(`${endPoint}/newrequest`, fd);
+  const result = await axios.post(
+    `https://mobileapp1.spectranet.com.ng/api/sendMailDealerApp`,
+    fd,
+  );
   return result;
 };
 

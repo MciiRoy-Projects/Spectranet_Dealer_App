@@ -11,8 +11,11 @@ import Home from './src/main/Home';
 import Scoreboard from './src/main/Scoreboard';
 import ScoreboardView from './src/main/ScoreboardView';
 import IncentiveView from './src/main/IncentiveView';
+import IncentiveHtml from './src/main/IncentiveHtml';
 import Request from './src/main/Request';
 import RequestForm from './src/main/RequestForm';
+import RequestFormOne from './src/main/RequestFormOne';
+import RequestFormTwo from './src/main/RequestFormTwo';
 import NewsNotification from './src/main/NewsNotification';
 import NewsNotificationView from './src/main/NewsNotificationView';
 import Contact from './src/main/Contact';
@@ -58,15 +61,18 @@ const UserNavigator = createStackNavigator(
 
 const MainStack = createStackNavigator(
   {
-    /*Home,
+    Home,
     Profile,
     Promo,
-    PromoView,*/
+    PromoView,
     Scoreboard,
     ScoreboardView,
     IncentiveView,
+    IncentiveHtml,
     Request,
     RequestForm,
+    RequestFormOne,
+    RequestFormTwo,
     NewsNotification,
     NewsNotificationView,
     Contact,

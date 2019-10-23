@@ -15,9 +15,9 @@ import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
 const List = [
-  {name: 'Customer Complaint Form', nav: 'RequestForm'},
+  {name: 'Customer Complaint Form', nav: 'RequestFormOne'},
   {name: 'Dealer Complaint Form', nav: 'RequestForm'},
-  {name: 'Stock Purchase Form', nav: 'RequestForm'},
+  {name: 'Stock Purchase Form', nav: 'RequestFormTwo'},
   {name: 'Sales Lead Form', nav: 'RequestForm'},
   {name: 'Feedback Form', nav: 'RequestForm'},
 ];

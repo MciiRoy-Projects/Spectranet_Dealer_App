@@ -13,11 +13,18 @@ import {
   H1,
   Button,
   HeaderBack,
+  H2,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import {getData, idCheck, requestForm, Snack} from '../partials/_api';
+import {
+  getData,
+  idCheck,
+  requestForm,
+  keyContact,
+  Snack,
+} from '../partials/_api';
 
 let RegFont = '';
 Platform.OS == 'ios'
@@ -26,13 +33,17 @@ Platform.OS == 'ios'
 
 Platform.OS == 'ios' ? (fontWeight = 'bold') : (fontWeight = 'normal');
 
-export default class RequestForm extends React.Component {
+export default class RequestFormTwo extends React.Component {
   state = {
     name: '',
     userId: '',
     type: '',
+    product: '',
+    quantity: '',
+    tsm: '',
     subject: '',
     message: '',
+    isLoadingBg: true,
     isLoading: false,
   };
 
@@ -43,19 +54,44 @@ export default class RequestForm extends React.Component {
         let userId = idCheck(res, 'userId');
         let email = idCheck(res, 'email');
         let name = `${idCheck(res, 'firstName')}`;
-        this.setState({userId, email, name});
         this.setState({
           userId,
           email,
           name,
           type: this.props.navigation.state.params,
         });
+        this.getTsm(userId);
       }
     });
   }
 
+  getTsm = userId => {
+    keyContact(userId)
+      .then(res => {
+        res = res.data;
+        if (res.success == true) {
+          this.setState({
+            tsm: res.data.tsmname,
+          });
+          this.setState({isLoadingBg: false});
+        }
+      })
+      .catch(() => Snack('Connection Error. Please try again later'));
+  };
+
   submit = () => {
-    const {userId, email, name, subject, type, message} = this.state;
+    const {
+      userId,
+      email,
+      name,
+      subject,
+      type,
+      message,
+      product,
+      quantity,
+      tsm,
+    } = this.state;
+
     if (
       userId == '' ||
       email == '' ||
@@ -69,7 +105,7 @@ export default class RequestForm extends React.Component {
     }
 
     this.setState({isLoading: true});
-    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}`;
+    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}&quantity=${quantity}&product=${product}&tsm=${tsm}`;
     requestForm(fd)
       .then(res => {
         if (res.data.status == true) {
@@ -87,7 +123,17 @@ export default class RequestForm extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {userId, subject, name, message, isLoading} = this.state;
+    const {
+      userId,
+      subject,
+      name,
+      message,
+      product,
+      quantity,
+      tsm,
+      isLoadingBg,
+      isLoading,
+    } = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -103,7 +149,7 @@ export default class RequestForm extends React.Component {
             <TextInput
               value={userId}
               style={styles.input2}
-              placeholder="Dealer ID"
+              placeholder="Dealer User ID"
               editable={false}
             />
             <TextInput
@@ -111,6 +157,25 @@ export default class RequestForm extends React.Component {
               style={styles.input2}
               placeholder="Dealer Name"
               editable={false}
+            />
+            <TextInput
+              value={tsm}
+              style={styles.input2}
+              placeholder="tsm"
+              editable={false}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Product"
+              value={product}
+              onChangeText={product => this.setState({product})}
+            />
+            <TextInput
+              style={styles.input}
+              keyboardType="number-pad"
+              placeholder="Quantity"
+              value={quantity}
+              onChangeText={quantity => this.setState({quantity})}
             />
             <TextInput
               style={styles.input}
@@ -138,6 +203,39 @@ export default class RequestForm extends React.Component {
             )}
           </ScrollView>
         </View>
+
+        {isLoadingBg ? (
+          <View
+            style={{
+              height: RH(100),
+              width: RW(100),
+              backgroundColor: '#00000095',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: AppColors.cobalt,
+                marginBottom: RH(5),
+                padding: RH(2),
+                width: RW(80),
+              }}>
+              <H2
+                style={{
+                  fontSize: RF(20),
+                  color: '#fff',
+                  textAlign: 'center',
+                  marginBottom: RH(4),
+                }}>
+                Fetching {'\n'}Territory Relationship{'\n'}Manager Details
+              </H2>
+              <ActivityIndicator size="large" color="#fff" />
+            </View>
+          </View>
+        ) : null}
       </WrapperMain>
     );
   }
