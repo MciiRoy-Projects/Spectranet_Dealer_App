@@ -55,7 +55,7 @@ export class Chart extends React.Component {
           this.loadChart(res.data);
         }
       })
-      .catch(err => alert('Error Loading Data'))
+      .catch(err => Snack('Connection Error. Please try again later'))
       .then(() => this.setState({isLoading: false}));
   };
 

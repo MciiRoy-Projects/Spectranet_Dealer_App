@@ -179,7 +179,7 @@ export default class RequestFormTwo extends React.Component {
             />
             <TextInput
               style={styles.input}
-              placeholder="Complaint Subject"
+              placeholder="Subject"
               value={subject}
               onChangeText={subject => this.setState({subject})}
             />

@@ -40,6 +40,7 @@ export default class Home extends React.Component {
     today: new Date(),
     refreshing: false,
     showInfo: false,
+    loadChart: false,
   };
 
   init() {
@@ -51,6 +52,7 @@ export default class Home extends React.Component {
         this.loadPerformance(userId);
         this.loadETopUp(userId);
         this.loadDealerStockPurchase(userId);
+        this.setState({loadChart: true});
       }
     });
   }
@@ -84,7 +86,8 @@ export default class Home extends React.Component {
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .then(() => this.setState({refreshing: false}));
   };
 
   loadPerformance = userId => {
@@ -148,7 +151,7 @@ export default class Home extends React.Component {
   targetChecker = () => {};
 
   onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({refreshing: true, loadChart: false});
     this.init();
   };
 
@@ -158,7 +161,7 @@ export default class Home extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {data, today, refreshing, showInfo} = this.state;
+    const {data, today, refreshing, showInfo, loadChart} = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -177,7 +180,7 @@ export default class Home extends React.Component {
             />
           }>
           <Card style={styles.paneOne}>
-            <Chart />
+            {loadChart ? <Chart /> : null}
             <H1 style={styles.label}>
               Sales History ({moment(today).format('YYYY')})
             </H1>

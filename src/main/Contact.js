@@ -10,12 +10,19 @@ import {
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
-import {keyContact, getData, idCheck} from '../partials/_api';
+import {keyContact, getData, idCheck, Snack} from '../partials/_api';
 import {Linking} from 'react-native';
 
 export default class Contact extends React.Component {
   state = {
-    el: {},
+    el: {
+      dealercode: 'Null',
+      dealername: 'Null',
+      category: 'Null',
+      tsmemail: 'Null',
+      tsmname: 'Null',
+      tsmphone: 'Null',
+    },
     isLoading: true,
     userId: '',
   };
@@ -43,6 +50,7 @@ export default class Contact extends React.Component {
             el: res.data,
           });
       })
+      .catch(err => Snack('Connection Error. Please try again later.'))
       .then(() => this.setState({isLoading: false}));
   };
 
@@ -84,17 +92,17 @@ export default class Contact extends React.Component {
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>Territory Relationship Manager Name</P>
+                <P style={styles.one}>Territory Sales Manager Name</P>
                 <H1 style={styles.two}>{el.tsmname}</H1>
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>Territory Relationship Manager Email</P>
+                <P style={styles.one}>Territory Sales Manager Email</P>
                 <H1 style={styles.two}>{el.tsmemail}</H1>
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>Territory Relationship Manager Phone</P>
+                <P style={styles.one}>Territory Sales Manager Phone</P>
                 <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
                   <H1 style={styles.two}>{el.tsmphone}</H1>
                 </Touch>
