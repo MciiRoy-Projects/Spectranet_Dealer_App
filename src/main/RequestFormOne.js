@@ -13,11 +13,34 @@ import {
   H1,
   Button,
   HeaderBack,
+  Touch,
+  H2,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 import {getData, idCheck, Snack, requestForm} from '../partials/_api';
+const subjects = [
+  'Recharge Redirect Page',
+  'Slow Internet Speed',
+  'Connected But Not Browsing',
+  'Device Not Working',
+  "Can't Recharge - RCV",
+  'Complaint Not Receiving Bill',
+  'Complaint On Payment',
+  'Complaint On Refund',
+  'Not Receiving Registration Validation E-Mail',
+  'Balance/Billed or Unbilled Bandwidth Query',
+  'Network Coverage Area',
+  'Payment Options',
+  'Service Suspension/ Reactivation',
+  'Bill/Usage Details Request',
+  'Change In Customer Details',
+  'Service Activation',
+  'Duplicate Bill Request',
+  'Itemized - Printed Bill',
+  'Others',
+];
 
 let RegFont = '';
 Platform.OS == 'ios'
@@ -33,9 +56,11 @@ export default class RequestFormOne extends React.Component {
     type: '',
     customerId: '',
     customerName: '',
-    subject: '',
+    subject: '* Choose Subject',
     message: '',
     isLoading: false,
+    isPopup: false,
+    isSubject: false,
   };
 
   init() {
@@ -101,6 +126,7 @@ export default class RequestFormOne extends React.Component {
       customerId,
       customerName,
       isLoading,
+      isPopup,
     } = this.state;
     return (
       <WrapperMain>
@@ -120,34 +146,42 @@ export default class RequestFormOne extends React.Component {
               placeholder="Dealer User ID"
               editable={false}
             />
+
             <TextInput
               value={name}
               style={styles.input2}
               placeholder="Dealer Name"
               editable={false}
             />
+
             <TextInput
               style={styles.input}
-              placeholder="Customer ID"
+              placeholder="* Customer ID"
               value={customerId}
               onChangeText={customerId => this.setState({customerId})}
             />
+
             <TextInput
               style={styles.input}
-              placeholder="Customer Name"
+              placeholder="* Customer Name"
               value={customerName}
               onChangeText={customerName => this.setState({customerName})}
             />
-            <TextInput
+
+            <Touch
               style={styles.input}
-              placeholder="Subject"
-              value={subject}
-              onChangeText={subject => this.setState({subject})}
-            />
+              onPress={() => this.setState({isPopup: true})}>
+              {subject !== '* Choose Subject' ? (
+                <H2 style={styles.text1}>{subject}</H2>
+              ) : (
+                <H2 style={styles.text2}>{subject}</H2>
+              )}
+            </Touch>
+
             <TextInput
               style={styles.textbox}
               value={message}
-              placeholder="Description"
+              placeholder=" * Description"
               onChangeText={message => this.setState({message})}
               multiline={true}
               numberOfLines={5}
@@ -164,6 +198,30 @@ export default class RequestFormOne extends React.Component {
             )}
           </ScrollView>
         </View>
+
+        {isPopup ? (
+          <View style={styles.popup}>
+            <View style={styles.options}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {subjects.map((el, key) => (
+                  <Touch
+                    key={key}
+                    style={styles.optionItems}
+                    onPress={() =>
+                      this.setState({subject: el, isPopup: false})
+                    }>
+                    <H2 style={{fontSize: RF(16)}}>{el}</H2>
+                  </Touch>
+                ))}
+              </ScrollView>
+            </View>
+            <Touch
+              style={styles.closeBtn}
+              onPress={() => this.setState({isPopup: false})}>
+              <H2 style={{color: '#fff', fontSize: RF(16)}}>Close</H2>
+            </Touch>
+          </View>
+        ) : null}
       </WrapperMain>
     );
   }
@@ -193,16 +251,25 @@ const styles = StyleSheet.create({
     fontFamily: RegFont,
     paddingVertical: RH(2),
     marginVertical: RH(0.7),
-    borderBottomColor: AppColors.veryLightPink,
-    borderBottomWidth: RH(0.3),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.8,
+  },
+  text1: {
+    fontSize: RF(17),
+    fontFamily: RegFont,
+  },
+  text2: {
+    opacity: 0.3,
+    fontSize: RF(17),
+    fontFamily: RegFont,
   },
   input2: {
     fontSize: RF(17),
     fontFamily: RegFont,
     paddingVertical: RH(2),
     marginVertical: RH(0.7),
-    borderBottomColor: AppColors.veryLightPink,
-    borderBottomWidth: RH(0.3),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.8,
     opacity: 0.8,
   },
   textbox: {
@@ -210,8 +277,8 @@ const styles = StyleSheet.create({
     fontFamily: RegFont,
     paddingVertical: RH(2),
     marginBottom: RH(1),
-    borderBottomColor: AppColors.veryLightPink,
-    borderBottomWidth: RH(0.3),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.5,
     height: RH(15),
   },
   btn: {
@@ -219,5 +286,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: RH(2),
     marginBottom: RH(5),
+  },
+  popup: {
+    backgroundColor: '#00000099',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: RH(100),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  options: {
+    height: '50%',
+    width: '80%',
+    backgroundColor: '#efefef',
+    borderRadius: RH(1),
+    padding: RW(5),
+  },
+  optionItems: {
+    paddingVertical: RH(2),
+    borderBottomColor: AppColors.veryLightPink,
+    borderBottomWidth: RH(0.3),
+  },
+  closeBtn: {
+    backgroundColor: AppColors.cobalt,
+    width: '80%',
+    padding: RH(2),
+    borderRadius: RH(1),
+    marginTop: RH(1),
+    alignItems: 'center',
   },
 });

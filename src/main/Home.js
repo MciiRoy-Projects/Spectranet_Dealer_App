@@ -179,12 +179,12 @@ export default class Home extends React.Component {
               onRefresh={this.onRefresh}
             />
           }>
-          <Card style={styles.paneOne}>
+          {/*<Card style={styles.paneOne}>
             {loadChart ? <Chart /> : null}
             <H1 style={styles.label}>
               Sales History ({moment(today).format('YYYY')})
             </H1>
-          </Card>
+          </Card>*/}
 
           <ScrollView>
             <View style={styles.paneTwo}>

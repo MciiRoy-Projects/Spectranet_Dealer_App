@@ -16,10 +16,25 @@ import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 
 const data = [
-  {item: 'Available Stock', num: 0, data: [], code: 'available_stock'},
-  {item: 'MTD Activations', num: 0, data: [], code: 'mtd_activations'},
+  {
+    item: 'Available Stock as per the sku',
+    num: 0,
+    data: [],
+    code: 'available_stock',
+  },
+  {
+    item: 'Activation Data/Sales Data',
+    num: 0,
+    data: [],
+    code: 'mtd_activations',
+  },
   {item: 'E-Top Up', num: 0, data: [], code: 'e_top_up'},
-  {item: 'MTD Stock Purchase', num: 0, data: [], code: 'mtd_stock_purchase'},
+  {
+    item: 'Stock purchase for the month',
+    num: 0,
+    data: [],
+    code: 'mtd_stock_purchase',
+  },
 ];
 
 export default class Scoreboard extends React.Component {
@@ -45,11 +60,6 @@ export default class Scoreboard extends React.Component {
                 onPress={() => navigation.navigate('ScoreboardView', el)}
               />
             ))}
-            <LiImage
-              icon={AppIcons.mtdSales}
-              text="Incentives"
-              onPress={() => navigation.navigate('IncentiveView')}
-            />
           </ScrollView>
         </View>
       </WrapperMain>

@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   two: {
     marginLeft: RW(5),
-    fontSize: RF(20),
+    fontSize: RF(18),
     color: AppColors.greyishBrown,
   },
 });

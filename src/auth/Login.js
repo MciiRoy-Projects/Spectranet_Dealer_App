@@ -22,10 +22,10 @@ import {userLogin, storeData, Snack} from '../partials/_api';
 
 export default class Login extends React.Component {
   state = {
-    //ID: 'LGX007-Kemasho',
-    //pass: 'LGX007-Kemasho',
-    ID: '',
-    pass: '',
+    ID: 'LGX007-Kemasho',
+    pass: 'LGX007-Kemasho',
+    //ID: '',
+    //pass: '',
     isLoading: false,
   };
 
