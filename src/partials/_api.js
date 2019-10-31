@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Snackbar from 'react-native-snackbar';
 
-console.disableYellowBox = true;
+//console.disableYellowBox = true;
 
 const endPoint = 'https://scm.spectranet.com.ng/api';
 
@@ -26,6 +26,15 @@ export const monthlyPerformance = async userId => {
       },
     },
   );
+  return res;
+};
+
+export const dealerAvailableStock = async userId => {
+  const res = await axios.get(`${endPoint}/availablestock/${userId}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
   return res;
 };
 

@@ -17,6 +17,7 @@ import {
   dealerPerformance,
   dealerBalance,
   dealerStockPurchase,
+  dealerAvailableStock,
   storeData,
   getData,
   idCheck,
@@ -41,6 +42,7 @@ export default class Home extends React.Component {
     refreshing: false,
     showInfo: false,
     loadChart: false,
+    dealerAvailableStockData: [],
   };
 
   init() {
@@ -49,6 +51,7 @@ export default class Home extends React.Component {
         res = JSON.parse(res);
         let userId = idCheck(res, 'userId');
         this.loadStock(userId);
+        this.loadAvailableStock(userId);
         this.loadPerformance(userId);
         this.loadETopUp(userId);
         this.loadDealerStockPurchase(userId);
@@ -148,6 +151,18 @@ export default class Home extends React.Component {
       .catch(err => console.log(err));
   };
 
+  loadAvailableStock = userId => {
+    dealerAvailableStock(userId)
+      .then(res => {
+        const {data} = this.state;
+        res = res.data;
+        if (res.success == true) {
+          this.setState({dealerAvailableStockData: res.data});
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
   targetChecker = () => {};
 
   onRefresh = () => {
@@ -161,7 +176,14 @@ export default class Home extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {data, today, refreshing, showInfo, loadChart} = this.state;
+    const {
+      data,
+      today,
+      refreshing,
+      showInfo,
+      loadChart,
+      dealerAvailableStockData,
+    } = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -204,6 +226,21 @@ export default class Home extends React.Component {
                 </Touch>
               ))}
             </View>
+
+            <View style={styles.paneTwo}>
+              <H1 style={styles.textOne}>Available</H1>
+
+              {dealerAvailableStockData.map((el, i) => (
+                <Touch key={i} style={styles.grid}>
+                  <H2 style={styles.one}>{el.devicetype}</H2>
+                  {isNaN(el.count) || el.count == 0 ? (
+                    <H1 style={styles.two}>0</H1>
+                  ) : (
+                    <H1 style={styles.two}>{numeral(el.count).format(0, 0)}</H1>
+                  )}
+                </Touch>
+              ))}
+            </View>
           </ScrollView>
         </ScrollView>
 
@@ -240,12 +277,12 @@ const styles = StyleSheet.create({
     marginHorizontal: RW(5),
   },
   paneTwo: {
-    marginTop: RH(1.5),
+    marginTop: RH(1),
+    marginHorizontal: RW(3),
     minHeight: RH(36),
     backgroundColor: '#fff',
     paddingVertical: RH(2),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
+    borderRadius: RH(2),
   },
   label: {
     fontSize: RF(14),
@@ -254,7 +291,7 @@ const styles = StyleSheet.create({
   textOne: {
     color: AppColors.pumpkin,
     fontSize: RF(15),
-    paddingHorizontal: RW(12),
+    paddingHorizontal: RW(8),
     marginBottom: RH(2),
   },
   grid: {
@@ -262,7 +299,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#d8d8d820',
-    paddingHorizontal: RW(12),
+    paddingHorizontal: RW(8),
     marginBottom: 2,
   },
   one: {

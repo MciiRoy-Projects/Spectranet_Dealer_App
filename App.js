@@ -61,10 +61,10 @@ const UserNavigator = createStackNavigator(
 
 const MainStack = createStackNavigator(
   {
-    /*Home,
+    Home,
     Profile,
     Promo,
-    PromoView,*/
+    PromoView,
     Scoreboard,
     ScoreboardView,
     IncentiveView,
