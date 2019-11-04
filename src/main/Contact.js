@@ -22,6 +22,9 @@ export default class Contact extends React.Component {
       tsmemail: 'Null',
       tsmname: 'Null',
       tsmphone: 'Null',
+      rsmname: 'Null',
+      rsmphone: 'Null',
+      rsmemail: 'Null',
     },
     isLoading: true,
     userId: '',
@@ -45,10 +48,10 @@ export default class Contact extends React.Component {
     keyContact(userId)
       .then(res => {
         res = res.data;
-        if (res.success == true)
-          this.setState({
-            el: res.data,
-          });
+        if (res.success == true) console.warn(res.data);
+        this.setState({
+          el: res.data,
+        });
       })
       .catch(err => Snack('Connection Error. Please try again later.'))
       .then(() => this.setState({isLoading: false}));
@@ -105,6 +108,23 @@ export default class Contact extends React.Component {
                 <P style={styles.one}>Territory Sales Manager Phone</P>
                 <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
                   <H1 style={styles.two}>{el.tsmphone}</H1>
+                </Touch>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Manager Name</P>
+                <H1 style={styles.two}>{el.rsmname}</H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Manager Email</P>
+                <H1 style={styles.two}>{el.rsmemail}</H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Manager Phone</P>
+                <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
+                  <H1 style={styles.two}>{el.rsmphone}</H1>
                 </Touch>
               </View>
             </ScrollView>
