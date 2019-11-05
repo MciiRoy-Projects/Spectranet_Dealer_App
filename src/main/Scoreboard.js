@@ -20,7 +20,7 @@ const data = [
     item: 'Available Stock as per the sku',
     num: 0,
     data: [],
-    code: 'available_stock',
+    code: 'dealerAvailableStockData',
   },
   {
     item: 'Activation Data/Sales Data',

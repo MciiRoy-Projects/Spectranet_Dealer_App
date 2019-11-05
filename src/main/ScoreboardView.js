@@ -12,20 +12,31 @@ import {
   dealerPerformance,
   dealerBalance,
   dealerStockPurchase,
+  dealerAvailableStock,
+  idCheck,
 } from '../partials/_api';
+import {Chart} from '../partials/_charts';
 
 export default class ScoreboardView extends React.Component {
   state = {
     title: '',
     data: [],
     isLoading: true,
+    code: this.props.navigation.state.params.code,
   };
 
-  init = () => {
+  init = async () => {
     let obj = this.props.navigation.state.params;
     this.setState({
       title: obj.item,
     });
+
+    var userDetails = await getData('userDetails');
+    let userId = '';
+    if (userDetails) {
+      userDetails = JSON.parse(userDetails);
+      userId = idCheck(userDetails, 'userId');
+    }
 
     getData(obj.code)
       .then(res => {
@@ -33,29 +44,47 @@ export default class ScoreboardView extends React.Component {
           this.loadData(obj.code);
           //return;
         }
+
         Snack('Updating Data . . .');
 
+        if (obj.code == 'dealerAvailableStockData') {
+          this.loadAvailableStock(obj.code, userId);
+        }
+
         if (obj.code == 'available_stock') {
-          this.loadStock(obj.code);
+          this.loadStock(obj.code, userId);
         }
 
         if (obj.code == 'mtd_activations') {
-          this.loadPerformance(obj.code);
+          this.loadPerformance(obj.code, userId);
         }
 
         if (obj.code == 'e_top_up') {
-          this.loadETopUp(obj.code);
+          this.loadETopUp(obj.code, userId);
         }
 
         if (obj.code == 'mtd_stock_purchase') {
-          this.loadDealerStockPurchase(obj.code);
+          this.loadDealerStockPurchase(obj.code, userId);
         }
       })
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   };
 
-  loadStock = code => {
-    dealerStock()
+  loadAvailableStock = (code, userId) => {
+    dealerAvailableStock(userId)
+      .then(res => {
+        res = res.data;
+        if (res.success == true) {
+          storeData(code, res);
+          this.setState({data: res.data, isLoading: false});
+        }
+      })
+      .catch(err => console.warn(err))
+      .then(() => Snack('Data Updated . . .'));
+  };
+
+  loadStock = (code, userId) => {
+    dealerStock(userId)
       .then(res => {
         res = res.data;
         if (res.success == true) {
@@ -71,8 +100,8 @@ export default class ScoreboardView extends React.Component {
       .then(() => Snack('Data Updated . . .'));
   };
 
-  loadPerformance = code => {
-    dealerPerformance()
+  loadPerformance = (code, userId) => {
+    dealerPerformance(userId)
       .then(res => {
         res = res.data;
         if (res.success == true) {
@@ -88,8 +117,8 @@ export default class ScoreboardView extends React.Component {
       .then(() => Snack('Data Updated . . .'));
   };
 
-  loadETopUp = code => {
-    dealerBalance()
+  loadETopUp = (code, userId) => {
+    dealerBalance(userId)
       .then(res => {
         res = res.data;
         if (res.success == true) {
@@ -105,15 +134,14 @@ export default class ScoreboardView extends React.Component {
       .then(() => Snack('Data Updated . . .'));
   };
 
-  loadDealerStockPurchase = code => {
-    dealerStockPurchase()
+  loadDealerStockPurchase = (code, userId) => {
+    dealerStockPurchase(userId)
       .then(res => {
         res = res.data;
         if (res.success == true) {
           res = res.data;
           storeData(code, res).then(res => {
             if (res == true) {
-              this.loadData(code);
             }
           });
         }
@@ -161,7 +189,8 @@ export default class ScoreboardView extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {title, data, isLoading} = this.state;
+    const {title, data, isLoading, code} = this.state;
+
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -181,16 +210,11 @@ export default class ScoreboardView extends React.Component {
             />
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
-              {data.map((el, i) => (
-                <View key={i} style={styles.grid}>
-                  <H2 style={styles.one}>{el.item.toUpperCase()}</H2>
-                  {isNaN(el.num) || el.num == null ? (
-                    <H1 style={styles.two}> 0 </H1>
-                  ) : (
-                    <H1 style={styles.two}>{numeral(el.num).format(0, 0)}</H1>
-                  )}
-                </View>
-              ))}
+              {code == 'dealerAvailableStockData' && data.length > 0 ? (
+                <Chart chartData={data} />
+              ) : (
+                <LoopTable data={data} />
+              )}
             </ScrollView>
           )}
         </View>
@@ -199,6 +223,26 @@ export default class ScoreboardView extends React.Component {
   }
 }
 
+const LoadDealerStockPurchase = () => {
+  return (
+    <View>
+      <Text>loadDealerStockPurchase</Text>
+    </View>
+  );
+};
+
+const LoopTable = props => {
+  return props.data.map((el, i) => (
+    <View key={props.i} style={styles.grid}>
+      <H2 style={styles.one}>{el.item.toUpperCase()}</H2>
+      {isNaN(el.num) || el.num == null ? (
+        <H1 style={styles.two}> 0 </H1>
+      ) : (
+        <H1 style={styles.two}>{numeral(el.num).format(0, 0)}</H1>
+      )}
+    </View>
+  ));
+};
 const styles = StyleSheet.create({
   paneOne: {
     padding: RW(6),

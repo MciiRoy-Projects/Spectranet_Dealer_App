@@ -24,40 +24,11 @@ export class Chart extends React.Component {
     super(props);
     this.state = {
       barWidth: 30,
-      chartData: [],
+      chartData: props.chartData,
       isLoading: true,
-      isData: true,
+      isData: false,
     };
   }
-
-  init() {
-    getData('userDetails')
-      .then(res => {
-        if (res) {
-          res = JSON.parse(res);
-          let userId = idCheck(res, 'userId');
-          this.loadData(userId);
-        }
-      })
-      .catch(err => console.log(err));
-  }
-
-  loadData = userId => {
-    monthlyPerformance(userId)
-      .then(res => {
-        res = res.data;
-        if (res.success == true) {
-          if (res.data.length < 1) {
-            Snack('No Data Found for This User');
-            this.setState({isData: false});
-            return;
-          }
-          this.loadChart(res.data);
-        }
-      })
-      .catch(err => Snack('Connection Error. Please try again later'))
-      .then(() => this.setState({isLoading: false}));
-  };
 
   loadChart = data => {
     let maxHeight = RH(48) - RH(3);
@@ -77,6 +48,8 @@ export class Chart extends React.Component {
       barWidth = Math.ceil((RW(80) / number) * 0.88);
     }
 
+    console.warn((data[0].count / sum) * maxHeight);
+
     this.setState({
       barWidth: barWidth,
       maxHeight,
@@ -86,7 +59,10 @@ export class Chart extends React.Component {
   };
 
   componentDidMount() {
-    this.init();
+    if (this.props.chartData.length > 0) {
+      this.setState({isData: true, isLoading: false});
+      this.loadChart(this.props.chartData);
+    }
   }
 
   render() {
@@ -135,7 +111,7 @@ export class Chart extends React.Component {
                   fontSize: RF(12),
                   marginTop: RH(0.3),
                 }}>
-                {item.monthname.substring(0, 3)}
+                {item.devicetype.substring(0, 8)}
               </H1>
             </View>
           </Animated.View>
@@ -158,11 +134,13 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
+    backgroundColor: 'red',
+    height: RH(40),
   },
 
   bar: {
     width: 30,
-    height: 200,
+    height: RH(40),
     marginLeft: RW(2),
   },
 

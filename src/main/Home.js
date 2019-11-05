@@ -157,7 +157,9 @@ export default class Home extends React.Component {
         const {data} = this.state;
         res = res.data;
         if (res.success == true) {
-          this.setState({dealerAvailableStockData: res.data});
+          res = res.data;
+          storeData('dealerAvailableStockData', res);
+          this.setState({dealerAvailableStockData: res});
         }
       })
       .catch(err => console.log(err));
