@@ -17,7 +17,7 @@ import {RF, RW, RH} from '../lib/_sizes';
 
 const data = [
   {
-    item: 'Available Stock as per the sku',
+    item: 'Available Stock',
     num: 0,
     data: [],
     code: 'dealerAvailableStockData',
@@ -26,7 +26,7 @@ const data = [
     item: 'Activation Data/Sales Data',
     num: 0,
     data: [],
-    code: 'mtd_activations',
+    code: 'activations',
   },
   {item: 'E-Top Up', num: 0, data: [], code: 'e_top_up'},
   {

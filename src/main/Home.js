@@ -215,10 +215,7 @@ export default class Home extends React.Component {
               <H1 style={styles.textOne}>Transactions</H1>
 
               {data.map((el, i) => (
-                <Touch
-                  key={i}
-                  style={styles.grid}
-                  onPress={() => navigation.navigate('ScoreboardView', el)}>
+                <Touch key={i} style={styles.grid}>
                   <H2 style={styles.one}>{el.item}</H2>
                   {isNaN(el.num) || el.num == 0 ? (
                     <H1 style={styles.two}>0</H1>

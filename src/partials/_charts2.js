@@ -19,7 +19,7 @@ function minChartHeight(v) {
   return v;
 }
 
-export class Chart extends React.Component {
+export class ChartTwo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ export class Chart extends React.Component {
   }
 
   loadChart = data => {
-    let maxHeight = RH(100) - RH(3);
+    let maxHeight = RH(60) - RH(3);
     var sum = 0;
     let barWidth;
     let number = data.length;
@@ -109,7 +109,7 @@ export class Chart extends React.Component {
                   fontSize: RF(12),
                   marginTop: RH(0.3),
                 }}>
-                {item.devicetype.substring(0, 8)}
+                {item.monthname.substring(0, 3)}
               </H1>
             </View>
           </Animated.View>
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    height: RH(30),
+    minHeight: RH(10),
     marginBottom: RH(1),
     padding: RW(5),
   },

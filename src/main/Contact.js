@@ -81,50 +81,134 @@ export default class Contact extends React.Component {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.grid}>
                 <P style={styles.one}>Dealer Code</P>
-                <H1 style={styles.two}>{el.dealercode}</H1>
+                <H1 style={styles.two}>
+                  {el['Affiliate Name'] == null ? 'Null' : el['Affiliate Name']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>Dealer Name</P>
-                <H1 style={styles.two}>{el.dealername}</H1>
+                <P style={styles.one}>Dealer Target</P>
+                <H1 style={styles.two}>{el['Dealer Target']}</H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Category</P>
-                <H1 style={styles.two}>{el.category}</H1>
+                <H1 style={styles.two}>
+                  {el['category'] == null ? ' - ' : el['category']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Name</P>
-                <H1 style={styles.two}>{el.tsmname}</H1>
+                <H1 style={styles.two}>
+                  {el['TSM Name'] == null ? ' - ' : el['TSM Name']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Email</P>
-                <H1 style={styles.two}>{el.tsmemail}</H1>
+                <H1 style={styles.two}>
+                  {el['TSM Email'] == null ? ' - ' : el['TSM Email']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Phone</P>
-                <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
-                  <H1 style={styles.two}>{el.tsmphone}</H1>
+                <Touch
+                  onPress={() => Linking.openURL(`tel:${el['TSM Phone']}`)}>
+                  <H1 style={styles.two}>
+                    {el['TSM Phone'] == null ? ' - ' : el['TSM Phone']}
+                  </H1>
                 </Touch>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Name</P>
-                <H1 style={styles.two}>{el.rsmname}</H1>
+                <H1 style={styles.two}>
+                  {el['RSM Name'] == null ? ' - ' : el['RSM Name']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Email</P>
-                <H1 style={styles.two}>{el.rsmemail}</H1>
+                <H1 style={styles.two}>
+                  {el['RSM Email'] == null ? ' - ' : el['RSM Email']}
+                </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Phone</P>
-                <Touch onPress={() => Linking.openURL(`tel:${el.tsmphone}`)}>
-                  <H1 style={styles.two}>{el.rsmphone}</H1>
+                <Touch
+                  onPress={() => Linking.openURL(`tel:${el['RSM Phone']}`)}>
+                  <H1 style={styles.two}>
+                    {el['RSM Phone'] == null ? ' - ' : el['RSM Phone']}
+                  </H1>
+                </Touch>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Channel Partner Executive Name</P>
+                <H1 style={styles.two}>
+                  {el['CPE Name'] == null ? ' - ' : el['CPE Name']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Channel Partner Executive Email</P>
+                <H1 style={styles.two}>
+                  {el['CPE Email'] == null ? ' - ' : el['CPE Email']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Channel Partner Executive Phone</P>
+                <Touch
+                  onPress={() => Linking.openURL(`tel:${el['CPE Phone']}`)}>
+                  <H1 style={styles.two}>
+                    {el['CPE Phone'] == null ? ' - ' : el['CPE Phone']}
+                  </H1>
+                </Touch>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Super Dealer Name</P>
+                <H1 style={styles.two}>
+                  {el['Super Dealer Name'] == null
+                    ? '-'
+                    : el['Super Dealer Name']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Super Dealer Email</P>
+                <H1 style={styles.two}>
+                  {el['Super Dealer Email'] == null
+                    ? ' - '
+                    : el['Super Dealer Email']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Executive Name</P>
+                <H1 style={styles.two}>
+                  {el['CPE Name'] == null ? ' - ' : el['RSE Name']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Executive Email</P>
+                <H1 style={styles.two}>
+                  {el['CPE Email'] == null ? ' - ' : el['RSE Email']}
+                </H1>
+              </View>
+
+              <View style={styles.grid}>
+                <P style={styles.one}>Regional Sales Executive Phone</P>
+                <Touch
+                  onPress={() => Linking.openURL(`tel:${el['RSE Phone']}`)}>
+                  <H1 style={styles.two}>
+                    {el['CPE Phone'] == null ? ' - ' : el['RSE Phone']}
+                  </H1>
                 </Touch>
               </View>
             </ScrollView>

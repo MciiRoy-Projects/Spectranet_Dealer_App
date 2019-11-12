@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
 import {
   Header,
   WrapperMain,
@@ -16,17 +16,45 @@ import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
 import moment from 'moment';
-
-const List = [
-  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
-  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
-  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
-  {item: 'Your Order has been successfully sent!', timestamp: new Date()},
-];
+import {notificationHistory, Snack} from '../partials/_api';
 
 export default class NewsNotification extends React.Component {
+  state = {
+    List: [],
+    isLoading: true,
+  };
+
+  loadData = () => {
+    notificationHistory()
+      .then(res => {
+        Snack('Updated . . .');
+        var List = [];
+        let notifications = res.data.notifications;
+        notifications.forEach(el => {
+          List.push({
+            item: notifications[0].headings.en,
+            timestamp: moment(notifications[0].completed_at * 1000).format(
+              'MMMM DD, YYYY',
+            ),
+            content: notifications[0].contents.en,
+          });
+        });
+        this.setState({List});
+      })
+      .catch(err => {
+        Snack('Connection Error. Please try again');
+        this.props.navigation.goBack();
+      })
+      .then(() => this.setState({isLoading: false}));
+  };
+
+  componentDidMount() {
+    this.loadData();
+  }
+
   render() {
     const {navigation} = this.props;
+    const {List, isLoading} = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -34,23 +62,29 @@ export default class NewsNotification extends React.Component {
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> News & Notification</Title>
+          <Title> News & Notifications</Title>
         </View>
 
         <View style={styles.paneTwo}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {List.map((el, key) => (
-              <Touch
-                style={styles.grid}
-                onPress={() => navigation.navigate('NewsNotificationView', el)}
-                key={key}>
-                <P style={styles.one}>
-                  {moment(el.timestamp).format('MMMM DD, YYYY')}
-                </P>
-                <H1 style={styles.two}>{el.item}</H1>
-              </Touch>
-            ))}
-          </ScrollView>
+          {isLoading ? (
+            <ActivityIndicator size="large" color={AppColors.cobalt} />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {List.map((el, key) => (
+                <Touch
+                  style={styles.grid}
+                  onPress={() =>
+                    navigation.navigate('NewsNotificationView', el)
+                  }
+                  key={key}>
+                  <P style={styles.one}>
+                    {moment(el.timestamp).format('MMMM DD, YYYY')}
+                  </P>
+                  <H1 style={styles.two}>{el.item}</H1>
+                </Touch>
+              ))}
+            </ScrollView>
+          )}
         </View>
       </WrapperMain>
     );

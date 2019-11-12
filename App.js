@@ -3,6 +3,7 @@ import {StatusBar, Animated, Easing} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
+import OneSignal from 'react-native-onesignal';
 
 import Splash from './src/auth/Splash';
 import Onboard from './src/auth/Onboard';
@@ -10,6 +11,7 @@ import Login from './src/auth/Login';
 import Home from './src/main/Home';
 import Scoreboard from './src/main/Scoreboard';
 import ScoreboardView from './src/main/ScoreboardView';
+import Target from './src/main/Target';
 import IncentiveView from './src/main/IncentiveView';
 import IncentiveHtml from './src/main/IncentiveHtml';
 import Request from './src/main/Request';
@@ -61,12 +63,13 @@ const UserNavigator = createStackNavigator(
 
 const MainStack = createStackNavigator(
   {
-    /*Home,
+    /* Home,
     Profile,
     Promo,
-    PromoView,*/
+    PromoView,
     Scoreboard,
-    ScoreboardView,
+    ScoreboardView,*/
+    Target,
     IncentiveView,
     IncentiveHtml,
     Request,
@@ -109,6 +112,22 @@ const AppNavigator = createSwitchNavigator(
 const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {
+  constructor(properties) {
+    super(properties);
+    OneSignal.init('72ed7f65-ab57-45df-98bd-175ab2abd461');
+
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onReceived);
+    OneSignal.addEventListener('ids', device => {
+      //console.warn(device.pushToken);
+    });
+    OneSignal.inFocusDisplaying(0);
+  }
+
+  onReceived(notification) {
+    console.log('Notification received: ', notification);
+  }
+
   render() {
     return <AppContainer />;
   }

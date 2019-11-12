@@ -13,14 +13,20 @@ import {
   dealerBalance,
   dealerStockPurchase,
   dealerAvailableStock,
+  mtddealertransactions,
+  dealermonthwiseperformance,
   idCheck,
 } from '../partials/_api';
 import {Chart} from '../partials/_charts';
+import moment from 'moment';
+import {ChartTwo} from '../partials/_charts2';
 
 export default class ScoreboardView extends React.Component {
   state = {
     title: '',
     data: [],
+    chartData: [],
+    etopData: [],
     isLoading: true,
     code: this.props.navigation.state.params.code,
   };
@@ -40,11 +46,6 @@ export default class ScoreboardView extends React.Component {
 
     getData(obj.code)
       .then(res => {
-        if (res) {
-          this.loadData(obj.code);
-          //return;
-        }
-
         Snack('Updating Data . . .');
 
         if (obj.code == 'dealerAvailableStockData') {
@@ -55,8 +56,8 @@ export default class ScoreboardView extends React.Component {
           this.loadStock(obj.code, userId);
         }
 
-        if (obj.code == 'mtd_activations') {
-          this.loadPerformance(obj.code, userId);
+        if (obj.code == 'activations') {
+          this.loadActivations(obj.code, userId);
         }
 
         if (obj.code == 'e_top_up') {
@@ -66,6 +67,11 @@ export default class ScoreboardView extends React.Component {
         if (obj.code == 'mtd_stock_purchase') {
           this.loadDealerStockPurchase(obj.code, userId);
         }
+
+        if (res) {
+          this.loadData(obj.code);
+          //return;
+        }
       })
       .catch(err => console.log(err));
   };
@@ -73,14 +79,27 @@ export default class ScoreboardView extends React.Component {
   loadAvailableStock = (code, userId) => {
     dealerAvailableStock(userId)
       .then(res => {
+        let data = [];
         res = res.data;
         if (res.success == true) {
           storeData(code, res);
-          this.setState({data: res.data, isLoading: false});
+          if (res.data.length > 0) {
+            res.data.forEach(el => {
+              data.push({item: el.devicetype, num: el.count});
+            });
+          }
+          this.setState({
+            data,
+            chartData: res.data,
+            isLoading: false,
+          });
         }
+        Snack('Data Updated . . .');
       })
-      .catch(err => console.warn(err))
-      .then(() => Snack('Data Updated . . .'));
+      .catch(err => {
+        this.props.navigation.goBack();
+        Snack('Connection Error !');
+      });
   };
 
   loadStock = (code, userId) => {
@@ -96,8 +115,10 @@ export default class ScoreboardView extends React.Component {
           });
         }
       })
-      .catch(err => console.log(err))
-      .then(() => Snack('Data Updated . . .'));
+      .catch(err => {
+        this.props.navigation.goBack();
+        Snack('Connection Error !');
+      });
   };
 
   loadPerformance = (code, userId) => {
@@ -113,74 +134,82 @@ export default class ScoreboardView extends React.Component {
           });
         }
       })
-      .catch(err => console.log(err))
-      .then(() => Snack('Data Updated . . .'));
+      .catch(err => {
+        this.props.navigation.goBack();
+        Snack('Connection Error !');
+      });
+  };
+
+  loadActivations = (code, userId) => {
+    dealermonthwiseperformance(userId).then(res => {
+      let data = [];
+      if (res.data.success == true) {
+        res.data.data.forEach(el => {
+          data.push({item: el.monthname, num: el.count});
+        });
+        this.setState({
+          data,
+          chartData: res.data.data,
+          isLoading: false,
+        });
+      }
+    });
   };
 
   loadETopUp = (code, userId) => {
     dealerBalance(userId)
       .then(res => {
+        let data = [];
         res = res.data;
         if (res.success == true) {
           res = res.data;
-          storeData(code, res).then(res => {
-            if (res == true) {
-              this.loadData(code);
-            }
-          });
+          data.push({item: res.dealername, num: res.amount});
+          this.setState(
+            {
+              data,
+              isLoading: false,
+            },
+            () => {
+              this.loadMtddealertransactions(userId);
+            },
+          );
+          storeData(code, res);
         }
       })
-      .catch(err => console.log(err))
-      .then(() => Snack('Data Updated . . .'));
+      .catch(err => {
+        Snack('Connection Error !');
+      });
+  };
+
+  loadMtddealertransactions = userId => {
+    mtddealertransactions(userId)
+      .then(res => {
+        if (res.data.success == true) {
+          this.setState({etopData: res.data.data});
+        }
+      })
+      .catch(err => console.warn(err));
   };
 
   loadDealerStockPurchase = (code, userId) => {
+    var data = [];
     dealerStockPurchase(userId)
       .then(res => {
         res = res.data;
         if (res.success == true) {
-          res = res.data;
-          storeData(code, res).then(res => {
-            if (res == true) {
-            }
+          storeData(code, res);
+          data.push({item: res.data.dealername, num: res.data.mtddevice});
+          this.setState({
+            data,
+            isLoading: false,
           });
         }
+        Snack('Data Updated');
       })
-      .catch(err => console.log(err))
-      .then(() => Snack('Data Updated . . .'));
-  };
-
-  loadData = code => {
-    let data = [];
-    getData(code)
-      .then(obj => {
-        if (!obj) {
-          return;
-        }
-        obj = JSON.parse(obj);
-
-        if (code == 'available_stock') {
-          data.push({item: 'mifi', num: obj.mifi});
-          data.push({item: 'cpe', num: obj.cpe});
-        }
-
-        if (code == 'mtd_activations') {
-          data.push({item: 'Last 3 Months', num: obj.last3month});
-          data.push({item: 'mtd', num: obj.mtd});
-          data.push({item: 'ftd', num: obj.ftd});
-        }
-
-        if (code == 'e_top_up') {
-          data.push({item: 'amount', num: obj.amount});
-        }
-
-        if (code == 'mtd_stock_purchase') {
-          data.push({item: 'MTD Device', num: obj.mtddevice});
-        }
-
-        this.setState({data, isLoading: false});
-      })
-      .catch(err => Snack(err));
+      .catch(err => {
+        this.props.navigation.goBack();
+        Snack('Connection Error !');
+      });
   };
 
   componentDidMount() {
@@ -189,7 +218,7 @@ export default class ScoreboardView extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {title, data, isLoading, code} = this.state;
+    const {title, data, isLoading, chartData, etopData, code} = this.state;
 
     return (
       <WrapperMain>
@@ -210,11 +239,25 @@ export default class ScoreboardView extends React.Component {
             />
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
-              {code == 'dealerAvailableStockData' && data.length > 0 ? (
-                <Chart chartData={data} />
-              ) : (
-                <LoopTable data={data} />
-              )}
+              {code == 'dealerAvailableStockData' && chartData.length > 0 ? (
+                <View style={{alignItems: 'center'}}>
+                  <Chart chartData={chartData} />
+                  <H2 style={{marginBottom: RH(2)}}>Available Stock</H2>
+                </View>
+              ) : null}
+
+              {code == 'activations' && chartData.length > 0 ? (
+                <View style={{alignItems: 'center'}}>
+                  <ChartTwo chartData={chartData} />
+                  <H2 style={{marginBottom: RH(2)}}>
+                    Activations for Last 5 Months
+                  </H2>
+                </View>
+              ) : null}
+
+              <LoopTable data={data} />
+
+              {code == 'e_top_up' ? <ELoopTable data={etopData} /> : null}
             </ScrollView>
           )}
         </View>
@@ -233,7 +276,7 @@ const LoadDealerStockPurchase = () => {
 
 const LoopTable = props => {
   return props.data.map((el, i) => (
-    <View key={props.i} style={styles.grid}>
+    <View key={i} style={styles.grid}>
       <H2 style={styles.one}>{el.item.toUpperCase()}</H2>
       {isNaN(el.num) || el.num == null ? (
         <H1 style={styles.two}> 0 </H1>
@@ -243,6 +286,30 @@ const LoopTable = props => {
     </View>
   ));
 };
+
+const ELoopTable = props => {
+  return props.data.map((el, i) => (
+    <View style={styles.table} key={i}>
+      <H2 style={styles.text}>
+        Date: {moment(el.transactiondate).format('MMMM DD, YYYY')}
+      </H2>
+      <H2 style={styles.text}>Dealer: {el.dealername}</H2>
+      <H2 style={styles.text}>
+        Amount: {numeral(el.transactionamount).format('0,0')}
+      </H2>
+      <H2 style={styles.text}>
+        Balance Before Transaction:{' '}
+        {numeral(el.balancebeforetrasaction).format('0,0')}
+      </H2>
+      <H2 style={styles.text}>
+        Balance After Transaction:{' '}
+        {numeral(el.balanceaftertrasaction).format('0,0')}
+      </H2>
+      <H2 style={styles.text}>Transfer Type: {el.transfertype}</H2>
+    </View>
+  ));
+};
+
 const styles = StyleSheet.create({
   paneOne: {
     padding: RW(6),
@@ -252,7 +319,6 @@ const styles = StyleSheet.create({
     marginTop: RH(1),
     backgroundColor: '#fff',
     paddingVertical: RH(4),
-
     borderTopLeftRadius: RH(5),
     borderTopRightRadius: RH(5),
     flex: 1,
@@ -272,5 +338,16 @@ const styles = StyleSheet.create({
     fontSize: RF(18),
     color: AppColors.scarlet2,
     textAlign: 'right',
+  },
+  table: {
+    borderTopWidth: 1,
+    borderTopColor: '#dfdfdf',
+    paddingHorizontal: RW(6),
+    paddingVertical: RH(1.5),
+  },
+  text: {
+    color: AppColors.scarlet2,
+    fontSize: RF(15),
+    opacity: 0.8,
   },
 });
