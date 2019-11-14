@@ -15,10 +15,6 @@ import ScoreboardView from './src/main/ScoreboardView';
 import Target from './src/main/Target';
 import IncentiveView from './src/main/IncentiveView';
 import IncentiveHtml from './src/main/IncentiveHtml';
-import Request from './src/main/Request';
-import RequestForm from './src/main/RequestForm';
-import RequestFormOne from './src/main/RequestFormOne';
-import RequestFormTwo from './src/main/RequestFormTwo';
 import NewsNotification from './src/main/NewsNotification';
 import NewsNotificationView from './src/main/NewsNotificationView';
 import Contact from './src/main/Contact';
@@ -27,6 +23,7 @@ import PromoView from './src/main/PromoView';
 import Profile from './src/main/Profile';
 
 /*---Forms ---*/
+import Request from './src/main/Request';
 import CustomerComplaintForm from './src/main/forms/CustomerComplaintForm';
 import DealerComplaintForm from './src/main/forms/DealerComplaintForm';
 import StockPurchaseForm from './src/main/forms/StockPurchaseForm';
