@@ -48,10 +48,11 @@ export default class Contact extends React.Component {
     keyContact(userId)
       .then(res => {
         res = res.data;
-        if (res.success == true) console.warn(res.data);
-        this.setState({
-          el: res.data,
-        });
+        if (res.success == true) {
+          this.setState({
+            el: res.data,
+          });
+        }
       })
       .catch(err => Snack('Connection Error. Please try again later.'))
       .then(() => this.setState({isLoading: false}));
@@ -82,13 +83,13 @@ export default class Contact extends React.Component {
               <View style={styles.grid}>
                 <P style={styles.one}>Dealer Code</P>
                 <H1 style={styles.two}>
-                  {el['Affiliate Name'] == null ? 'Null' : el['Affiliate Name']}
+                  {el['dealercode'] == null ? 'Null' : el['dealercode']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Dealer Target</P>
-                <H1 style={styles.two}>{el['Dealer Target']}</H1>
+                <H1 style={styles.two}>{el['dealertarget']}</H1>
               </View>
 
               <View style={styles.grid}>
@@ -101,23 +102,22 @@ export default class Contact extends React.Component {
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Name</P>
                 <H1 style={styles.two}>
-                  {el['TSM Name'] == null ? ' - ' : el['TSM Name']}
+                  {el['tsmname'] == null ? ' - ' : el['tsmname']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Email</P>
                 <H1 style={styles.two}>
-                  {el['TSM Email'] == null ? ' - ' : el['TSM Email']}
+                  {el['tsmemail'] == null ? ' - ' : el['tsmemail']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Territory Sales Manager Phone</P>
-                <Touch
-                  onPress={() => Linking.openURL(`tel:${el['TSM Phone']}`)}>
+                <Touch onPress={() => Linking.openURL(`tel:${el['tsmphone']}`)}>
                   <H1 style={styles.two}>
-                    {el['TSM Phone'] == null ? ' - ' : el['TSM Phone']}
+                    {el['tsmphone'] == null ? ' - ' : el['tsmphone']}
                   </H1>
                 </Touch>
               </View>
@@ -125,23 +125,22 @@ export default class Contact extends React.Component {
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Name</P>
                 <H1 style={styles.two}>
-                  {el['RSM Name'] == null ? ' - ' : el['RSM Name']}
+                  {el['rsmname'] == null ? ' - ' : el['rsmname']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Email</P>
                 <H1 style={styles.two}>
-                  {el['RSM Email'] == null ? ' - ' : el['RSM Email']}
+                  {el['rsmemail'] == null ? ' - ' : el['rsmemail']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Regional Sales Manager Phone</P>
-                <Touch
-                  onPress={() => Linking.openURL(`tel:${el['RSM Phone']}`)}>
+                <Touch onPress={() => Linking.openURL(`tel:${el['rsmphone']}`)}>
                   <H1 style={styles.two}>
-                    {el['RSM Phone'] == null ? ' - ' : el['RSM Phone']}
+                    {el['rsmphone'] == null ? ' - ' : el['rsmphone']}
                   </H1>
                 </Touch>
               </View>
@@ -149,23 +148,22 @@ export default class Contact extends React.Component {
               <View style={styles.grid}>
                 <P style={styles.one}>Channel Partner Executive Name</P>
                 <H1 style={styles.two}>
-                  {el['CPE Name'] == null ? ' - ' : el['CPE Name']}
+                  {el['cpename'] == null ? ' - ' : el['cpename']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Channel Partner Executive Email</P>
                 <H1 style={styles.two}>
-                  {el['CPE Email'] == null ? ' - ' : el['CPE Email']}
+                  {el['cpeemail'] == null ? ' - ' : el['cpeemail']}
                 </H1>
               </View>
 
               <View style={styles.grid}>
                 <P style={styles.one}>Channel Partner Executive Phone</P>
-                <Touch
-                  onPress={() => Linking.openURL(`tel:${el['CPE Phone']}`)}>
+                <Touch onPress={() => Linking.openURL(`tel:${el['cpephone']}`)}>
                   <H1 style={styles.two}>
-                    {el['CPE Phone'] == null ? ' - ' : el['CPE Phone']}
+                    {el['cpephone'] == null ? ' - ' : el['cpephone']}
                   </H1>
                 </Touch>
               </View>

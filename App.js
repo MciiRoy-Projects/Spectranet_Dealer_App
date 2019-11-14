@@ -4,6 +4,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import OneSignal from 'react-native-onesignal';
+import codePush from 'react-native-code-push';
 
 import Splash from './src/auth/Splash';
 import Onboard from './src/auth/Onboard';
@@ -63,12 +64,12 @@ const UserNavigator = createStackNavigator(
 
 const MainStack = createStackNavigator(
   {
-    /* Home,
+    Home,
     Profile,
     Promo,
     PromoView,
     Scoreboard,
-    ScoreboardView,*/
+    ScoreboardView,
     Target,
     IncentiveView,
     IncentiveHtml,
@@ -128,9 +129,20 @@ class App extends React.Component {
     console.log('Notification received: ', notification);
   }
 
+  componentDidMount = () => {
+    codePush.sync({
+      //updateDialog: true,
+      installMode: codePush.InstallMode.ON_NEXT_RESUME,
+    });
+  };
+
   render() {
     return <AppContainer />;
   }
 }
 
-export default App;
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.MANUAL,
+};
+
+export default codePush(codePushOptions)(App);

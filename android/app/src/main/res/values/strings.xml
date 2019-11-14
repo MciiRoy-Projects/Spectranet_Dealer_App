@@ -1,3 +1,4 @@
 <resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">6PfinQvDHIrzgtlouUWWHFl3hJ6oXANpCA2Ey</string>
     <string name="app_name">Spectranet Dealer</string>
 </resources>

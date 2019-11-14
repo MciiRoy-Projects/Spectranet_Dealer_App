@@ -26,7 +26,8 @@ import {
 
 export default class Target extends React.Component {
   state = {
-    dealer: {'Dealer Target': '-'},
+    dealerTarget: '-',
+    targetAchieved: '-',
     recharge: {'Dealer Target': '-'},
     available: {'Dealer Target': '-'},
     isLoading: true,
@@ -35,11 +36,11 @@ export default class Target extends React.Component {
   loadKeyContactData = userId => {
     keyContact(userId)
       .then(res => {
+        console.log(userId);
         res = res.data;
         if (res.success == true) {
-          console.warn(res.data);
           this.setState({
-            dealer: res.data,
+            dealerTarget: res.data['dealertarget'],
           });
         }
       })
@@ -54,7 +55,7 @@ export default class Target extends React.Component {
         res = res.data;
         if (res.success == true) {
           res = res.data;
-          console.warn(res);
+          this.setState({targetAchieved: res.last3month});
         }
       })
       .catch(err => console.log(err));
@@ -66,7 +67,7 @@ export default class Target extends React.Component {
         res = JSON.parse(res);
         let userId = idCheck(res, 'userId');
         this.loadKeyContactData(userId);
-        //this.loadPerformance(userId);
+        this.loadPerformance(userId);
       }
     });
   }
@@ -77,7 +78,13 @@ export default class Target extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {isLoading, dealer, recharge, available} = this.state;
+    const {
+      isLoading,
+      dealerTarget,
+      targetAchieved,
+      recharge,
+      available,
+    } = this.state;
     return (
       <WrapperMain>
         <View style={{paddingHorizontal: RW(6)}}>
@@ -85,7 +92,7 @@ export default class Target extends React.Component {
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Targets (for the month)</Title>
+          <Title> Target for the month</Title>
         </View>
 
         {isLoading ? (
@@ -94,7 +101,9 @@ export default class Target extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.paneTwo}>
               <H1 style={styles.textOne}>Activations</H1>
-              <H1 style={styles.two}>{dealer['Dealer Target']}</H1>
+              <H1 style={styles.two}>
+                {targetAchieved} / {dealerTarget}
+              </H1>
             </View>
 
             <View style={styles.paneTwo}>
@@ -124,6 +133,7 @@ const styles = StyleSheet.create({
     paddingVertical: RH(4),
     paddingHorizontal: RW(6),
     borderRadius: RH(2),
+    marginHorizontal: RW(6),
     flex: 1,
   },
   textOne: {
