@@ -1,49 +1,51 @@
 {
-  "name": "Spectranet_Dealer_App",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "react-native start",
-    "andy": "react-native run-android",
-    "build-andy": "cd android && ./gradlew  bundleRelease",
-    "release-andy": "react-native run-android --variant=release",
-    "ios": "react-native run-ios",
-    "clean": "cd android && gradlew clean",
-    "test": "jest",
-    "lint": "eslint ."
-  },
-  "dependencies": {
-    "@react-native-community/async-storage": "^1.6.1",
-    "axios": "^0.19.0",
-    "moment": "^2.24.0",
-    "numeral": "^2.0.6",
-    "react": "16.8.6",
-    "react-native": "0.60.5",
-    "react-native-code-push": "^5.7.0",
-    "react-native-gesture-handler": "^1.4.1",
-    "react-native-modal-datetime-picker": "^7.5.0",
-    "react-native-onesignal": "^3.5.0",
-    "react-native-pie": "^0.6.1",
-    "react-native-pure-chart": "^0.0.24",
-    "react-native-reanimated": "^1.2.0",
-    "react-native-snackbar": "^2.0.2",
-    "react-native-swiper": "^1.5.14",
-    "react-native-webview": "^7.4.2",
-    "react-navigation": "^4.0.0",
-    "react-navigation-drawer": "^2.1.2",
-    "react-navigation-stack": "^1.5.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "babel-jest": "^24.9.0",
-    "eslint": "^6.3.0",
-    "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.56.0",
-    "react-test-renderer": "16.8.6"
-  },
-  "jest": {
-    "preset": "react-native"
-  }
+	"name": "Spectranet_Dealer_App",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "react-native start",
+		"andy": "react-native run-android",
+		"build-andy": "cd android && ./gradlew  bundleRelease",
+		"release-andy": "react-native run-android --variant=release",
+		"ios": "react-native run-ios",
+		"clean": "cd android && gradlew clean",
+		"deploy-andy": "appcenter codepush release-react -a spectranetlimitedng/Spectranet-Dealer-App -d Production -m",
+		"deploy-ios": "appcenter codepush release-react -a spectranetlimitedng/Spectranet-Dealer-App-IOS -d Production -m --plist-file ios/Spectranet_Dealer_App/info.plist",
+		"test": "jest",
+		"lint": "eslint ."
+	},
+	"dependencies": {
+		"@react-native-community/async-storage": "^1.6.1",
+		"axios": "^0.19.0",
+		"moment": "^2.24.0",
+		"numeral": "^2.0.6",
+		"react": "16.8.6",
+		"react-native": "0.60.5",
+		"react-native-code-push": "^5.7.0",
+		"react-native-gesture-handler": "^1.4.1",
+		"react-native-modal-datetime-picker": "^7.5.0",
+		"react-native-onesignal": "^3.5.0",
+		"react-native-pie": "^0.6.1",
+		"react-native-pure-chart": "^0.0.24",
+		"react-native-reanimated": "^1.2.0",
+		"react-native-snackbar": "^2.0.2",
+		"react-native-swiper": "^1.5.14",
+		"react-native-webview": "^7.4.2",
+		"react-navigation": "^4.0.0",
+		"react-navigation-drawer": "^2.1.2",
+		"react-navigation-stack": "^1.5.1"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.5.5",
+		"@babel/runtime": "^7.5.5",
+		"@react-native-community/eslint-config": "^0.0.5",
+		"babel-jest": "^24.9.0",
+		"eslint": "^6.3.0",
+		"jest": "^24.9.0",
+		"metro-react-native-babel-preset": "^0.56.0",
+		"react-test-renderer": "16.8.6"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
 }

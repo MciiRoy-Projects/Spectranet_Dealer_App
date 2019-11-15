@@ -125,7 +125,7 @@ export default class Target extends React.Component {
 
 							{stockList.map((el, i) => (
 								<View key={i} style={styles.grid}>
-									<H2 style={styles.textOne}>{el.location.toUpperCase()}</H2>
+									<H2 style={styles.textOne}>{el.devicetype.toUpperCase()}</H2>
 									{isNaN(el.count) || el.count == null ? (
 										<H1 style={styles.textTwo}> 0 </H1>
 									) : (

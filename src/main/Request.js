@@ -9,7 +9,7 @@ const List = [
 	{name: 'Customer Complaint Form', nav: 'CustomerComplaintForm'},
 	{name: 'Dealer Complaint Form', nav: 'DealerComplaintForm'},
 	{name: 'Stock Purchase Form', nav: 'StockPurchaseForm'},
-	{name: 'Sales Lead Form', nav: 'RequestForm'},
+	{name: 'Sales Lead Form', nav: 'SalesLeadForm'},
 	{name: 'Feedback Form', nav: 'DealerFeedbackForm'},
 ];
 

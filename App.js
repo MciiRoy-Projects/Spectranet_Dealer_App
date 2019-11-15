@@ -27,6 +27,7 @@ import Request from './src/main/Request';
 import CustomerComplaintForm from './src/main/forms/CustomerComplaintForm';
 import DealerComplaintForm from './src/main/forms/DealerComplaintForm';
 import StockPurchaseForm from './src/main/forms/StockPurchaseForm';
+import SalesLeadForm from './src/main/forms/SalesLeadForm';
 import DealerFeedbackForm from './src/main/forms/DealerFeedbackForm';
 
 import {Drawer} from './src/partials/_drawers';
@@ -83,6 +84,7 @@ const MainStack = createStackNavigator(
 		CustomerComplaintForm,
 		DealerComplaintForm,
 		StockPurchaseForm,
+		SalesLeadForm,
 		DealerFeedbackForm,
 	},
 	{
