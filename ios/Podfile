@@ -28,6 +28,7 @@ target 'Spectranet_Dealer_App' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
+  pod 'React-ART', :path => '../node_modules/react-native/Libraries/ART'
 
   target 'Spectranet_Dealer_AppTests' do
     inherit! :search_paths

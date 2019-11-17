@@ -88,11 +88,6 @@ export default class Contact extends React.Component {
               </View>
 
               <View style={styles.grid}>
-                <P style={styles.one}>Dealer Target</P>
-                <H1 style={styles.two}>{el['dealertarget']}</H1>
-              </View>
-
-              <View style={styles.grid}>
                 <P style={styles.one}>Category</P>
                 <H1 style={styles.two}>
                   {el['category'] == null ? ' - ' : el['category']}

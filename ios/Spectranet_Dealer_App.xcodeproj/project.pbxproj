@@ -5,8 +5,10 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Spectranet_Dealer_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Spectranet_Dealer_AppTests.m */; };
+		028958F8DEA148E5A0E106BB /* Product Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -20,17 +22,16 @@
 		2DCD954D1E0B4F2C00145EB5 /* Spectranet_Dealer_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Spectranet_Dealer_AppTests.m */; };
 		534AA19298504F99920EC03E /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACD3111861624B2399D17C05 /* NunitoSans-Bold.ttf */; };
 		54D7730A0F4B4AA3B38525AF /* AvenirLTStd-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F3615628F434E9CBB8270A8 /* AvenirLTStd-Light.otf */; };
+		6D1E0335CE4942CC9D81A2BB /* Product Sans Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */; };
 		6D8C94A7603BD489188B0F96 /* libPods-Spectranet_Dealer_AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 678C00A3B30F2FD532602122 /* libPods-Spectranet_Dealer_AppTests.a */; };
 		719F7AE5DC0E4E3EB046C229 /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57C8ABB6EDE848359E509B68 /* AvenirLTStd-Book.otf */; };
+		7B1BBC36DDEA4692A77816BC /* Product Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */; };
+		B2F863D54A65434881DB2E9E /* Product Sans Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */; };
 		B382E503976C4013A8EAFF28 /* icofont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E700BB84B3F14E2AB96305C9 /* icofont.ttf */; };
 		B77415AB99822AE00DEC63D8 /* libPods-Spectranet_Dealer_App-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F600416B4659315F85AE3705 /* libPods-Spectranet_Dealer_App-tvOS.a */; };
 		C76C565DA04647EC8BF7FF67 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16FAA167FAE843888D90574E /* NunitoSans-Regular.ttf */; };
 		E52CD18E3589455B986A70F3 /* AvenirLTStd-Roman.otf in Resources */ = {isa = PBXBuildFile; fileRef = E0F04F9413DF4683A5E286BF /* AvenirLTStd-Roman.otf */; };
 		FDF30C20393249C705CA00CF /* libPods-Spectranet_Dealer_App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A004323D56858C194A65671D /* libPods-Spectranet_Dealer_App.a */; };
-		6D1E0335CE4942CC9D81A2BB /* Product Sans Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */; };
-		7B1BBC36DDEA4692A77816BC /* Product Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */; };
-		B2F863D54A65434881DB2E9E /* Product Sans Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */; };
-		028958F8DEA148E5A0E106BB /* Product Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +57,9 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* Spectranet_Dealer_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Spectranet_Dealer_AppTests.m; sourceTree = "<group>"; };
 		07189DE6CB9FE0153D54E3BF /* Pods-Spectranet_Dealer_App-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App-tvOSTests/Pods-Spectranet_Dealer_App-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		0F3615628F434E9CBB8270A8 /* AvenirLTStd-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Light.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Light.otf"; sourceTree = "<group>"; };
+		0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Bold Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold Italic.ttf"; sourceTree = "<group>"; };
+		0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Bold.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold.ttf"; sourceTree = "<group>"; };
+		0F3615628F434E9CBB8270A8 /* AvenirLTStd-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Light.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Light.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Spectranet_Dealer_App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectranet_Dealer_App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Spectranet_Dealer_App/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Spectranet_Dealer_App/AppDelegate.m; sourceTree = "<group>"; };
@@ -64,32 +67,30 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Spectranet_Dealer_App/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Spectranet_Dealer_App/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Spectranet_Dealer_App/main.m; sourceTree = "<group>"; };
-		16FAA167FAE843888D90574E /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Regular.ttf"; path = "../assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
+		16FAA167FAE843888D90574E /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Regular.ttf"; path = "../assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
+		188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Regular.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Regular.ttf"; sourceTree = "<group>"; };
 		28A6D0E81DD67199249FF27B /* Pods-Spectranet_Dealer_AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_AppTests/Pods-Spectranet_Dealer_AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Spectranet_Dealer_App-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spectranet_Dealer_App-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Spectranet_Dealer_App-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spectranet_Dealer_App-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F173A6F5991FE93BF1B7CF /* Pods-Spectranet_Dealer_App-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App-tvOS/Pods-Spectranet_Dealer_App-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3DC4846AD265460EB4A93CF6 /* Pods-Spectranet_Dealer_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App.release.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App/Pods-Spectranet_Dealer_App.release.xcconfig"; sourceTree = "<group>"; };
-		57C8ABB6EDE848359E509B68 /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Book.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
+		57C8ABB6EDE848359E509B68 /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Book.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Book.otf"; sourceTree = "<group>"; };
 		678C00A3B30F2FD532602122 /* libPods-Spectranet_Dealer_AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spectranet_Dealer_AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72BD640482A4BD5F683D6F9A /* Pods-Spectranet_Dealer_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App.debug.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App/Pods-Spectranet_Dealer_App.debug.xcconfig"; sourceTree = "<group>"; };
 		878D2CCF6D6E6D7BBF3553A3 /* Pods-Spectranet_Dealer_App-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App-tvOS/Pods-Spectranet_Dealer_App-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		87C10D835B4B42D0BFD97DFE /* AvenirLTStd-Heavy.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Heavy.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Heavy.otf"; sourceTree = "<group>"; };
+		87C10D835B4B42D0BFD97DFE /* AvenirLTStd-Heavy.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Heavy.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Heavy.otf"; sourceTree = "<group>"; };
 		A004323D56858C194A65671D /* libPods-Spectranet_Dealer_App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spectranet_Dealer_App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACD3111861624B2399D17C05 /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Bold.ttf"; path = "../assets/fonts/Nunito_Sans/NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
+		ACD3111861624B2399D17C05 /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Bold.ttf"; path = "../assets/fonts/Nunito_Sans/NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
 		B1BA9407F9C23ED6678A6540 /* libPods-Spectranet_Dealer_App-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spectranet_Dealer_App-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C196128A9746BC0EFAD0A717 /* Pods-Spectranet_Dealer_App-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_App-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_App-tvOSTests/Pods-Spectranet_Dealer_App-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Italic.ttf"; sourceTree = "<group>"; };
 		D988022C236FE56F19F533C1 /* Pods-Spectranet_Dealer_AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spectranet_Dealer_AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spectranet_Dealer_AppTests/Pods-Spectranet_Dealer_AppTests.release.xcconfig"; sourceTree = "<group>"; };
-		E0F04F9413DF4683A5E286BF /* AvenirLTStd-Roman.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Roman.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Roman.otf"; sourceTree = "<group>"; };
-		E491F6165E1D486C84555785 /* Fontawesome.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontawesome.otf; path = ../assets/fonts/Fontawesome.otf; sourceTree = "<group>"; };
-		E700BB84B3F14E2AB96305C9 /* icofont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = icofont.ttf; path = ../assets/fonts/icofont.ttf; sourceTree = "<group>"; };
+		E0F04F9413DF4683A5E286BF /* AvenirLTStd-Roman.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AvenirLTStd-Roman.otf"; path = "../assets/fonts/Avenir/AvenirLTStd-Roman.otf"; sourceTree = "<group>"; };
+		E491F6165E1D486C84555785 /* Fontawesome.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontawesome.otf; path = ../assets/fonts/Fontawesome.otf; sourceTree = "<group>"; };
+		E700BB84B3F14E2AB96305C9 /* icofont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icofont.ttf; path = ../assets/fonts/icofont.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F600416B4659315F85AE3705 /* libPods-Spectranet_Dealer_App-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spectranet_Dealer_App-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CE3ADA6BEFF4B24B505FDD1 /* Product Sans Bold Italic.ttf */ = {isa = PBXFileReference; name = "Product Sans Bold Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0F05CD40D15D458F83EB8C66 /* Product Sans Bold.ttf */ = {isa = PBXFileReference; name = "Product Sans Bold.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D2AE04A10AAB4D04BD688368 /* Product Sans Italic.ttf */ = {isa = PBXFileReference; name = "Product Sans Italic.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */ = {isa = PBXFileReference; name = "Product Sans Regular.ttf"; path = "../assets/fonts/Product_Sans/Product Sans Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +172,6 @@
 				28A6D0E81DD67199249FF27B /* Pods-Spectranet_Dealer_AppTests.debug.xcconfig */,
 				D988022C236FE56F19F533C1 /* Pods-Spectranet_Dealer_AppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -239,7 +239,6 @@
 				188E74B4D95D455A9D3FE910 /* Product Sans Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +335,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 4DMD25BNMU;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -352,6 +354,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -684,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 4DMD25BNMU;
 				INFOPLIST_FILE = Spectranet_Dealer_App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -691,7 +695,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mciroyprojects.spectranetdealerapp;
 				PRODUCT_NAME = Spectranet_Dealer_App;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -703,6 +707,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4DMD25BNMU;
 				INFOPLIST_FILE = Spectranet_Dealer_App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -710,7 +715,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mciroyprojects.spectranetdealerapp;
 				PRODUCT_NAME = Spectranet_Dealer_App;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
