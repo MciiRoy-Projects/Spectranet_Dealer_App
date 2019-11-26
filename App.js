@@ -33,122 +33,122 @@ import DealerFeedbackForm from './src/main/forms/DealerFeedbackForm';
 import {Drawer} from './src/partials/_drawers';
 
 const transitionConfig = () => {
-	return {
-		transitionSpec: {
-			duration: 500,
-			easing: Easing.out(Easing.elastic(0.8)),
-			timing: Animated.timing,
-			useNativeDriver: true,
-		},
+  return {
+    transitionSpec: {
+      duration: 500,
+      easing: Easing.out(Easing.elastic(0.8)),
+      timing: Animated.timing,
+      useNativeDriver: true,
+    },
 
-		screenInterpolator: sceneProps => {
-			const {layout, position, scene} = sceneProps;
-			const thisSceneIndex = scene.index;
-			const width = layout.initWidth;
-			const translateX = position.interpolate({
-				inputRange: [thisSceneIndex - 1, thisSceneIndex],
-				outputRange: [width, 0],
-			});
-			return {transform: [{translateX}]};
-		},
-	};
+    screenInterpolator: sceneProps => {
+      const {layout, position, scene} = sceneProps;
+      const thisSceneIndex = scene.index;
+      const width = layout.initWidth;
+      const translateX = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [width, 0],
+      });
+      return {transform: [{translateX}]};
+    },
+  };
 };
 
 const UserNavigator = createStackNavigator(
-	{
-		Login,
-	},
-	{
-		defaultNavigationOptions: {
-			header: null,
-		},
-		transitionConfig,
-	},
+  {
+    Login,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+    transitionConfig,
+  },
 );
 
 const MainStack = createStackNavigator(
-	{
-		Home,
-		Profile,
-		Promo,
-		PromoView,
-		Scoreboard,
-		ScoreboardView,
-		Target,
-		IncentiveView,
-		IncentiveHtml,
-		Request,
-		NewsNotification,
-		NewsNotificationView,
-		Contact,
-		CustomerComplaintForm,
-		DealerComplaintForm,
-		StockPurchaseForm,
-		SalesLeadForm,
-		DealerFeedbackForm,
-	},
-	{
-		defaultNavigationOptions: {
-			header: null,
-		},
-	},
+  {
+    Home,
+    Profile,
+    Promo,
+    PromoView,
+    Scoreboard,
+    ScoreboardView,
+    Target,
+    IncentiveView,
+    IncentiveHtml,
+    Request,
+    NewsNotification,
+    NewsNotificationView,
+    Contact,
+    CustomerComplaintForm,
+    DealerComplaintForm,
+    StockPurchaseForm,
+    SalesLeadForm,
+    DealerFeedbackForm,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+  },
 );
 
 const DrawerNavigator = createDrawerNavigator(
-	{
-		MainStack,
-	},
-	{
-		drawerWidth: '75%',
-		contentComponent: Drawer,
-	},
+  {
+    MainStack,
+  },
+  {
+    drawerWidth: '75%',
+    contentComponent: Drawer,
+  },
 );
 
 const AppNavigator = createSwitchNavigator(
-	{
-		Splash,
-		Onboard,
-		UserNavigator,
-		DrawerNavigator,
-	},
-	{
-		transitionConfig,
-	},
+  {
+    Splash,
+    Onboard,
+    UserNavigator,
+    DrawerNavigator,
+  },
+  {
+    transitionConfig,
+  },
 );
 
 const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {
-	constructor(properties) {
-		super(properties);
-		OneSignal.init('72ed7f65-ab57-45df-98bd-175ab2abd461');
+  constructor(properties) {
+    super(properties);
+    OneSignal.init('72ed7f65-ab57-45df-98bd-175ab2abd461');
 
-		OneSignal.addEventListener('received', this.onReceived);
-		OneSignal.addEventListener('opened', this.onReceived);
-		OneSignal.addEventListener('ids', device => {
-			//console.warn(device.pushToken);
-		});
-		OneSignal.inFocusDisplaying(0);
-	}
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onReceived);
+    OneSignal.addEventListener('ids', device => {
+      //console.warn(device.pushToken);
+    });
+    OneSignal.inFocusDisplaying(0);
+  }
 
-	onReceived(notification) {
-		console.log('Notification received: ', notification);
-	}
+  onReceived(notification) {
+    console.log('Notification received: ', notification);
+  }
 
-	componentDidMount = () => {
-		codePush.sync({
-			//updateDialog: true,
-			installMode: codePush.InstallMode.ON_NEXT_RESUME,
-		});
-	};
+  componentDidMount = () => {
+    codePush.sync({
+      //updateDialog: true,
+      installMode: codePush.InstallMode.ON_NEXT_RESUME,
+    });
+  };
 
-	render() {
-		return <AppContainer />;
-	}
+  render() {
+    return <AppContainer />;
+  }
 }
 
 const codePushOptions = {
-	checkFrequency: codePush.CheckFrequency.MANUAL,
+  checkFrequency: codePush.CheckFrequency.MANUAL,
 };
 
 export default codePush(codePushOptions)(App);

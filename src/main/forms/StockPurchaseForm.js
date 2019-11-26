@@ -186,7 +186,7 @@ export default class StockPurchaseForm extends React.Component {
 			/>*/}
             <TextInput
               style={styles.input}
-              placeholder="Subject"
+              placeholder="*Subject"
               value={subject}
               onChangeText={subject => this.setState({subject})}
             />
@@ -194,7 +194,7 @@ export default class StockPurchaseForm extends React.Component {
             <TextInput
               style={styles.textbox}
               value={message}
-              placeholder="Description"
+              placeholder="*Description"
               onChangeText={message => this.setState({message})}
               multiline={true}
               numberOfLines={5}

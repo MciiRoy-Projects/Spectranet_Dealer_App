@@ -14,6 +14,7 @@ import {
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
+import {getData, idCheck} from '../partials/_api';
 
 const data = [
   {
@@ -38,6 +39,37 @@ const data = [
 ];
 
 export default class Scoreboard extends React.Component {
+  checkUserID = () => {
+    getData('userDetails').then(res => {
+      if (res) {
+        res = JSON.parse(res);
+        let userId = idCheck(res, 'userId');
+        userId = userId.substring(0, 3);
+        if (
+          userId == 'LGX' ||
+          userId == 'ABX' ||
+          userId == 'IBX' ||
+          userId == 'PHX'
+        )
+          this.props.navigation.navigate('IncentiveHtml', {
+            link: 'franchiseincentive',
+          });
+        if (
+          userId == 'LGX' ||
+          userId == 'ABX' ||
+          userId == 'IBX' ||
+          userId == 'PHX'
+        )
+          this.props.navigation.navigate('IncentiveHtml', {
+            link: 'superdealerincentive',
+          });
+        this.props.navigation.navigate('IncentiveHtml', {
+          link: 'dealerincentive',
+        });
+      }
+    });
+  };
+
   render() {
     const {navigation} = this.props;
     return (
@@ -60,6 +92,12 @@ export default class Scoreboard extends React.Component {
                 onPress={() => navigation.navigate('ScoreboardView', el)}
               />
             ))}
+
+            <LiImage
+              icon={AppIcons.mtdSales}
+              text="Incentives"
+              onPress={this.checkUserID}
+            />
           </ScrollView>
         </View>
       </WrapperMain>
