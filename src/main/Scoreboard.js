@@ -50,22 +50,24 @@ export default class Scoreboard extends React.Component {
           userId == 'ABX' ||
           userId == 'IBX' ||
           userId == 'PHX'
-        )
+        ) {
           this.props.navigation.navigate('IncentiveHtml', {
             link: 'franchiseincentive',
           });
-        if (
-          userId == 'LGX' ||
-          userId == 'ABX' ||
-          userId == 'IBX' ||
-          userId == 'PHX'
-        )
+        } else if (
+          userId == 'LGD' ||
+          userId == 'ABD' ||
+          userId == 'IBD' ||
+          userId == 'PHD'
+        ) {
           this.props.navigation.navigate('IncentiveHtml', {
             link: 'superdealerincentive',
           });
-        this.props.navigation.navigate('IncentiveHtml', {
-          link: 'dealerincentive',
-        });
+        } else {
+          this.props.navigation.navigate('IncentiveHtml', {
+            link: 'dealerincentive',
+          });
+        }
       }
     });
   };

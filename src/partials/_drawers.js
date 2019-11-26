@@ -59,7 +59,7 @@ export const Drawer = props => {
           opacity: 0.5,
           fontSize: RF(12),
         }}>
-        Version 1.0.1
+        Version 1.0.2
       </H2>
     </View>
   );

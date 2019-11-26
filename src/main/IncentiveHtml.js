@@ -34,7 +34,7 @@ export default class IncentiveHtml extends React.Component {
             goBack={() => navigation.goBack()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Incentive</Title>
+          <Title> Incentives</Title>
         </View>
         <View style={styles.webview}>
           <WebView source={{uri: url}} style={{flex: 1}}></WebView>
