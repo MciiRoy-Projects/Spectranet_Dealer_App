@@ -1,169 +1,135 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import Pie from 'react-native-pie';
 import {
-  Header,
-  WrapperMain,
-  H1,
-  H2,
-  P,
-  Title,
-  Card,
-  Touch,
-  LiImage,
-  Ico,
-} from '../partials/_components';
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Image,
+  AppState,
+} from 'react-native';
+import Pie from 'react-native-pie';
+import {Header, WrapperMain, Loading} from '../partials/_components';
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import numeral from 'numeral';
-import {
-  keyContact,
-  getData,
-  idCheck,
-  dealerPerformance,
-  dealerAvailableStock,
-  Snack,
-} from '../partials/_api';
+import Chart from './TargetComponent/_chart';
+import Chart2 from './TargetComponent/_chart2';
+import {targetHistory, updateState} from '../actions';
+import {connect} from 'react-redux';
+import format from 'format-number';
+import {Touch} from '../partials/_components';
 
-export default class Target extends React.Component {
-  state = {
-    dealerTarget: '-',
-    targetAchieved: '-',
-    recharge: {'Dealer Target': '-'},
-    available: {'Dealer Target': '-'},
-    isLoading: true,
-    isChart: true,
-    soldPercent: 0,
-    totalStock: 0,
-    stockList: [],
-  };
-
-  loadKeyContactData = userId => {
-    keyContact(userId)
-      .then(res => {
-        console.log(userId);
-        res = res.data;
-        if (res.success == true) {
-          this.setState(
-            {
-              dealerTarget: res.data['dealertarget'],
-              targetAchieved: res.data['dealermtd'],
-            },
-            () => {
-              this.checkChart();
-            },
-          );
-        }
-      })
-      .catch(err => Snack('Connection Error. Please try again later.'))
-      .then(() => this.setState({isLoading: false}));
-  };
-
-  loadDealerAvailableStock = userId => {
-    dealerAvailableStock(userId)
-      .then(res => {
-        const {data} = this.state;
-        var totalStock = 0;
-        res = res.data;
-        if (res.success == true) {
-          res.data.forEach(el => {
-            totalStock += el.count;
-          });
-          this.setState({totalStock, stockList: res.data});
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  init() {
-    getData('userDetails').then(res => {
-      if (res) {
-        res = JSON.parse(res);
-        let userId = idCheck(res, 'userId');
-        this.loadKeyContactData(userId);
-        this.loadDealerAvailableStock(userId);
-      }
-    });
+class Target extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.updateState('isLoadingBg', true);
+    this.amountSold = null;
+    this.dealertargetValue = null;
+    this.mtd = null;
+    this.valueArr = [];
+    this.text = '';
+    this.target_text = '';
+    this.target_text = '';
+    this.state = {
+      popup: false,
+      target_text: null,
+      topup_text: null,
+      click: false,
+    };
   }
 
-  checkChart = () => {
-    const {dealerTarget, targetAchieved} = this.state;
-    if (dealerTarget == '-' || targetAchieved == '-') return;
-    var soldPercent = Math.ceil((targetAchieved / dealerTarget) * 100);
-    this.setState({isChart: true, soldPercent});
-  };
+  init() {
+    this.props.targetHistory();
+  }
 
   componentDidMount() {
     this.init();
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (
+      props.store.mtdetopupsold &&
+      props.store.dealertarget &&
+      props.store.mtd
+    ) {
+      let balance = 1000000 - props.store.mtdetopupsold;
+      let targetbal = props.store.dealertarget - props.store.mtd;
+
+      let text1 = `Your total E-top up purchased for the month is ${format({
+        prefix: '₦',
+      })(props.store.mtdetopupsold)}, purchase a minimum ${format({
+        prefix: '₦',
+      })(balance)} more to meet your target.`;
+
+      let text2 = `Your total activation is now ${props.store.mtd}, please activate ${targetbal} more devices to meet your Target for the Month.`;
+      if (state.click === false) {
+        return {popup: true, topup_text: text1, target_text: text2};
+      } else {
+        return {popup: false};
+      }
+    }
+    return {popup: false};
+  }
+
   render() {
     const {navigation} = this.props;
-    const {
-      isLoading,
-      dealerTarget,
-      targetAchieved,
-      recharge,
-      available,
-      isChart,
-      soldPercent,
-      stockList,
-      totalStock,
-    } = this.state;
+
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <Header
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Target for the month</Title>
         </View>
 
-        {isLoading ? (
-          <ActivityIndicator size="large" color={AppColors.cobalt} />
-        ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.paneTwoOne}>
-              {isChart ? (
-                <Pie
-                  radius={RW(25)}
-                  innerRadius={RW(22)}
-                  series={[soldPercent]}
-                  colors={[AppColors.cobalt]}
-                  backgroundColor="#efefef"
-                />
-              ) : null}
-              <H1 style={styles.two}>
-                {targetAchieved} / {dealerTarget}
-              </H1>
-              <H1 style={styles.textOneOne}>Activations</H1>
-            </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.paneTwoOne}>
+            <Chart />
+          </View>
 
-            <View style={styles.paneTwo}>
-              <H1 style={styles.textOneOne}>Available Stock (Device Wise)</H1>
-              <H1 style={styles.two2}>{totalStock}</H1>
+          <View style={{marginVertical: RH(2)}}>
+            <Chart2 />
+          </View>
+        </ScrollView>
 
-              {stockList.map((el, i) => (
-                <View key={i} style={styles.grid}>
-                  <H2 style={styles.textOne}>{el.devicetype.toUpperCase()}</H2>
-                  {isNaN(el.count) || el.count == null ? (
-                    <H1 style={styles.textTwo}> 0 </H1>
-                  ) : (
-                    <H1 style={styles.textTwo}>
-                      {numeral(el.count).format(0, 0)}
-                    </H1>
-                  )}
-                </View>
-              ))}
+        {this.props.store.isLoadingBg ? <Loading /> : null}
+
+        {this.state.popup ? (
+          <View style={styles.popup}>
+            <View style={styles.options}>
+              <Text style={styles.text}>{this.state.topup_text}</Text>
+              <Text style={styles.text}>{this.state.target_text}</Text>
             </View>
-          </ScrollView>
-        )}
+            <Touch
+              style={styles.closeBtn}
+              onPress={() => this.setState({click: true})}>
+              <Image
+                source={AppIcons.closeform}
+                resizeMode="contain"
+                style={{
+                  height: RH(8),
+                  width: RW(15),
+                }}
+              />
+            </Touch>
+          </View>
+        ) : null}
       </WrapperMain>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    store: state.store,
+  };
+};
+
+export default connect(mapStateToProps, {
+  targetHistory,
+  updateState,
+})(Target);
 
 const styles = StyleSheet.create({
   paneOne: {
@@ -181,10 +147,8 @@ const styles = StyleSheet.create({
   },
   paneTwoOne: {
     marginTop: RH(1),
-    backgroundColor: '#fff',
     paddingTop: RH(4),
     paddingHorizontal: RW(6),
-    borderRadius: RH(2),
     marginHorizontal: RW(6),
     alignItems: 'center',
     flex: 1,
@@ -238,5 +202,54 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     color: AppColors.scarlet2,
     textAlign: 'right',
+  },
+  gauge: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  gaugeText: {
+    backgroundColor: 'transparent',
+    color: AppColors.white,
+    fontSize: 24,
+    fontFamily: 'Montserrat-Regular',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  popup: {
+    backgroundColor: 'rgba(0, 0, 0, 0.78)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: RW(100),
+    height: RH(100),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  options: {
+    height: '50%',
+    width: '80%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: RH(1),
+    padding: RW(5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeBtn: {
+    width: '80%',
+    padding: RH(2),
+    borderRadius: RH(1),
+    marginTop: RH(1),
+    alignItems: 'center',
+  },
+  text: {
+    fontFamily: 'Montserrat-Regular',
+    marginTop: RH(5),
+    textAlign: 'center',
   },
 });

@@ -5,8 +5,7 @@ import {
   WrapperMain,
   H1,
   H2,
-  Title,
-  Touch,
+  PageTitle
 } from '../partials/_components';
 
 import AppColors from '../lib/_colors';
@@ -28,20 +27,22 @@ export default class PromoView extends React.Component {
     const {data} = this.state;
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <HeaderBack
             goBack={() => navigation.goBack()}
             openProfile={() => navigation.navigate('Profile')}
-          />
-          <H1 style={styles.title}>{data.title}</H1>
-          <H1 style={[styles.textDate]}>
-            {moment(data.startdate).format('MMM DD, YYYY')} -{' '}
-            {moment(data.enddate).format('MMM DD, YYYY')}
-          </H1>
+          />          
         </View>
 
-        <View style={styles.paneTwo}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+        <PageTitle title={data.title} style={styles.title}/>
+          
+        <H1 style={[styles.textDate]}>
+          {moment(data.startdate).format('MMM DD, YYYY')} -{' '}
+          {moment(data.enddate).format('MMM DD, YYYY')}
+        </H1>
+        
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.paneTwo}>
             <View style={styles.imageHolder}>
               <Image
                 source={{uri: data.img}}
@@ -49,9 +50,11 @@ export default class PromoView extends React.Component {
                 resizeMode="contain"
               />
             </View>
+            <H2 style={{marginBottom:20,color:AppColors.white,fontSize:RF(14)}}>Product Description</H2>
             <H2 style={styles.textOne}>{data.content}</H2>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>  
+
       </WrapperMain>
     );
   }
@@ -61,12 +64,16 @@ const styles = StyleSheet.create({
   imageHolder: {
     width: '100%',
     height: RH(30),
-    marginRight: RW(5),
     borderRadius: RH(1),
     marginBottom: RH(5),
+    backgroundColor: AppColors.white,
+    borderRadius: RW(5),
+    alignItems:'center',
+    justifyContent:'center',
+    overflow:'hidden'
   },
   image: {
-    flex: 1,
+    flex:1,
     width: '100%',
   },
   paneOne: {
@@ -75,26 +82,24 @@ const styles = StyleSheet.create({
   },
   paneTwo: {
     marginTop: RH(1),
-    backgroundColor: '#fff',
-    paddingVertical: RH(4),
-    paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
     flex: 1,
+    marginTop: RH(1),
+    marginHorizontal: RW(3),
+    paddingVertical: RH(2),
   },
   title: {
-    paddingRight: RW(15),
-    fontSize: RF(22),
-    color: AppColors.cobalt,
+    fontSize: RF(20),
+    color: AppColors.white,
   },
   textOne: {
     fontSize: RF(18),
-    color: AppColors.brownishGrey,
+    color: AppColors.white,
   },
   textDate: {
     fontSize: RF(13),
-    color: AppColors.brownishGrey,
+    color: AppColors.white,
     opacity: 0.8,
+    paddingHorizontal: RW(2)
   },
   grid: {
     paddingVertical: RH(3),

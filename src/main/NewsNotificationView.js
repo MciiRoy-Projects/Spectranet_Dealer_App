@@ -1,44 +1,43 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, StyleSheet, ScrollView, Image, Text} from 'react-native';
 import {
   HeaderBack,
   WrapperMain,
   P,
   H2,
-  Title,
-  Ico,
+  PageTitle,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
-import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import moment from 'moment';
 
 export default class NewsNotificationView extends React.Component {
   render() {
     const {navigation} = this.props;
     const data = navigation.state.params;
+    let stringData = JSON.stringify(data.content);
+    var json = JSON.parse(stringData);
+    let body = json.replace(/(\\r)*\\n/g, '\n');
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <HeaderBack
             goBack={() => navigation.goBack()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> News & Notifications</Title>
+          <PageTitle title={'News & Notifications'} />
+
+          <Text style={styles.text}>{data.item}</Text>
         </View>
 
-        <View style={styles.paneTwo}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.grid}>
-              <H2 style={styles.header}>{data.item}</H2>
-              <P style={styles.one}>{data.timestamp}</P>
-            </View>
-
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.paneTwo}>
             <View style={{marginTop: RH(1)}}>
-              <H2 style={styles.two}>{data.content}</H2>
+              <H2 style={styles.two}>
+                <Text>{body}</Text>
+              </H2>
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </WrapperMain>
     );
   }
@@ -50,13 +49,13 @@ const styles = StyleSheet.create({
     height: RH(40),
   },
   paneTwo: {
-    marginTop: RH(1),
+    marginTop: RH(3),
     backgroundColor: '#fff',
-    paddingVertical: RH(4),
     paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
+    borderRadius: RH(2),
     flex: 1,
+    //marginHorizontal: RW(3),
+    paddingVertical: RH(2),
   },
   grid: {
     paddingVertical: RH(2.3),
@@ -78,5 +77,11 @@ const styles = StyleSheet.create({
     fontSize: RF(18),
     lineHeight: RF(25),
     color: AppColors.greyishBrown,
+  },
+  text: {
+    color: AppColors.white,
+    fontFamily: 'Montserrat-Regular',
+    paddingHorizontal: RW(2),
+    marginTop: RH(2),
   },
 });

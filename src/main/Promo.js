@@ -11,35 +11,22 @@ import {
   WrapperMain,
   H1,
   H2,
-  Title,
+  PageTitle,
   Touch,
+  Loading
 } from '../partials/_components';
 
 import AppColors from '../lib/_colors';
 import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import {getPromos, Snack} from '../partials/_api';
 import moment from 'moment';
+import {promoData} from '../actions';
+import {connect} from 'react-redux';
 
-export default class Promo extends React.Component {
-  state = {
-    list: [],
-    isLoading: true,
-  };
-
+class Promo extends React.Component {
+  
   loadData = () => {
-    getPromos()
-      .then(res => {
-        res = res.data;
-        if (res.status) {
-          this.setState({list: res.msg});
-          this.setState({isLoading: false});
-          Snack('Updated . . .');
-          return;
-        }
-        Snack(res.msg);
-      })
-      .catch(err => console.log(err));
+    this.props.promoData();
   };
 
   componentDidMount() {
@@ -48,27 +35,20 @@ export default class Promo extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    const {list, isLoading} = this.state;
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <Header
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Current Promos</Title>
+          <PageTitle title={"Current Promos"}/>
         </View>
 
         <View style={styles.paneTwo}>
-          {isLoading ? (
-            <ActivityIndicator
-              size="large"
-              color={AppColors.cobalt}
-              style={{marginTop: RH(30)}}
-            />
-          ) : (
+          
             <ScrollView showsVerticalScrollIndicator={false}>
-              {list.map((el, key) => (
+              {this.props.store.list.map((el, key) => (
                 <Touch
                   style={styles.grid}
                   key={key}
@@ -83,7 +63,7 @@ export default class Promo extends React.Component {
                       <Image
                         source={{uri: el.img}}
                         style={styles.image}
-                        resizeMode="cover"
+                        resizeMode="contain"
                       />
                     </View>
                     <View>
@@ -101,20 +81,35 @@ export default class Promo extends React.Component {
                 </Touch>
               ))}
             </ScrollView>
-          )}
         </View>
+
+        {this.props.store.isLoadingBg ? (
+          <Loading />
+        ) : null}
       </WrapperMain>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+      store: state.store
+  }
+};
+
+export default connect(mapStateToProps, { 
+  promoData
+ })(Promo);
+
 const styles = StyleSheet.create({
   imageHolder: {
-    backgroundColor: '#dfdfdf',
+    backgroundColor: AppColors.white,
     width: RW(25),
     height: RH(10),
     marginRight: RW(5),
     borderRadius: RH(1),
+    alignItems:'center',
+    justifyContent:'center'
   },
   image: {
     flex: 1,
@@ -126,29 +121,46 @@ const styles = StyleSheet.create({
   },
   paneTwo: {
     marginTop: RH(1),
-    backgroundColor: '#fff',
-    paddingVertical: RH(4),
-    paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
     flex: 1,
+    marginTop: RH(1),
+    marginHorizontal: RW(3),
+    paddingVertical: RH(2)
   },
   textOne: {
     fontSize: RF(18),
-    color: AppColors.brownishGrey,
+    color: AppColors.white,
   },
   textTwo: {
     fontSize: RF(13),
-    color: AppColors.brownishGrey,
+    color: AppColors.white,
     opacity: 0.6,
-    marginTop: RH(0.5),
+    marginTop: RH(2),
   },
   grid: {
+    //paddingVertical: RH(3),
+    //flexDirection: 'row',
+    //alignItems: 'center',
+    //justifyContent: 'space-between',
+    //borderBottomColor: '#dfdfdf',
+    //borderBottomWidth: 0.5,
+
+    alignItems:"center", 
+    borderLeftColor:"#F15F79",
+    borderLeftWidth:2,
+    paddingHorizontal:15,
+    flexDirection:'row',
+    justifyContent:'space-between',
     paddingVertical: RH(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomColor: '#dfdfdf',
-    borderBottomWidth: 0.5,
+    marginVertical:RH(2),
+    shadowColor:'rgba(0, 0, 0, 0.1)',
+    shadowOffset:{width:0,height:0},
+    shadowOpacity:0.8,
+    shadowRadius:2,
+    elevation:1,
+    backgroundColor:'#1B5AAC',
+    borderTopWidth:1,
+    borderTopColor:'rgba(255,255,255,0.3)',
+    borderBottomWidth:1,
+    borderBottomColor:'rgba(255,255,255,0.3)'
   },
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,14 +6,17 @@ import {
   TextInput,
   ActivityIndicator,
   Platform,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import {
-  Header,
   WrapperMain,
   H1,
-  Button,
   HeaderBack,
-  H2,
+  Loading,
+  PageTitle,
+  Touch,
+  H2
 } from '../../partials/_components';
 import AppColors from '../../lib/_colors';
 import AppIcons from '../../partials/_icons';
@@ -25,6 +28,10 @@ import {
   keyContact,
   Snack,
 } from '../../partials/_api';
+import {updateState} from '../../actions';
+import {connect} from 'react-redux';
+import {FormMessage} from './_partials';
+const subjects = ['FREEDOM MIFI', 'EVO MIFI', 'Blaze CPE', 'Car Mifi', 'ACE', 'VirtualIMEI', 'Others'];
 
 let RegFont = '';
 Platform.OS == 'ios'
@@ -33,21 +40,14 @@ Platform.OS == 'ios'
 
 Platform.OS == 'ios' ? (fontWeight = 'bold') : (fontWeight = 'normal');
 
-export default class StockPurchaseForm extends React.Component {
-  state = {
-    name: '',
-    userId: '',
-    type: '',
-    product: '',
-    quantity: '',
-    tsm: '',
-    tsmemail: '',
-    superdealemail: '',
-    subject: '',
-    message: '',
-    isLoadingBg: true,
-    isLoading: false,
-  };
+class StockPurchaseForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.updateState("isLoadingBg",true);
+    this.props.updateState('skuqty','');
+    this.props.updateState('skulabel','* Choose SKU'); 
+  }
+
 
   init() {
     getData('userDetails').then(res => {
@@ -55,14 +55,12 @@ export default class StockPurchaseForm extends React.Component {
         res = JSON.parse(res);
         let userId = idCheck(res, 'userId');
         let email = idCheck(res, 'email');
-        let name = `${idCheck(res, 'firstName')}`;
-        this.setState({
-          userId,
-          email,
-          name,
-          type: this.props.navigation.state.params,
-        });
+        let name = `${idCheck(res, 'firstName')}`;        
         this.getTsm(userId);
+        this.props.updateState('userId',userId);
+        this.props.updateState('email',email);
+        this.props.updateState('name',name);
+        this.props.updateState('isLoadingBg', false);
       }
     });
   }
@@ -73,181 +71,198 @@ export default class StockPurchaseForm extends React.Component {
         res = res.data;
         //console.warn(res);
         if (res.success == true) {
-          this.setState({
-            tsm: res.data.tsmname,
-            tsmemail: res.data.tsmemail,
-            superdealemail: res.data.superdealemail,
-            isLoadingBg: false,
-          });
+          this.props.updateState('tsm', res.data.tsmname);
+          this.props.updateState('tsmemail', res.data.tsmemail);
+          this.props.updateState('superdealeremail', res.data.sdemail);
+          this.props.updateState('superdealername', res.data.sdname);
+          this.props.updateState('isLoadingBg', false);
         }
       })
-      .catch(() => Snack('Connection Error. Please try again later'));
+      .catch(() => Snack('Connection Error. Please try again later'))
+      .then(() => this.props.updateState('isLoading', false));;
   };
 
-  submit = () => {
-    const {
-      userId,
-      email,
-      name,
-      subject,
-      type,
-      message,
-      product,
-      quantity,
-      tsm,
-      tsmemail,
-      superdealemail,
-    } = this.state;
-
+  submit(){
     if (
-      userId == '' ||
-      email == '' ||
-      name == '' ||
-      subject == '' ||
-      message == '' ||
-      type == ''
+      this.props.store.userId == '' ||
+      this.props.store.name == '' ||
+      this.props.store.skulabel == '' ||
+      this.props.store.skulabel == '* Choose SKU' ||
+      this.props.store.skuqty == '' ||
+      this.props.store.type == ''
     ) {
       Snack('Fields with * are required');
       return;
     }
 
-    this.setState({isLoading: true});
-    const fd = `userId=${userId}&email=${email}&name=${name}&subject=${subject}&message=${message}&type=${type}&quantity=${quantity}&product=${product}&tsm=${tsm}&tsmemail=${tsmemail}`;
+    this.props.updateState('isLoading', true);
+    const fd = `userId=${this.props.store.userId}&email=${this.props.store.email}&name=${this.props.store.name}&subject=${this.props.store.stockPurchaseFormSub}&type=${"Stock Purchase Form"}&quantity=${this.props.store.skuqty}&product=${this.props.store.skulabel}&tsm=${this.props.store.tsm}&tsmemail=${this.props.store.tsmemail}`;
+    
     requestForm(fd)
       .then(res => {
         if (res.data.status == true) {
-          Snack(res.data.response);
-          this.props.navigation.goBack();
+          this.props.updateState('isPopupFormSent',true);
+          this.props.updateState('isLoading',false);
         }
       })
       .catch(err => Snack('Connection Error. Please try again later'))
-      .then(() => this.setState({isLoading: false}));
+      .then(() => this.props.updateState('isLoading', false));
   };
 
   componentDidMount() {
     this.init();
   }
 
+  onIdChange(text){
+    this.props.updateState('customerId',text)
+  }
+
+  onMsgChange(text){
+    this.props.updateState('message',text)
+  }
+
+  onSkuQtyChange(text){
+    this.props.updateState('skuqty',text)
+  }
+
   render() {
     const {navigation} = this.props;
-    const {
-      userId,
-      subject,
-      name,
-      message,
-      product,
-      quantity,
-      tsm,
-      isLoadingBg,
-      isLoading,
-    } = this.state;
+    
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <HeaderBack
             goBack={() => navigation.goBack()}
-            openProfile={() => navigation.navigate('Profile')}
+            openProfile={() => {
+              navigation.navigate('Profile');
+            }}
           />
+          <PageTitle title={"Stock Purchase Form"} style={styles.text} />          
         </View>
-
-        <View style={styles.paneTwo}>
-          <H1 style={styles.textOne}>{navigation.state.params}</H1>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          
+        
+        <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+          <View style={styles.paneTwo}>
+            <H1 style={styles.textOne}>{navigation.state.params}</H1>
+            
             <TextInput
-              value={userId}
+              value={this.props.store.userId}
               style={styles.input2}
               placeholder="Dealer User ID"
+              placeholderTextColor = "#ABABAB"
               editable={false}
             />
+
             <TextInput
-              value={name}
+              value={this.props.store.name}
               style={styles.input2}
               placeholder="Dealer Name"
+              placeholderTextColor = "#ABABAB"
               editable={false}
             />
-            {/*<TextInput
-              value={tsm}
-              style={styles.input2}
-              placeholder="tsm"
-              editable={false}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Product"
-              value={product}
-              onChangeText={product => this.setState({product})}
-            />
-            <TextInput
-							style={styles.input}
-							keyboardType="number-pad"
-							placeholder="Quantity"
-							value={quantity}
-							onChangeText={quantity => this.setState({quantity})}
-			/>*/}
+
             <TextInput
               style={styles.input}
               placeholder="*Subject"
-              value={subject}
-              onChangeText={subject => this.setState({subject})}
+              placeholderTextColor = "#ABABAB"
+              value={this.props.store.stockPurchaseFormSub}              
+              editable={false}
             />
+
+            <Touch
+              style={styles.input}
+              onPress={() => this.props.updateState('isPopup', true)}>
+              {this.props.store.skulabel !== '* Choose SKU' ? (
+                <H2 style={styles.text1}>{this.props.store.skulabel}</H2>
+              ) : (
+                <H2 style={styles.text2}>{this.props.store.skulabel}</H2>
+              )}
+            </Touch>
 
             <TextInput
-              style={styles.textbox}
-              value={message}
-              placeholder="*Description"
-              onChangeText={message => this.setState({message})}
-              multiline={true}
-              numberOfLines={5}
+              style={styles.input}
+              placeholder="* Qty"
+              placeholderTextColor = "#ABABAB"s              
+              keyboardType="numeric"
+              value={this.props.store.skuqty}
+              onChangeText={this.onSkuQtyChange.bind(this)}
             />
-
-            {isLoading ? (
-              <ActivityIndicator size="large" color={AppColors.cobalt} />
-            ) : (
-              <Button
-                text="SUBMIT"
-                style={styles.btn}
-                onPress={() => this.submit()}
-              />
-            )}
-          </ScrollView>
-        </View>
-
-        {isLoadingBg ? (
-          <View
-            style={{
-              height: RH(100),
-              width: RW(100),
-              backgroundColor: '#00000095',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                backgroundColor: AppColors.cobalt,
-                marginBottom: RH(5),
-                padding: RH(2),
-                width: RW(80),
-              }}>
-              <H2
-                style={{
-                  fontSize: RF(20),
-                  color: '#fff',
-                  textAlign: 'center',
-                  marginBottom: RH(4),
-                }}>
-                Fetching {'\n'}Territory Relationship{'\n'}Manager Details
-              </H2>
-              <ActivityIndicator size="large" color="#fff" />
-            </View>
+            
           </View>
-        ) : null}
+          {this.props.store.isLoading ? (
+            <ActivityIndicator style={{marginTop: RH(1)}} size="large" color={AppColors.white} />
+          ) : (
+            <View style={styles.btnWrp}>                    
+              <TouchableOpacity
+                onPress={this.submit.bind(this)}
+                style={styles.btn}
+              >
+                <Image style={styles.btnBg} 
+                  source={require('../../../assets/img/submit.png')} />                            
+              </TouchableOpacity>
+
+            </View>
+          )}
+        </ScrollView>
+        
+
+          {this.props.store.isPopup ? (
+            <View style={styles.popup}>
+              <View style={styles.options}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {subjects.map((el, key) => (
+                    <Touch
+                      key={key}
+                      style={styles.optionItems}
+                      onPress={() =>{
+                        this.props.updateState('skulabel', el);
+                        this.props.updateState('isPopup', false); 
+                      }
+                      }>
+                      <H2 style={{fontSize: RF(16)}}>{el}</H2>
+                    </Touch>
+                  ))}
+                </ScrollView>
+              </View>
+              <Touch
+                style={styles.closeBtn}
+                onPress={() => this.props.updateState('isPopup', false)}>
+                <Image 
+                  source={AppIcons.closeform} 
+                  resizeMode="contain"
+                  style={{
+                    height: RH(8), 
+                    width: RW(15),          
+                    }}
+                />
+              </Touch>
+            </View>
+          ) : null}
+        
+        {this.props.store.isLoadingBg ? <Loading /> : null}
+
+        {this.props.store.isPopupFormSent ? (
+          <FormMessage 
+              action={() => {
+                this.props.navigation.goBack(); 
+                this.props.updateState('isPopupFormSent', false)} } 
+              imageSource={AppIcons.closeform}       
+          />) : null
+        }
       </WrapperMain>
     );
   }
 }
+
+
+
+const mapStateToProps = (state) => {
+  return {
+      store: state.store
+  }
+};
+
+export default connect(mapStateToProps, {updateState})(StockPurchaseForm);
 
 const styles = StyleSheet.create({
   paneOne: {
@@ -259,9 +274,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: RH(4),
     paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
+    borderRadius: RH(5),
     flex: 1,
+    paddingBottom: RH(2),
   },
   textOne: {
     color: AppColors.pumpkin,
@@ -270,34 +285,92 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: RF(17),
-    fontFamily: RegFont,
+    fontFamily: 'Montserrat-Regular',
     paddingVertical: RH(2),
     marginVertical: RH(0.7),
-    borderBottomColor: AppColors.veryLightPink,
-    borderBottomWidth: RH(0.3),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.8,
+    color:'#ABABAB'
   },
   input2: {
     fontSize: RF(17),
-    fontFamily: RegFont,
+    fontFamily:'Montserrat-Regular',
     paddingVertical: RH(2),
     marginVertical: RH(0.7),
-    borderBottomColor: AppColors.veryLightPink,
-    borderBottomWidth: RH(0.3),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.8,
     opacity: 0.8,
+    color:'#ABABAB'
   },
   textbox: {
-    fontSize: RF(18),
-    fontFamily: RegFont,
+    fontSize: RF(17),
+    fontFamily: 'Montserrat-Regular',
     paddingVertical: RH(2),
     marginBottom: RH(1),
+    borderBottomColor: '#dfdfdf',
+    borderBottomWidth: 0.8,
+    height: RH(15),
+    color:'#ABABAB'
+  },
+  btnWrp: {
+    flex:1,
+    alignItems: "center",
+    justifyContent:'center',
+    marginVertical:RH(5)
+  },
+  btn:{
+    width:'50%',
+    height:50,                         
+    position:'relative',
+    borderRadius:RH(15)
+  },
+  text:{
+    color: AppColors.white,
+    fontFamily:'Montserrat-Regular',
+    marginBottom: RH(5),
+    paddingVertical:RH(1),
+    fontSize:RF(18)
+  },
+  text1:{
+    color:'#ABABAB'
+  },
+  text2:{
+    color:'#ABABAB'
+  },
+  btnBg:{
+    width:'100%',
+    height:'100%',
+    borderRadius:RH(15)
+  },
+  popup: {
+    backgroundColor: 'rgba(0, 0, 0, 0.78)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: RW(100),
+    height: RH(100),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  options: {
+    height: '50%',
+    width: '80%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: RH(1),
+    padding: RW(5),
+  },
+  optionItems: {
+    paddingVertical: RH(2),
     borderBottomColor: AppColors.veryLightPink,
     borderBottomWidth: RH(0.3),
-    height: RH(15),
+    fontSize: RF(17),
+    fontFamily: 'Montserrat-Regular'
   },
-  btn: {
-    width: RW(70),
-    alignSelf: 'center',
-    marginTop: RH(2),
-    marginBottom: RH(5),
+  closeBtn: {
+    width: '80%',
+    padding: RH(2),
+    borderRadius: RH(1),
+    marginTop: RH(1),
+    alignItems: 'center',
   },
 });

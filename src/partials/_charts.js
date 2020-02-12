@@ -56,14 +56,14 @@ export class Chart extends React.Component {
     });
   };
 
-  componentDidMount() {
+  componentDidMount() {    
     if (this.props.chartData.length > 0) {
       this.setState({isData: true, isLoading: false});
       this.loadChart(this.props.chartData);
     }
   }
 
-  render() {
+  render() {    
     const {
       barWidth,
       maxHeight,
@@ -76,45 +76,59 @@ export class Chart extends React.Component {
       <ActivityIndicator size="large" color={AppColors.cobalt} />
     ) : isData ? (
       <View style={styles.container}>
-        {chartData.map((item, key) => (
-          <Animated.View
-            style={[
-              styles.bar,
-              {
-                width: barWidth,
-                height: minChartHeight((item.count / chartSum) * maxHeight),
-              },
-            ]}
-            key={key}>
-            <View style={styles.paneOne}>
-              <P
-                style={{
-                  opacity: 0.5,
-                  fontSize: RF(13),
-                  color: AppColors.greyishBrown,
-                }}>
-                {item.count}
-              </P>
-            </View>
-
-            <View
+            <View style={styles.chartContainer}>
+          {chartData.map((item, key) => (
+            <Animated.View
               style={[
-                styles.paneTwo,
-                {backgroundColor: AppColors.lightGreyBlue},
+                styles.bar,
+                {
+                  width: barWidth,
+                  height: minChartHeight((item.count / chartSum) * maxHeight),
+                  color: '#fff',
+                  
+                },
               ]}
-            />
-            <View style={styles.paneThree}>
-              <H1
-                style={{
-                  fontSize: RF(12),
-                  marginTop: RH(0.3),
-                }}>
-                {item.devicetype.substring(0, 8)}
-              </H1>
-            </View>
-          </Animated.View>
-        ))}
+              key={key}>
+                {/* numbers*/}
+              <View style={styles.paneOne}>
+                <P
+                  style={{
+                    opacity: 0.7,
+                    fontSize: RF(13),
+                    color: AppColors.greyishBrown,
+                  }}>
+                  {item.count}
+                </P>
+              </View>
+                   {/*bar*/}
+              <View
+                style={[
+                  styles.paneTwo,
+                  {backgroundColor: AppColors.purple,},
+                ]}
+              />
+               {/* name*/}
+              <View style={styles.paneThree}>
+                <H1
+                  style={{
+                    fontSize: RF(12),
+                    marginTop: RH(0.3),
+                  }}>
+                  {item.devicetype.substring(0, 8)}
+                </H1>
+              </View>
+            </Animated.View>
+          ))}                 
+        </View>
+        <View>
+            <H2 style={{
+              marginBottom: RH(2),               
+               color:AppColors.greyishBrown,
+               opacity:0.7
+                }}>Available Stock</H2>
+        </View> 
       </View>
+      
     ) : (
       <View>
         <H2 style={{marginBottom: RH(10), fontSize: RF(18), opacity: 0.2}}>
@@ -128,13 +142,23 @@ export class Chart extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    marginBottom: RH(1),
+    backgroundColor: 'rgba(144,180,216,0.3)',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius: RH(5),
+  },
+
+  chartContainer:{
+    flex: 1,
     width: '100%',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    height: RH(30),
-    marginBottom: RH(1),
-    padding: RW(5),
+    paddingVertical: RW(5),
+    paddingHorizontal: RW(5),
+    height: RH(35),
   },
 
   bar: {

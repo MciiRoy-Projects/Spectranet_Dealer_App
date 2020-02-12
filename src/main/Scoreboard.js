@@ -1,20 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Image} from 'react-native';
-import {
-  Header,
-  WrapperMain,
-  H1,
-  H2,
-  Title,
-  Card,
-  Touch,
-  LiImage,
-} from '../partials/_components';
+import {Header, WrapperMain, PageTitle} from '../partials/_components';
 
-import AppColors from '../lib/_colors';
-import AppIcons from '../partials/_icons';
-import {RF, RW, RH} from '../lib/_sizes';
-import {getData, idCheck} from '../partials/_api';
+import {RW, RH} from '../lib/_sizes';
+import {List} from '../main/ScoreboardComponents/_list';
 
 const data = [
   {
@@ -39,66 +28,32 @@ const data = [
 ];
 
 export default class Scoreboard extends React.Component {
-  checkUserID = () => {
-    getData('userDetails').then(res => {
-      if (res) {
-        res = JSON.parse(res);
-        let userId = idCheck(res, 'userId');
-        userId = userId.substring(0, 3);
-        if (
-          userId == 'LGX' ||
-          userId == 'ABX' ||
-          userId == 'IBX' ||
-          userId == 'PHX'
-        ) {
-          this.props.navigation.navigate('IncentiveHtml', {
-            link: 'franchiseincentive',
-          });
-        } else if (
-          userId == 'LGD' ||
-          userId == 'ABD' ||
-          userId == 'IBD' ||
-          userId == 'PHD'
-        ) {
-          this.props.navigation.navigate('IncentiveHtml', {
-            link: 'superdealerincentive',
-          });
-        } else {
-          this.props.navigation.navigate('IncentiveHtml', {
-            link: 'dealerincentive',
-          });
-        }
-      }
-    });
-  };
-
   render() {
     const {navigation} = this.props;
     return (
-      <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+      <WrapperMain style={{paddingHorizontal: RW(6)}}>
+        <View>
           <Header
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> Scoreboard</Title>
+          <PageTitle title={'Scoreboard'} />
         </View>
 
         <View style={styles.paneTwo}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {data.map((el, i) => (
-              <LiImage
-                key={i}
-                icon={AppIcons.mtdSales}
-                text={el.item}
-                onPress={() => navigation.navigate('ScoreboardView', el)}
-              />
-            ))}
-
-            <LiImage
-              icon={AppIcons.mtdSales}
-              text="Incentives"
-              onPress={this.checkUserID}
+            <List
+              title="Available Stock"
+              goto={() => navigation.navigate('ScoreboardView')}
+            />
+            <List
+              title={'Activation & Sales Data'}
+              goto={() => navigation.navigate('Activation')}
+            />
+            <List title="E-Top Up" goto={() => navigation.navigate('Etopup')} />
+            <List
+              title="Stock Purchase For The Month"
+              goto={() => navigation.navigate('PurchaseForDMth')}
             />
           </ScrollView>
         </View>
@@ -114,11 +69,8 @@ const styles = StyleSheet.create({
   },
   paneTwo: {
     marginTop: RH(1),
-    backgroundColor: '#fff',
-    paddingVertical: RH(4),
-    paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
-    flex: 1,
+    marginHorizontal: RW(3),
+    paddingVertical: RH(2),
+    borderRadius: RH(2),
   },
 });

@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, StatusBar, Image} from 'react-native';
+import {View, StyleSheet, StatusBar, Image, ImageBackground} from 'react-native';
 import AppColors from '../lib/_colors';
 import {getData} from '../partials/_api';
+import SplashImage from '../../assets/img/Team.png';
+import {RH, RW} from '../lib/_sizes';
 
 export default class Splash extends React.Component {
   checker = () => {
@@ -22,18 +24,28 @@ export default class Splash extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          backgroundColor={AppColors.paleGrey}
+      <View style={{flex: 1}}>
+        
+        <ImageBackground
+          source={SplashImage}
+          resizeMode="cover"
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: RH(5),
+            backgroundColor: '#1455A9',
+            width:RW(100)
+        }}>
+            <StatusBar
+          backgroundColor={AppColors.fadeBlue}
           barStyle="dark-content"
         />
-        <View style={styles.wrap}>
-          <Image
-            source={require('../../assets/img/AgentLogoDark.png')}
-            style={{width: '100%'}}
-            resizeMode="contain"
-          />
-        </View>
+            <Image 
+              resizeMode="contain"
+              style={{height:RH(65), width:RW(75)}}
+              source={require('../../assets/img/AgentLogoDark.png')}/>
+          </ImageBackground>        
       </View>
     );
   }

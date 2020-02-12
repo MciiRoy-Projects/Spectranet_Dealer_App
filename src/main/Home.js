@@ -1,174 +1,64 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {
   Header,
   WrapperMain,
-  H1,
-  H2,
-  Title,
-  Card,
-  Touch,
-  P,
+  Loading,
+  PageTitle,
+  Popup,
 } from '../partials/_components';
 import AppColors from '../lib/_colors';
 import {RF, RW, RH} from '../lib/_sizes';
+import Transactions from '../main/HomeComponents/_transactions';
+import AvailableStocks from '../main/HomeComponents/_availablestock';
+import {getAvatar} from '../partials/_api';
+import {information} from '../lib/_text';
+
 import {
-  dealerStock,
-  dealerPerformance,
-  dealerBalance,
-  dealerStockPurchase,
-  dealerAvailableStock,
-  storeData,
-  getData,
-  idCheck,
-} from '../partials/_api';
-import moment from 'moment';
-import numeral from 'numeral';
-import {Chart} from '../partials/_charts';
+  //availablestocks,
+  //salesAndPurchases,
+  homeactions,
+  updateState,
+} from '../actions';
+import {connect} from 'react-redux';
 
-const text = `Your device stock has reached the minimum inventory level of "available stock" ….. Get more device billed to achieve your activation targets.\nHappy selling.`;
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.updateState('isLoadingBg', true);
+  }
 
-const data = [
-  {item: 'Available Stock', num: 0, data: [], code: 'available_stock'},
-  {item: 'MTD Activations', num: 0, data: [], code: 'mtd_activations'},
-  {item: 'E-Top Up', num: 0, data: [], code: 'e_top_up'},
-  {item: 'MTD Stock Purchase', num: 0, data: [], code: 'mtd_stock_purchase'},
-];
-
-export default class Home extends React.Component {
-  state = {
-    data: data,
-    today: new Date(),
-    refreshing: false,
-    showInfo: false,
-    loadChart: false,
-    dealerAvailableStockData: [],
+  getData = async () => {
+    //await this.props.salesAndPurchases();
+    //await this.props.availablestocks();
+    await this.props.homeactions();
   };
 
   init() {
-    getData('userDetails').then(res => {
-      if (res) {
-        res = JSON.parse(res);
-        let userId = idCheck(res, 'userId');
-        this.loadStock(userId);
-        this.loadAvailableStock(userId);
-        this.loadPerformance(userId);
-        this.loadETopUp(userId);
-        this.loadDealerStockPurchase(userId);
-        this.setState({loadChart: true});
-      }
-    });
+    this.props.updateState('refreshing', false);
+    this.getData();
+    getAvatar('avatar')
+      .then(res => {
+        let imgsource = {uri: JSON.parse(res).uri};
+        this.props.updateState('avatar', imgsource);
+      })
+      .catch(e => console.log(e));
   }
 
   hideInfo = () => {
-    this.setState({showInfo: false});
+    this.props.updateState('showInfo', false);
   };
-
-  loadStock = userId => {
-    dealerStock(userId)
-      .then(res => {
-        const {data} = this.state;
-        res = res.data;
-        if (res.success == true) {
-          res = res.data;
-          storeData(data[0].code, res);
-
-          let mifi = res.mifi;
-          let cpe = res.cpe;
-
-          if (mifi == null) mifi = 0;
-          if (cpe == null) cpe = 0;
-
-          data[0].num = parseInt(mifi) + parseInt(cpe);
-          data[0].data = res;
-
-          this.setState({
-            data,
-            refreshing: false,
-            showInfo: data[0].num < 6 ? true : false,
-          });
-        }
-      })
-      .catch(err => console.log(err))
-      .then(() => this.setState({refreshing: false}));
-  };
-
-  loadPerformance = userId => {
-    dealerPerformance(userId)
-      .then(res => {
-        const {data} = this.state;
-        res = res.data;
-        if (res.success == true) {
-          res = res.data;
-          storeData(data[1].code, res);
-          let last3month = res.last3month;
-          data[1].num = parseInt(last3month);
-          data[1].data = res;
-          this.setState({
-            data,
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  loadETopUp = userId => {
-    dealerBalance(userId)
-      .then(res => {
-        const {data} = this.state;
-        res = res.data;
-        if (res.success == true) {
-          res = res.data;
-          storeData(data[2].code, res);
-          let amount = res.amount;
-          data[2].num = parseInt(amount);
-          data[2].data = res;
-          this.setState({
-            data,
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  loadDealerStockPurchase = userId => {
-    dealerStockPurchase(userId)
-      .then(res => {
-        const {data} = this.state;
-        res = res.data;
-        if (res.success == true) {
-          res = res.data;
-          storeData(data[3].code, res);
-          //console.warn(res);
-          /*let amount = res.amount;
-          data[2].num = parseInt(amount);
-          data[2].data = res;
-          this.setState({
-            data,
-          });*/
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  loadAvailableStock = userId => {
-    dealerAvailableStock(userId)
-      .then(res => {
-        const {data} = this.state;
-        res = res.data;
-        if (res.success == true) {
-          res = res.data;
-          storeData('dealerAvailableStockData', res);
-          this.setState({dealerAvailableStockData: res});
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  targetChecker = () => {};
 
   onRefresh = () => {
-    this.setState({refreshing: true, loadChart: false});
+    this.props.updateState('refreshing', true);
+    this.props.updateState('isLoadingBg', true);
     this.init();
   };
 
@@ -176,95 +66,90 @@ export default class Home extends React.Component {
     this.init();
   }
 
+  renderInformation() {
+    return (
+      <Popup>
+        <View>
+          <Text
+            style={{
+              fontSize: RF(22),
+              fontWeight: 'bold',
+              color: AppColors.lighBlack,
+            }}>
+            {information.paragraph1}
+          </Text>
+          <Text style={{color: AppColors.lighBlack, textAlign: 'justify'}}>
+            {information.paragraph2}
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              this.props.updateState('infopopup', false);
+            }}
+            style={{
+              backgroundColor: AppColors.niceBlue,
+              borderColor: AppColors.niceBlue,
+              borderWidth: 1,
+              marginTop: 15,
+              paddingHorizontal: RW(5),
+              paddingVertical: RW(2.5),
+              borderRadius: RW(2.5),
+              alignItems: 'center',
+            }}>
+            <Text style={{color: '#FFFFFF', fontSize: RF(18)}}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      </Popup>
+    );
+  }
+
   render() {
     const {navigation} = this.props;
-    const {
-      data,
-      today,
-      refreshing,
-      showInfo,
-      loadChart,
-      dealerAvailableStockData,
-    } = this.state;
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <Header
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
+            imgsrc={this.props.store.avatar}
           />
-          <Title>Account Summary</Title>
         </View>
 
+        <PageTitle title={'Account Summary'} />
+
         <ScrollView
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={this.props.store.refreshing}
               onRefresh={this.onRefresh}
             />
           }>
-          {/*<Card style={styles.paneOne}>
-            {loadChart ? <Chart /> : null}
-            <H1 style={styles.label}>
-              Sales History ({moment(today).format('YYYY')})
-            </H1>
-          </Card>*/}
-
-          <ScrollView>
-            <View style={styles.paneTwo}>
-              <H1 style={styles.textOne}>Transactions</H1>
-
-              {data.map((el, i) => (
-                <Touch key={i} style={styles.grid}>
-                  <H2 style={styles.one}>{el.item}</H2>
-                  {isNaN(el.num) || el.num == 0 ? (
-                    <H1 style={styles.two}>0</H1>
-                  ) : (
-                    <H1 style={styles.two}>{numeral(el.num).format(0, 0)}</H1>
-                  )}
-                </Touch>
-              ))}
-            </View>
-
-            <View style={styles.paneTwo}>
-              <H1 style={styles.textOne}>Available</H1>
-
-              {dealerAvailableStockData.map((el, i) => (
-                <Touch key={i} style={styles.grid}>
-                  <H2 style={styles.one}>{el.devicetype}</H2>
-                  {isNaN(el.count) || el.count == 0 ? (
-                    <H1 style={styles.two}>0</H1>
-                  ) : (
-                    <H1 style={styles.two}>{numeral(el.count).format(0, 0)}</H1>
-                  )}
-                </Touch>
-              ))}
-            </View>
-          </ScrollView>
+          <View style={styles.paneTwo}>
+            <Transactions />
+            <AvailableStocks data={this.props.store.stockdata} />
+          </View>
         </ScrollView>
 
-        {showInfo ? (
-          <View style={styles.blackscreen}>
-            <View style={styles.wrap}>
-              <H1
-                style={{
-                  fontSize: RF(17),
-                  color: AppColors.cobalt,
-                  marginBottom: RH(1),
-                }}>
-                Dear Partner,
-              </H1>
-              <P style={styles.textWrap}>{text}</P>
-              <Touch style={styles.btn} onPress={this.hideInfo}>
-                <H1 style={{color: '#fff', fontSize: RF(15)}}>Close</H1>
-              </Touch>
-            </View>
-          </View>
-        ) : null}
+        {this.props.store.isLoadingBg ? <Loading /> : null}
+        {this.props.store.infopopup ? this.renderInformation() : null}
       </WrapperMain>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    store: state.store,
+  };
+};
+
+export default connect(mapStateToProps, {
+  //availablestocks,
+  //salesAndPurchases,
+  homeactions,
+  updateState,
+})(Home);
 
 const styles = StyleSheet.create({
   paneOne: {
@@ -272,14 +157,11 @@ const styles = StyleSheet.create({
     height: RH(42),
     alignItems: 'center',
     justifyContent: 'flex-end',
-
     marginHorizontal: RW(5),
   },
   paneTwo: {
     marginTop: RH(1),
     marginHorizontal: RW(3),
-    minHeight: RH(36),
-    backgroundColor: '#fff',
     paddingVertical: RH(2),
     borderRadius: RH(2),
   },
@@ -339,5 +221,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: RF(16),
     lineHeight: RF(25),
+  },
+  popup: {
+    backgroundColor: 'rgba(0, 0, 0, 0.78)',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: RW(100),
+    height: RH(100),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

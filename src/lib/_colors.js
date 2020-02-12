@@ -1,4 +1,5 @@
 module.exports = {
+  fadeBlue: '#1455A9',
   colorMain1: '#1A3B7E',
   colorMain2: '#E9EFF3',
   colorMain3: '#9f9f9f',
@@ -25,15 +26,16 @@ module.exports = {
   treeGreen: '#429321',
   niceBlue: '#0e4da3',
   darkPeriwinkle: '#6a69db',
-  offWhite: '#d8d8d820',
+  offWhite: 'rgba(255,255,255,0.4)',
   azul: '#0e5edc',
-  duskBlue40: '#21418240',
+  duskBlue40: '#214182',
   brownishGrey: '#5c5c5c',
   appleGreen: '#7ed321',
   scarlet: '#d0021b20',
   scarlet2: '#d0021b',
   reddish: '#ca2c2c',
-  pumpkin: '#df8100',
+  //pumpkin: '#df8100',
+  pumpkin: '#ffdbdb',
   orangeYellow: '#ffa600',
   brightBlue: '#0074ff',
   orangeL: '#f76b1c',
@@ -42,4 +44,8 @@ module.exports = {
   lightGreyBlue: '#90b4d8',
   blueyGrey: '#8a96ad',
   veryLightPink: '#ffdbdb',
+  white: '#ffffff',
+
+  /*New Colors */
+  fadewhite: 'rgba(255, 255, 255, 0.03)'
 };

@@ -1,95 +1,80 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {
-  Header,
-  WrapperMain,
-  H1,
-  H2,
-  P,
-  Title,
-  Card,
-  Touch,
-  LiImage,
-  Ico,
-} from '../partials/_components';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {Header, WrapperMain, Loading, PageTitle} from '../partials/_components';
 import AppColors from '../lib/_colors';
-import AppIcons from '../partials/_icons';
 import {RF, RW, RH} from '../lib/_sizes';
-import moment from 'moment';
-import {notificationHistory, Snack} from '../partials/_api';
+import {ListItem} from '../main/NewsComponent/_list';
+import {connect} from 'react-redux';
+import {getNews, updateState} from '../actions';
+import {List} from '../main/PurchaseForDMthComponents/_list';
 
-export default class NewsNotification extends React.Component {
-  state = {
-    List: [],
-    isLoading: true,
-  };
-
+class NewsNotification extends React.Component {
   loadData = () => {
-    notificationHistory()
-      .then(res => {
-        Snack('Updated . . .');
-        var List = [];
-        let notifications = res.data.notifications;
-        notifications.forEach(el => {
-          List.push({
-            item: notifications[0].headings.en,
-            timestamp: moment(notifications[0].completed_at * 1000).format(
-              'MMMM DD, YYYY',
-            ),
-            content: notifications[0].contents.en,
-          });
-        });
-        this.setState({List});
-      })
-      .catch(err => {
-        Snack('Connection Error. Please try again');
-        this.props.navigation.goBack();
-      })
-      .then(() => this.setState({isLoading: false}));
+    this.props.getNews();
+    this.props.updateState('refreshing', false);
   };
 
   componentDidMount() {
     this.loadData();
   }
 
+  onRefresh = () => {
+    this.props.updateState('refreshing', true);
+    this.loadData();
+  };
+
   render() {
     const {navigation} = this.props;
-    const {List, isLoading} = this.state;
     return (
       <WrapperMain>
-        <View style={{paddingHorizontal: RW(6)}}>
+        <View>
           <Header
             openDrawer={() => navigation.openDrawer()}
             openProfile={() => navigation.navigate('Profile')}
           />
-          <Title> News & Notifications</Title>
+          <PageTitle title={'News & Notifications'} />
         </View>
 
-        <View style={styles.paneTwo}>
-          {isLoading ? (
-            <ActivityIndicator size="large" color={AppColors.cobalt} />
-          ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {List.map((el, key) => (
-                <Touch
-                  style={styles.grid}
-                  onPress={() =>
-                    navigation.navigate('NewsNotificationView', el)
-                  }
-                  key={key}>
-                  <P style={styles.one}>
-                    {moment(el.timestamp).format('MMMM DD, YYYY')}
-                  </P>
-                  <H1 style={styles.two}>{el.item}</H1>
-                </Touch>
-              ))}
-            </ScrollView>
-          )}
-        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.store.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }>
+          <View style={styles.paneTwo}>
+            {this.props.store.News.length > 0 ? (
+              this.props.store.News.map((el, key) => (
+                <ListItem
+                  date={el.timestamp}
+                  key={key}
+                  title={el.item}
+                  goto={() => navigation.navigate('NewsNotificationView', el)}
+                />
+              ))
+            ) : (
+              <List title="No news" />
+            )}
+          </View>
+        </ScrollView>
+
+        {this.props.store.isLoadingBg ? <Loading /> : null}
       </WrapperMain>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    store: state.store,
+  };
+};
+
+export default connect(mapStateToProps, {
+  getNews,
+  updateState,
+})(NewsNotification);
 
 const styles = StyleSheet.create({
   paneOne: {
@@ -98,12 +83,8 @@ const styles = StyleSheet.create({
   },
   paneTwo: {
     marginTop: RH(1),
-    backgroundColor: '#fff',
-    paddingVertical: RH(4),
-    paddingHorizontal: RW(6),
-    borderTopLeftRadius: RH(5),
-    borderTopRightRadius: RH(5),
-    flex: 1,
+    marginHorizontal: RW(3),
+    paddingVertical: RH(2),
   },
   grid: {
     paddingVertical: RH(3),
